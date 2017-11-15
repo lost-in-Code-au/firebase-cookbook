@@ -114,13 +114,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
     backgroundColor:'transparent',
-    color: '#fff'
+    color: '#fff',
   },
   recipeCardContainer: {
-    backgroundColor: "white",
+    backgroundColor: "transparent",
     borderRadius: 20,
     width: "85%",
     borderWidth: 1,
+    borderColor: '#fff',
     margin: 10,
   },
   recipeCard: {
@@ -129,10 +130,13 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   name: {
+    color: '#fff',
     fontWeight: "bold",
     margin: 5,
   },
   snippet: {
+    fontWeight: "bold",
+    color: '#fff',
     margin: 5,
   },
   infoContainer: {
@@ -140,6 +144,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   infoText: {
+    fontWeight: "bold",
+    color: '#fff',
     flex: 1,
     textAlign: "center",
   },
