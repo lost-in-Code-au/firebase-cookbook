@@ -9,6 +9,7 @@ export default class App extends React.Component {
     this.state = {
       // firebase things?
     };
+
   }
 
   componentDidMount() {
@@ -16,9 +17,27 @@ export default class App extends React.Component {
   }
 
   render() {
-    const db = firebase.database().ref().toJSON
 
-    console.log("firebase.db: ", firebase.database().ref().toJSON)
+    var config = {
+      apiKey: "AIzaSyDhsH4FXxdlN9UegLr0_P2UDuOXp-WySk0",
+      authDomain: "react-native-firebase-st-d0137",
+      databaseURL: "https://react-native-firebase-st-d0137.firebaseio.com/"
+      // storageBucket: "bucket.appspot.com"
+    }
+
+    firebase.initializeApp(config)
+
+    const db = firebase.database()
+
+    console.log("firebase.db: ", db)
+
+    db.ref().once('value').then(function(snapshot) {
+      console.log(snapshot.val())
+
+    });
+
+    // console.log("data: ", dbData)
+
     return (
       <View style={styles.container}>
         <Image source={require('./assets/RNFirebase512x512.png')} style={[styles.logo]} />
