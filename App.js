@@ -54,8 +54,8 @@ export default class App extends React.Component {
               <Text style={styles.name}>{recipe.name}</Text>
               <Text style={styles.snippet}>{this.shortenSnippet(recipe.snippet)}</Text>
               <View style={styles.infoContainer}>
-                <Text style={styles.infoText}>Difficulty: {recipe.difficulty}</Text>
-                <Text style={styles.infoText}>Duration: {recipe.duration}</Text>
+                <Text style={styles.infoText}>Difficulty: {recipe.difficulty}/5</Text>
+                <Text style={styles.infoText}>Duration: {recipe.duration}mins</Text>
               </View>
               {/* <Image source={image} style={styles.recipeImage} /> */}
             </View>
