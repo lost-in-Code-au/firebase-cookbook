@@ -1,10 +1,13 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Platform, Image, Text, View, StatusBar } from 'react-native';
+import {
+  Dimensions, StyleSheet, Platform, Image, ImageBackground, Text, View, StatusBar
+} from 'react-native';
 
 import firebase from 'react-native-firebase';
 
 var ScreenHeight = Dimensions.get("window").height
 var ScreenWidth = Dimensions.get("window").Width
+const MAX_SNIPPET_LENGTH = 75
 // var SBHeight = StatusBar.currnetHeight //for android
 
 const config = {
@@ -19,48 +22,68 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      // firebase things?
+      recipes: []
     };
-
   }
 
   componentDidMount() {
-    // firebase things?
+    firebase.database().ref().once('value')
+      .then((snapshot) => {
+      data = snapshot.val()
+      this.setState({recipes: data})
+      console.log("data: ", data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
+  shortenSnippet(snippet){
+    if(snippet.length > MAX_SNIPPET_LENGTH){
+      snippet = snippet.slice(0, MAX_SNIPPET_LENGTH-3) + "..."
+    }
+    return snippet
+  }
 
+  renderRecipes(){
+    if(this.state.recipes.length > 0){
+      const recipeCards = this.state.recipes.map((recipe) => {
+        return(
+          <View key={recipe._id} style={styles.recipeCardContainer}>
+            <View style={styles.recipeCard}>
+              <Text style={styles.name}>{recipe.name}</Text>
+              <Text style={styles.snippet}>{this.shortenSnippet(recipe.snippet)}</Text>
+              <View style={styles.infoContainer}>
+                <Text style={styles.infoText}>Difficulty: {recipe.difficulty}</Text>
+                <Text style={styles.infoText}>Duration: {recipe.duration}</Text>
+              </View>
+              {/* <Image source={image} style={styles.recipeImage} /> */}
+            </View>
+          </View>
+        )
+      })
+      return recipeCards
+    }else{
+      return (<Text style={styles.loading}>Loading...</Text>)
+    }
+  }
 
   render() {
-
-    const db = firebase.database()
-
-    db.ref().once('value').then(function(snapshot) {
-      console.log(snapshot.val())
-      data = snapshot.val()
-      return data
-    })
-
-    // const recipes = function renderData() {
-    //
-    // }
-
     return (
       <View>
         <View  style={styles.statusBar}>
           <StatusBar />
         </View>
-        <Image source={require('./assets/bg.png')} style={[styles.backGround]}>
+        <ImageBackground source={require('./assets/bg.png')} style={[styles.backGround]}>
           <View  style={styles.container}>
             <View>
               <Text style={styles.welcome}>
                 Klassen & Jones CookBook
               </Text>
             </View>
-            <Text style={styles.instructions}>
-
-            </Text>
+            {this.renderRecipes()}
           </View>
-        </Image>
+        </ImageBackground>
       </View>
     )
   }
@@ -73,6 +96,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height: 20,
   },
+  loading: {
+    backgroundColor: "transparent",
+    color: "white",
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -83,27 +110,41 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 28,
     textAlign: 'center',
     margin: 10,
     backgroundColor:'transparent',
     color: '#fff'
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  recipeCardContainer: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    width: "85%",
+    borderWidth: 1,
+    margin: 10,
   },
-  modules: {
-    margin: 20,
+  recipeCard: {
+    backgroundColor: "transparent",
+    width: "100%",
+    padding: 10,
   },
-  modulesHeader: {
-    fontSize: 16,
-    marginBottom: 8,
+  name: {
+    fontWeight: "bold",
+    margin: 5,
   },
-  module: {
-    fontSize: 14,
-    marginTop: 4,
-    textAlign: 'center',
+  snippet: {
+    margin: 5,
+  },
+  infoContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  infoText: {
+    flex: 1,
+    textAlign: "center",
+  },
+  recipeImage: {
+    width: 200,
+    height: 100,
   }
 })
