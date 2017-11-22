@@ -1,6 +1,15 @@
 import React from 'react';
 import {
-  Dimensions, StyleSheet, Platform, Image, ImageBackground, Text, View, StatusBar
+  Dimensions,
+  StyleSheet,
+  Platform,
+  Image,
+  ImageBackground,
+  Text,
+  View,
+  StatusBar,
+  SectionList,
+  ScrollView
 } from 'react-native';
 
 import firebase from 'react-native-firebase';
@@ -14,16 +23,16 @@ const config = {
   apiKey: "AIzaSyDhsH4FXxdlN9UegLr0_P2UDuOXp-WySk0",
   authDomain: "react-native-firebase-st-d0137",
   databaseURL: "https://react-native-firebase-st-d0137.firebaseio.com/"
-}
+}//TODO: move over to webApp.js file.
 
 firebase.initializeApp(config)
 
 export default class App extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {
       recipes: []
-    };
+    }
   }
 
   componentDidMount() {
@@ -31,10 +40,10 @@ export default class App extends React.Component {
       .then((snapshot) => {
       data = snapshot.val()
       this.setState({recipes: data})
-      console.log("data: ", data);
+      console.log("data: ", data)
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err)
     })
   }
 
@@ -75,14 +84,14 @@ export default class App extends React.Component {
           <StatusBar />
         </View>
         <ImageBackground source={require('./assets/bg.png')} style={[styles.backGround]}>
-          <View  style={styles.container}>
+          <ScrollView  style={styles.container}>
             <View>
               <Text style={styles.welcome}>
                 Klassen & Jones CookBook
               </Text>
             </View>
             {this.renderRecipes()}
-          </View>
+          </ScrollView>
         </ImageBackground>
       </View>
     )
@@ -102,8 +111,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   backGround: {
     height: ScreenHeight,
