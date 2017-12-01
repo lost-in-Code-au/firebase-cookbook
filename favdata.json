@@ -1,0 +1,142 @@
+[
+  {
+    "_id": "5",
+    "picture": "http://placehold.it/32x32",
+    "author": "<TEST James>",
+    "name": "<TEST Hummus>",
+    "ingredients": [
+      {
+        "id": 0,
+        "name": "1 can of chickpeas"
+      },
+      {
+        "id": 1,
+        "name": "2 tablespoons of Olive oil"
+      },
+      {
+        "id": 2,
+        "name": "1 Lemon or 4 tablespoons of Lemon juice"
+      },
+      {
+        "id": 3,
+        "name": "1 and a half of Garlic clovers"
+      },
+      {
+        "id": 4,
+        "name": "3/4 teaspoon of Cumin"
+      },
+      {
+        "id": 5,
+        "name": "1 and a half of teaspoons of Salt"
+      },
+      {
+        "id": 6,
+        "name": "1 tablespoon of Tahini"
+      },
+      {
+        "id": 7,
+        "name": "3/4 teaspoon of Paprika"
+      },
+      {
+        "id": 8,
+        "name": "1/2 teaspoon of Chilli powder"
+      },
+      {
+        "id": 9,
+        "name": "1 tablespoon of Hot sauce/Saracha"
+      }
+    ],
+    "snippet": "3 time winner, HOT HUMMUS you'll be loving it.\r\n",
+    "instructions": [
+      {
+        "step": 0,
+        "text": "Drain can of chickpeas but leave some of the juice.\r\n"
+      },
+      {
+        "step": 1,
+        "text": "Squeeze the lemon for all its lemony goodness.\r\n"
+      },
+      {
+        "step": 2,
+        "text": "Combine all ingredients into the blender and blend until your desired consistency (I like it chunky).\r\n"
+      },
+      {
+        "step": 3,
+        "text": "Enjoy this equisite hummus and don't forget - it's better than Roberts...\r\n"
+      }
+    ],
+    "difficulty": 5,
+    "duration": 32,
+    "diet": "VG"
+  },
+  {
+    "_id": "6",
+    "picture": "http://placehold.it/32x32",
+    "author": "<TEST> Klassen",
+    "name": "<TEST> Joel's Award Winning Hummus",
+    "ingredients": [
+      {
+        "id": 0,
+        "name": "1 can of chickpeas"
+      },
+      {
+        "id": 1,
+        "name": "2 tablespoons of Olive oil"
+      },
+      {
+        "id": 2,
+        "name": "1 Lemon or 4 tablespoons of Lemon juice"
+      },
+      {
+        "id": 3,
+        "name": "1 and a half of Garlic clovers"
+      },
+      {
+        "id": 4,
+        "name": "3/4 teaspoon of Cumin"
+      },
+      {
+        "id": 5,
+        "name": "1 and a half of teaspoons of Salt"
+      },
+      {
+        "id": 6,
+        "name": "1 tablespoon of Tahini"
+      },
+      {
+        "id": 7,
+        "name": "3/4 teaspoon of Paprika"
+      },
+      {
+        "id": 8,
+        "name": "1/2 teaspoon of Chilli powder"
+      },
+      {
+        "id": 9,
+        "name": "1 tablespoon of Hot sauce/Saracha"
+      }
+    ],
+    "snippet": "3 time winner, HOT HUMMUS you'll be loving it.\r\n",
+    "instructions": [
+      {
+        "step": 0,
+        "text": "Drain can of chickpeas but leave some of the juice.\r\n"
+      },
+      {
+        "step": 1,
+        "text": "Squeeze the lemon for all its lemony goodness.\r\n"
+      },
+      {
+        "step": 2,
+        "text": "Combine all ingredients into the blender and blend until your desired consistency (I like it chunky).\r\n"
+      },
+      {
+        "step": 3,
+        "text": "Enjoy this equisite hummus and don't forget - it's better than Roberts...\r\n"
+      }
+    ],
+    "difficulty": 5,
+    "duration": 32,
+    "diet": "VG"
+}
+]

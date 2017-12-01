@@ -3,14 +3,18 @@ import {
   Dimensions,
   StyleSheet,
   Platform,
-  Image,
   ImageBackground,
   Text,
   View,
   StatusBar,
-  SectionList,
-  ScrollView
+  FlatList,
+  ScrollView,
+  Animated,
+  Image,
+  Easing
 } from 'react-native';
+
+// import favData from './favdata.json' //TODO: make backout data incase no wifi?
 
 import firebase from 'react-native-firebase';
 
@@ -30,14 +34,15 @@ firebase.initializeApp(config)
 export default class App extends React.Component {
   constructor() {
     super()
+    this.spinValue = new Animated.Value(0)
     this.state = {
       recipes: []
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     firebase.database().ref().once('value')
-      .then((snapshot) => {
+    .then((snapshot) => {
       data = snapshot.val()
       this.setState({recipes: data})
       console.log("data: ", data)
@@ -47,12 +52,45 @@ export default class App extends React.Component {
     })
   }
 
+  componentDidMount() {
+    if (true) {
+      console.log('Firebasedb connected!')
+    } else {
+      this.setState({recipes: favData})
+      console.log("no firebase: ", favData)
+    }
+    this.spin()
+    }
+    spin () {
+    this.spinValue.setValue(0)
+    Animated.timing(
+      this.spinValue,
+      {
+        toValue: 1,
+        duration: 4000,
+        easing: Easing.linear
+      }
+    ).start(() => this.spin())
+  }
+
   shortenSnippet(snippet){
     if(snippet.length > MAX_SNIPPET_LENGTH){
       snippet = snippet.slice(0, MAX_SNIPPET_LENGTH-3) + "..."
     }
     return snippet
   }
+
+  // AnimateLoading(){
+  //   Animated.timing(
+  //     someValue,
+  //     {
+  //       toValue: number,
+  //       duration: number,
+  //       easing: easingFunction,
+  //       delay: number
+  //     }
+  //   )
+  // }
 
   renderRecipes(){
     if(this.state.recipes.length > 0){
@@ -66,16 +104,34 @@ export default class App extends React.Component {
                 <Text style={styles.infoText}>Difficulty: {recipe.difficulty}/5</Text>
                 <Text style={styles.infoText}>Duration: {recipe.duration}mins</Text>
               </View>
-              {/* <Image source={image} style={styles.recipeImage} /> */}
+              {/* <Image source={image} style={styles.recipeImage} /> /*TODO: add to cards after image upload is possible */}
             </View>
           </View>
         )
       })
       return recipeCards
     }else{
-      return (<Text style={styles.loading}>Loading...</Text>)
+
+      const spin = this.spinValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0deg', '360deg']
+      })
+      return (
+        <View>
+          <Text style={styles.loading}>Loading...</Text>
+          <View style={styles.img}>
+            <Animated.Image
+            style={{
+              width: 97,
+              height: 97,
+              transform: [{rotate: spin}] }}
+              source={require('./assets/reactjs.png')}
+            />
+          </View>
+        </View>
+      )
     }
-  }
+  }//TODO: remove ScrollView since it's not required if we are using  FlatList
 
   render() {
     return (
@@ -101,6 +157,14 @@ export default class App extends React.Component {
 // {firebase.messaging.nativeModuleExists && <Text style={styles.module}>Messaging</Text>}
 
 const styles = StyleSheet.create({
+  img: {
+    margin: 10,
+    padding: 30,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+  },
   statusBar: {
     backgroundColor: '#fff',
     height: 20,
@@ -108,6 +172,8 @@ const styles = StyleSheet.create({
   loading: {
     backgroundColor: "transparent",
     color: "white",
+    textAlign:'center',
+    fontSize: 28,
   },
   container: {
     flex: 1,
@@ -126,7 +192,7 @@ const styles = StyleSheet.create({
   recipeCardContainer: {
     backgroundColor: "transparent",
     borderRadius: 20,
-    width: "85%",
+    width: "84%",
     borderWidth: 1,
     borderColor: '#fff',
     margin: 10,
