@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   recipeCardContainer: {
     backgroundColor: "transparent",
     borderRadius: 20,
-    width: "84%",
+    width: ScreenWidth,
     borderWidth: 1,
     borderColor: '#fff',
     margin: 10,
