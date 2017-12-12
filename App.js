@@ -14,6 +14,8 @@ import {
   Easing
 } from 'react-native'
 
+import ShowPage from './showpage.js'
+
 // import favData from './favdata.json' //TODO: make backout data incase no wifi?
 
 import firebase from 'react-native-firebase'
@@ -75,7 +77,7 @@ export default class App extends Component<{}> {
     if(this.state.loading) {
       return (
         <View>
-          <Text style={styles.loading}>{text}</Text>
+          <Text style={[styles.loading, styles.backGround]}>{text}</Text>
         </View>
       )
     }
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
   },
   loading: {
     backgroundColor: "transparent",
-    color: "black",
+    color: "white",
     textAlign:'center',
     fontSize: 28,
   },
