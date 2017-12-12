@@ -58,7 +58,7 @@ export default class App extends Component<{}> {
     // .catch((err) => {
     //   console.log(err)
     //   this.setState({...this.state, error: true, loading: false})
-    // })
+    // })//err catch needs to be researched on react-native-firebase package
   }
 
   shortenSnippet(snippet){
@@ -69,13 +69,13 @@ export default class App extends Component<{}> {
   }
 
 
-  renderRecipes(){
+  renderLandingPage(){
 
     const text = this.state.loading ? 'Loading...' : 'Loaded'
     if(this.state.loading) {
       return (
         <View>
-          <Text style={styles.loading}>Loading...</Text>
+          <Text style={styles.loading}>{text}</Text>
         </View>
       )
     }
@@ -117,7 +117,7 @@ export default class App extends Component<{}> {
                 Klassen & Jones CookBook
               </Text>
             </View>
-            {this.renderRecipes()}
+            {this.renderLandingPage()}
           </ScrollView>
         </ImageBackground>
       </View>
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   loading: {
     backgroundColor: "transparent",
-    color: "white",
+    color: "black",
     textAlign:'center',
     fontSize: 28,
   },
