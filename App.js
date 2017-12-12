@@ -7,11 +7,8 @@ import {
   Text,
   View,
   StatusBar,
-  FlatList,
   ScrollView,
-  Animated,
-  Image,
-  Easing
+  TouchableHighlight
 } from 'react-native'
 
 import ShowPage from './showpage.js'
@@ -46,8 +43,6 @@ export default class App extends Component<{}> {
   }
 
   componentDidMount() {
-    // console.log('Hello')
-
     firebase.database().ref().on('value', (snapshot) => {
         console.log(snapshot.val())
         const data = snapshot.val()
@@ -63,13 +58,21 @@ export default class App extends Component<{}> {
     // })//err catch needs to be researched on react-native-firebase package
   }
 
+  showItem(recipe){
+    return (
+      <View>
+        <Text style={styles.name}>{recipe.name}</Text>
+        <Text style={styles.snippet}>{recipe.snippet}</Text>
+      </View>
+    )
+  }
+
   shortenSnippet(snippet){
     if(snippet.length > MAX_SNIPPET_LENGTH){
-      snippet = snippet.slice(0, MAX_SNIPPET_LENGTH-3) + "..."
+      snippet = snippet.slice(0, MAX_SNIPPET_LENGTH-5) + "..."
     }
     return snippet
   }
-
 
   renderLandingPage(){
 
@@ -91,6 +94,10 @@ export default class App extends Component<{}> {
       return this.state.recipes.map((recipe) => {
         return (
           <View key={recipe._id} style={styles.recipeCardContainer}>
+    <TouchableHighlight props={recipe}
+    style={styles.button}
+    onPress={this.showItem()}
+    >
             <View style={styles.recipeCard}>
               <Text style={styles.name}>{recipe.name}</Text>
               <Text style={styles.snippet}>{this.shortenSnippet(recipe.snippet)}</Text>
@@ -100,6 +107,8 @@ export default class App extends Component<{}> {
               </View>
               {/* <Image source={image} style={styles.recipeImage} /> /*TODO: add to cards after image upload is possible */}
             </View>
+
+    </TouchableHighlight>
           </View>
         )
       })
@@ -169,6 +178,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#fff',
     margin: 10,
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    padding: 10
   },
   recipeCard: {
     backgroundColor: "transparent",
