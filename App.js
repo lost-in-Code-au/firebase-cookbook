@@ -46,17 +46,19 @@ export default class App extends Component<{}> {
   componentDidMount() {
     // console.log('Hello')
 
-    firebase.database().ref().once('value')
-    .then((snapshot) => {
-      console.log(snapshot.val())
-      const data = snapshot.val()
-      this.setState({...this.state, recipes: data, loading: false})
-      // console.log("data: ", data)
-    })
-    .catch((err) => {
-      console.log(err)
-      this.setState({...this.state, error: true, loading: false})
-    })
+    firebase.database().ref().on('value', (snapshot) => {
+        console.log(snapshot.val())
+        const data = snapshot.val()
+        this.setState({
+          ...this.state,
+          recipes: data,
+          loading: !this.state.loading
+        })
+      })
+    // .catch((err) => {
+    //   console.log(err)
+    //   this.setState({...this.state, error: true, loading: false})
+    // })
   }
 
   shortenSnippet(snippet){
@@ -68,6 +70,8 @@ export default class App extends Component<{}> {
 
 
   renderRecipes(){
+
+    const text = this.state.loading ? 'Loading...' : 'Loaded'
     if(this.state.loading) {
       return (
         <View>
