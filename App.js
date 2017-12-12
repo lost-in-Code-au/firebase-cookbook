@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react'
 import {
   Dimensions,
   StyleSheet,
@@ -12,11 +12,11 @@ import {
   Animated,
   Image,
   Easing
-} from 'react-native';
+} from 'react-native'
 
 // import favData from './favdata.json' //TODO: make backout data incase no wifi?
 
-import firebase from 'react-native-firebase';
+import firebase from 'react-native-firebase'
 
 var ScreenHeight = Dimensions.get("window").height
 var ScreenWidth = Dimensions.get("window").Width
@@ -31,46 +31,32 @@ const config = {
 
 firebase.initializeApp(config)
 
-export default class App extends React.Component {
+export default class App extends Component<{}> {
   constructor() {
     super()
-    this.spinValue = new Animated.Value(0)
+    // this.spinValue = new Animated.Value(0)
     this.state = {
-      recipes: []
+      recipes: [],
+      loading: true,
+      error: null
+      //added for view state ie error and state handling
     }
-  }
-
-  componentWillMount() {
-    firebase.database().ref().once('value')
-    .then((snapshot) => {
-      data = snapshot.val()
-      this.setState({recipes: data})
-      console.log("data: ", data)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
   }
 
   componentDidMount() {
-    if (true) {
-      console.log('Firebasedb connected!')
-    } else {
-      this.setState({recipes: favData})
-      console.log("no firebase: ", favData)
-    }
-    this.spin()
-    }
-    spin () {
-    this.spinValue.setValue(0)
-    Animated.timing(
-      this.spinValue,
-      {
-        toValue: 1,
-        duration: 4000,
-        easing: Easing.linear
-      }
-    ).start(() => this.spin())
+    // console.log('Hello')
+
+    firebase.database().ref().once('value')
+    .then((snapshot) => {
+      console.log(snapshot.val())
+      const data = snapshot.val()
+      this.setState({...this.state, recipes: data, loading: false})
+      // console.log("data: ", data)
+    })
+    .catch((err) => {
+      console.log(err)
+      this.setState({...this.state, error: true, loading: false})
+    })
   }
 
   shortenSnippet(snippet){
@@ -80,22 +66,24 @@ export default class App extends React.Component {
     return snippet
   }
 
-  // AnimateLoading(){
-  //   Animated.timing(
-  //     someValue,
-  //     {
-  //       toValue: number,
-  //       duration: number,
-  //       easing: easingFunction,
-  //       delay: number
-  //     }
-  //   )
-  // }
 
   renderRecipes(){
-    if(this.state.recipes.length > 0){
-      const recipeCards = this.state.recipes.map((recipe) => {
-        return(
+    if(this.state.loading) {
+      return (
+        <View>
+          <Text style={styles.loading}>Loading...</Text>
+        </View>
+      )
+    }
+    else if (this.state.error) {
+      return <View><Text>Error</Text></View>
+    }
+    else if (this.state.recipes.length === 0) {
+      return <View><Text>No recipes</Text></View>
+    }
+    else {
+      return this.state.recipes.map((recipe) => {
+        return (
           <View key={recipe._id} style={styles.recipeCardContainer}>
             <View style={styles.recipeCard}>
               <Text style={styles.name}>{recipe.name}</Text>
@@ -109,27 +97,6 @@ export default class App extends React.Component {
           </View>
         )
       })
-      return recipeCards
-    }else{
-
-      const spin = this.spinValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['0deg', '360deg']
-      })
-      return (
-        <View>
-          <Text style={styles.loading}>Loading...</Text>
-          <View style={styles.img}>
-            <Animated.Image
-            style={{
-              width: 97,
-              height: 97,
-              transform: [{rotate: spin}] }}
-              source={require('./assets/reactjs.png')}
-            />
-          </View>
-        </View>
-      )
     }
   }//TODO: remove ScrollView since it's not required if we are using  FlatList
 
