@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import {
+  StatusBar,
   Dimensions,
   StyleSheet,
-  Platform,
   ImageBackground,
   Text,
   View,
-  StatusBar,
   ScrollView,
-  TouchableHighlight
+  Button,
+  FlatList
 } from 'react-native'
 
-import ShowPage from './showpage.js'
+import ShowPage from './showpage.js'//TODO: to be written
 
 // import favData from './favdata.json' //TODO: make backout data incase no wifi?
 
@@ -59,13 +59,15 @@ export default class App extends Component<{}> {
   }
 
   showItem(recipe){
-    return (
-      <View>
-        <Text style={styles.name}>{recipe.name}</Text>
-        <Text style={styles.snippet}>{recipe.snippet}</Text>
-      </View>
-    )
-  }
+    const show = recipe.name
+    console.log(recipe)
+    // return (
+    //   <View>
+    //     <Text style={styles.name}>{/* recipe.name */}</Text>
+    //     <Text style={styles.snippet}>{/* recipe.snippet */}</Text>
+    //   </View>
+    // )
+  }//TODO: once working to be exported to showpage.js
 
   shortenSnippet(snippet){
     if(snippet.length > MAX_SNIPPET_LENGTH){
@@ -91,27 +93,24 @@ export default class App extends Component<{}> {
       return <View><Text>No recipes</Text></View>
     }
     else {
-      return this.state.recipes.map((recipe) => {
-        return (
-          <View key={recipe._id} style={styles.recipeCardContainer}>
-    <TouchableHighlight props={recipe}
-    style={styles.button}
-    onPress={this.showItem()}
-    >
-            <View style={styles.recipeCard}>
-              <Text style={styles.name}>{recipe.name}</Text>
-              <Text style={styles.snippet}>{this.shortenSnippet(recipe.snippet)}</Text>
-              <View style={styles.infoContainer}>
-                <Text style={styles.infoText}>Difficulty: {recipe.difficulty}/5</Text>
-                <Text style={styles.infoText}>Duration: {recipe.duration}mins</Text>
+      return (
+        <FlatList
+          data={this.state.recipes}
+          renderItem={({ item }) => (
+            <View key={item._id} style={styles.recipeCardContainer}>
+              <View style={styles.recipeCard}>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.snippet}>{this.shortenSnippet(item.snippet)}</Text>
+                <View style={styles.infoContainer}>
+                  <Text style={styles.infoText}>Difficulty: {item.difficulty}/5</Text>
+                  <Text style={styles.infoText}>Duration: {item.duration}mins</Text>
+                </View>
+                {/* <Image source={image} style={styles.recipeImage} /> /*TODO: add to cards after image upload is possible */}
               </View>
-              {/* <Image source={image} style={styles.recipeImage} /> /*TODO: add to cards after image upload is possible */}
             </View>
-
-    </TouchableHighlight>
-          </View>
-        )
-      })
+          )}
+        />
+      )
     }
   }//TODO: remove ScrollView since it's not required if we are using  FlatList
 
