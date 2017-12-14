@@ -6,10 +6,11 @@ import {
   ImageBackground,
   Text,
   View,
-  ScrollView,
-  Button,
-  FlatList
+  FlatList,
+  TouchableHighlight,
+  AppRegistry
 } from 'react-native'
+import { StackNavigator } from 'react-navigation'
 
 import ShowPage from './showpage.js'//TODO: to be written
 
@@ -30,7 +31,16 @@ const config = {
 
 firebase.initializeApp(config)
 
-export default class App extends Component<{}> {
+// const Pages = StackNavigator({
+//   Home: { screen: HomeScreen },
+//   Recipe: { screen: RecipeScreen },
+//   Ingredients: { screen: IngredientsScreen },
+// })
+
+export default class HomeScreen extends Component<{}> {
+  static navigationOptions = {
+  title: 'J&K CookBook'
+  }
   constructor() {
     super()
     // this.spinValue = new Animated.Value(0)
@@ -41,6 +51,9 @@ export default class App extends Component<{}> {
       //added for view state ie error and state handling
     }
   }
+
+  _keyExtractor = (item, index) => item.id
+  // _onPress = (item) => <Text>{item.name}</Text>
 
   componentDidMount() {
     firebase.database().ref().on('value', (snapshot) => {
@@ -55,7 +68,7 @@ export default class App extends Component<{}> {
     // .catch((err) => {
     //   console.log(err)
     //   this.setState({...this.state, error: true, loading: false})
-    // })//err catch needs to be researched on react-native-firebase package
+    // })//TODO: err catch needs to be researched on react-native-firebase package
   }
 
   showItem(recipe){
@@ -96,8 +109,14 @@ export default class App extends Component<{}> {
       return (
         <FlatList
           data={this.state.recipes}
+          keyExtractor={this._keyExtractor}
+          ListHeaderComponent={() => (
+            <Text style={styles.header}> J&K CookBook </Text>
+          )}
           renderItem={({ item }) => (
-            <View key={item._id} style={styles.recipeCardContainer}>
+            <TouchableHighlight
+            onPress={() => this._onPress(item)}
+            key={item._id} style={styles.recipeCardContainer}>
               <View style={styles.recipeCard}>
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.snippet}>{this.shortenSnippet(item.snippet)}</Text>
@@ -107,7 +126,7 @@ export default class App extends Component<{}> {
                 </View>
                 {/* <Image source={image} style={styles.recipeImage} /> /*TODO: add to cards after image upload is possible */}
               </View>
-            </View>
+            </TouchableHighlight>
           )}
         />
       )
@@ -117,18 +136,13 @@ export default class App extends Component<{}> {
   render() {
     return (
       <View>
-        <View  style={styles.statusBar}>
-          <StatusBar />
-        </View>
         <ImageBackground source={require('./assets/bg.png')} style={[styles.backGround]}>
-          <ScrollView  style={styles.container}>
-            <View>
-              <Text style={styles.welcome}>
-                Klassen & Jones CookBook
-              </Text>
+          <View style={styles.statusBar}>
+            <StatusBar barStyle="light-content" />
+          </View>
+            <View style={styles.container}>
+              {this.renderLandingPage()}
             </View>
-            {this.renderLandingPage()}
-          </ScrollView>
         </ImageBackground>
       </View>
     )
@@ -147,7 +161,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   statusBar: {
-    backgroundColor: '#fff',
     height: 20,
   },
   loading: {
@@ -163,7 +176,7 @@ const styles = StyleSheet.create({
     height: ScreenHeight,
     width: ScreenWidth,
   },
-  welcome: {
+  header: {
     fontSize: 28,
     textAlign: 'center',
     margin: 10,
