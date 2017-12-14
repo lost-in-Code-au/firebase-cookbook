@@ -31,29 +31,19 @@ const config = {
 
 firebase.initializeApp(config)
 
-// const Pages = StackNavigator({
-//   Home: { screen: HomeScreen },
-//   Recipe: { screen: RecipeScreen },
-//   Ingredients: { screen: IngredientsScreen },
-// })
-
-export default class HomeScreen extends Component<{}> {
+class HomeScreen extends React.Component {
   static navigationOptions = {
   title: 'J&K CookBook'
   }
+
   constructor() {
     super()
-    // this.spinValue = new Animated.Value(0)
     this.state = {
       recipes: [],
       loading: true,
       error: null
-      //added for view state ie error and state handling
     }
   }
-
-  _keyExtractor = (item, index) => item.id
-  // _onPress = (item) => <Text>{item.name}</Text>
 
   componentDidMount() {
     firebase.database().ref().on('value', (snapshot) => {
@@ -71,17 +61,6 @@ export default class HomeScreen extends Component<{}> {
     // })//TODO: err catch needs to be researched on react-native-firebase package
   }
 
-  showItem(recipe){
-    const show = recipe.name
-    console.log(recipe)
-    // return (
-    //   <View>
-    //     <Text style={styles.name}>{/* recipe.name */}</Text>
-    //     <Text style={styles.snippet}>{/* recipe.snippet */}</Text>
-    //   </View>
-    // )
-  }//TODO: once working to be exported to showpage.js
-
   shortenSnippet(snippet){
     if(snippet.length > MAX_SNIPPET_LENGTH){
       snippet = snippet.slice(0, MAX_SNIPPET_LENGTH-5) + "..."
@@ -89,8 +68,8 @@ export default class HomeScreen extends Component<{}> {
     return snippet
   }
 
-  renderLandingPage(){
-
+  renderLandingPage() {
+    const { navigate } = this.props.navigation
     const text = this.state.loading ? 'Loading...' : 'Loaded'
     if(this.state.loading) {
       return (
@@ -110,12 +89,9 @@ export default class HomeScreen extends Component<{}> {
         <FlatList
           data={this.state.recipes}
           keyExtractor={this._keyExtractor}
-          ListHeaderComponent={() => (
-            <Text style={styles.header}> J&K CookBook </Text>
-          )}
           renderItem={({ item }) => (
             <TouchableHighlight
-            onPress={() => this._onPress(item)}
+            onPress={() => navigate('Recipe', item)}
             key={item._id} style={styles.recipeCardContainer}>
               <View style={styles.recipeCard}>
                 <Text style={styles.name}>{item.name}</Text>
@@ -131,23 +107,73 @@ export default class HomeScreen extends Component<{}> {
         />
       )
     }
-  }//TODO: remove ScrollView since it's not required if we are using  FlatList
+  }
 
   render() {
+
     return (
-      <View>
-        <ImageBackground source={require('./assets/bg.png')} style={[styles.backGround]}>
-          <View style={styles.statusBar}>
-            <StatusBar barStyle="light-content" />
-          </View>
-            <View style={styles.container}>
-              {this.renderLandingPage()}
-            </View>
-        </ImageBackground>
-      </View>
+      <ImageBackground source={require('./assets/bg.png')} style={styles.backGround}>
+        <View style={styles.container}>
+          {this.renderLandingPage()}
+        </View>
+      </ImageBackground>
     )
   }
 }
+
+class RecipeScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Show with Lucy',
+  }
+  render() {
+    console.log("Item props:", this.props.navigation.state.params)
+    const { params: item } = this.props.navigation.state;
+    return (
+      <ImageBackground source={require('./assets/bg.png')} style={styles.backGround}>
+        <Text style={styles.name}>{item.name}</Text>
+      </ImageBackground>
+    )
+  }
+}
+
+const CookBookApp = StackNavigator({
+  Home: { screen: HomeScreen },
+  Recipe: { screen: RecipeScreen },
+})
+
+export default class App extends Component<{}> {
+  constructor() {
+    super()
+    this.state = {
+      recipes: [],
+      loading: true,
+      error: null
+    }
+  }
+
+  _keyExtractor = (item, index) => item.id
+
+  componentDidMount() {
+    firebase.database().ref().on('value', (snapshot) => {
+        console.log(snapshot.val())
+        const data = snapshot.val()
+        this.setState({
+          ...this.state,
+          recipes: data,
+          loading: !this.state.loading
+        })
+      })
+    // .catch((err) => {
+    //   console.log(err)
+    //   this.setState({...this.state, error: true, loading: false})
+    // })//TODO: err catch needs to be researched on react-native-firebase package
+  }
+
+  render() {
+    return <CookBookApp />
+  }
+}
+
 // {firebase.auth.nativeModuleExists && <Text style={styles.module}>Authentication</Text>}
 // {firebase.messaging.nativeModuleExists && <Text style={styles.module}>Messaging</Text>}
 
