@@ -8,9 +8,11 @@ import {
   View,
   FlatList,
   TouchableHighlight,
-  AppRegistry
+  AppRegistry,
+  Image
 } from 'react-native'
 import { StackNavigator } from 'react-navigation'
+import RNCloudinary from 'react-native-cloudinary'
 
 import ShowPage from './showpage.js'//TODO: to be written
 
@@ -85,22 +87,23 @@ class HomeScreen extends React.Component {
       return <View><Text>No recipes</Text></View>
     }
     else {
+      console.log(this.state.recipes[0].picture);
       return (
         <FlatList
           data={this.state.recipes}
-          keyExtractor={this._keyExtractor}
+          automaticallyAdjustContentInsets={true}
           renderItem={({ item }) => (
             <TouchableHighlight
             onPress={() => navigate('Recipe', item)}
             key={item._id} style={styles.recipeCardContainer}>
               <View style={styles.recipeCard}>
+                <Image source={{uri: 'http://res.cloudinary.com/detvc9wtb/image/upload/v1513357565/sample.jpg' }} style={styles.recipeImage} />
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.snippet}>{this.shortenSnippet(item.snippet)}</Text>
                 <View style={styles.infoContainer}>
                   <Text style={styles.infoText}>Difficulty: {item.difficulty}/5</Text>
                   <Text style={styles.infoText}>Duration: {item.duration}mins</Text>
                 </View>
-                {/* <Image source={image} style={styles.recipeImage} /> /*TODO: add to cards after image upload is possible */}
               </View>
             </TouchableHighlight>
           )}
@@ -122,15 +125,43 @@ class HomeScreen extends React.Component {
 }
 
 class RecipeScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Show with Lucy',
+
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.state.params.name,
+  })
+
+  shortenSnippet(snippet){
+    if(snippet.length > MAX_SNIPPET_LENGTH){
+      snippet = snippet.slice(0, MAX_SNIPPET_LENGTH-5) + "..."
+    }
+    return snippet
   }
+
   render() {
     console.log("Item props:", this.props.navigation.state.params)
-    const { params: item } = this.props.navigation.state;
+    const { params: item } = this.props.navigation.state
+
     return (
       <ImageBackground source={require('./assets/bg.png')} style={styles.backGround}>
-        <Text style={styles.name}>{item.name}</Text>
+        <FlatList
+          data={item.instructions}
+          renderItem={({item: instruction}) => (
+            <View key={instruction.step} style={styles.recipeCard}>
+              <Text style={styles.name}>{instruction.text}</Text>
+            </View>
+          )}
+          ListHeaderComponent={() => (
+            <View style={styles.header}>
+              <Text style={styles.name}>{item.name}</Text>
+              <Text style={styles.name}>{item.author}</Text>
+              <Text style={styles.snippet}>{this.shortenSnippet(item.snippet)}</Text>
+              <View style={styles.infoContainer}>
+                <Text style={styles.infoText}>Difficulty: {item.difficulty}/5</Text>
+                <Text style={styles.infoText}>Duration: {item.duration}mins</Text>
+              </View>
+            </View>
+          )}
+        />
       </ImageBackground>
     )
   }
@@ -203,7 +234,6 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
   },
   header: {
-    fontSize: 28,
     textAlign: 'center',
     margin: 10,
     backgroundColor:'transparent',
@@ -248,7 +278,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   recipeImage: {
-    width: 200,
-    height: 100,
+    width: ScreenWidth,
+    height: 300,
   }
 })

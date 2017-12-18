@@ -1,7 +1,7 @@
 [
   {
     "_id": "5",
-    "picture": "http://placehold.it/32x32",
+    "picture": "http://placehold.it/120x120",
     "author": "<TEST James>",
     "name": "<TEST Hummus>",
     "ingredients": [
@@ -71,7 +71,7 @@
   },
   {
     "_id": "6",
-    "picture": "http://placehold.it/32x32",
+    "picture": "http://placehold.it/120x120",
     "author": "<TEST> Klassen",
     "name": "<TEST> Joel's Award Winning Hummus",
     "ingredients": [
