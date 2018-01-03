@@ -52,11 +52,11 @@ export default class HomeScreen extends React.Component {
   firebase.database().ref().on('value', (snapshot) => {
       const data = snapshot.val()
 
-      this.forceUpdate(this.setState({
+      this.setState({
         ...this.state,
         recipes: data,
         loading: !this.state.loading
-      }))
+      })
       console.log(data)
 
     })
