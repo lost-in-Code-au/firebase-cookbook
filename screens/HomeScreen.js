@@ -1,16 +1,26 @@
-import React from 'react';
+import React from 'react'
 import {
+  StatusBar,
+  Dimensions,
+  StyleSheet,
+  ImageBackground,
+  Text,
+  View,
+  FlatList,
+  TouchableHighlight,
+  AppRegistry,
   Image,
+  Button,
+
   Platform,
   ScrollView,
-  StyleSheet,
-  Text,
   TouchableOpacity,
-  View,
-} from 'react-native';
-import { WebBrowser } from 'expo';
+} from 'react-native'
+import { WebBrowser } from 'expo'
 
-import { MonoText } from '../components/StyledText';
+import { MonoText } from '../components/StyledText'
+
+import * as firebase from 'firebase'
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
