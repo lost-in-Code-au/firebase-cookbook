@@ -5,9 +5,7 @@ import {
   Text,
   View,
   FlatList,
-  TouchableHighlight,
   ImageBackground,
-  Image,
   Button,
 } from 'react-native'
 
@@ -15,12 +13,12 @@ import {
 
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
 var ScreenWidth = Dimensions.get("window").Width
-const MAX_SNIPPET_LENGTH = 75
 
 class IngredientsScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.name,
+    // headerRight: <Button title="Rate" />,//TODO: Create rating Component
   })
 
   render() {
@@ -55,16 +53,6 @@ const styles = StyleSheet.create({
   font: {
     fontFamily: 'Baskerville',
   },
-  footer: {
-  },
-  loading: {
-    textAlign:'center',
-    fontSize: 28,
-    backgroundColor:'transparent',
-  },
-  container: {
-    flex: 1,
-  },
   backGround: {
     height: ScreenHeight,
     width: ScreenWidth,
@@ -77,13 +65,6 @@ const styles = StyleSheet.create({
     margin: 10,
     backgroundColor:'transparent',
   },
-  recipeCardContainer: {
-    backgroundColor: "transparent",
-    borderRadius: 50,
-    width: ScreenWidth,
-    borderWidth: 1,
-    margin: 10,
-  },
   recipeCard: {
     backgroundColor: "transparent",
     width: "100%",
@@ -93,28 +74,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: 5,
   },
-  snippet: {
-    backgroundColor: "transparent",
-    fontWeight: "bold",
-    margin: 5,
-  },
-  infoContainer: {
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  infoText: {
-    backgroundColor: "transparent",
-    fontWeight: "bold",
-    flex: 1,
-    textAlign: "center",
-  },
-  recipeImage: {
-    backgroundColor: "transparent",
-    width: ScreenWidth,
-    height: 300,
-    borderRadius: 50,
-  }
 })
 
 

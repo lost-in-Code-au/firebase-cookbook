@@ -13,8 +13,8 @@ import {
 import { StackNavigator } from 'react-navigation' // 1.0.0-beta.23
 
 // import styles from './styles'
-// import * from './screens'
 
+// import { HomeScreen, RecipeScreen, IngredientsScreen } from './screens'//TODO: not sure why couldn't get  this to work
 import HomeScreen from './screens/HomeScreen'
 import RecipeScreen from './screens/RecipeScreen'
 import IngredientsScreen from './screens/IngredientsScreen'

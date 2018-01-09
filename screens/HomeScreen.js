@@ -8,6 +8,7 @@ import {
   FlatList,
   TouchableHighlight,
   Image,
+  Button,
 } from 'react-native'
 
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
@@ -28,7 +29,9 @@ const MAX_SNIPPET_LENGTH = 75
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-  title: 'J&K CookBook'
+    headerLeft: <Button title="Search" />,
+    // headerRight: <Button title="Add" />,//TODO: create firebase writing Component
+    title: 'J&K CookBook'
   }
 
   constructor() {
@@ -67,6 +70,26 @@ class HomeScreen extends React.Component {
     }
   }
 
+  // _renderItem = ({item}) => (
+  //   <TouchableHighlight
+  //   onPress={() => navigate('Recipe', item)}
+  //   key={item._id}
+  //   style={styles.recipeCardContainer}>
+  //     <View style={styles.recipeCard}>
+  //       <Image
+  //       style={styles.recipeImage}
+  //       source={{uri: this.setImage(item.picture) }}
+  //       ></Image>
+  //       <Text style={[styles.name, styles.font]}>{item.name}</Text>
+  //       <Text style={[styles.snippet, styles.font]}>{this.shortenSnippet(item.snippet)}</Text>
+  //       <View style={styles.infoContainer}>
+  //         <Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
+  //         <Text style={[styles.infoText, styles.font]}>Duration: {item.duration}mins</Text>
+  //       </View>
+  //     </View>
+  //   </TouchableHighlight>
+  // )//Won't work without binding the navigate function somehow to the function
+
   renderLandingPage = () => {
     const { navigate } = this.props.navigation
     const text = this.state.loading ? 'Loading...' : 'Loaded'
@@ -84,12 +107,12 @@ class HomeScreen extends React.Component {
     }
     else {
       return (
-      <ImageBackground
-      style={[styles.backGround, {width: ScreenWidth, height: ScreenHeight}]}
-      source={require('../assets/images/seigaiha.png')}>
-        <FlatList
-          data={this.state.recipes}
-          renderItem={({ item }) => (
+        <ImageBackground
+        style={[styles.backGround, {width: ScreenWidth, height: ScreenHeight}]}
+        source={require('../assets/images/seigaiha.png')}>
+          <FlatList
+            data={this.state.recipes}
+            renderItem={({ item }) => (
             <TouchableHighlight
             onPress={() => navigate('Recipe', item)}
             key={item._id} style={styles.recipeCardContainer}>
@@ -107,7 +130,7 @@ class HomeScreen extends React.Component {
               </View>
             </TouchableHighlight>
           )}
-        />
+          />
         </ImageBackground>
       )
     }
@@ -126,26 +149,9 @@ const styles = StyleSheet.create({
   font: {
     fontFamily: 'Baskerville',
   },
-  footer: {
-  },
   loading: {
     textAlign:'center',
     fontSize: 28,
-    backgroundColor:'transparent',
-  },
-  container: {
-    flex: 1,
-  },
-  backGround: {
-    height: ScreenHeight,
-    width: ScreenWidth,
-  },
-  header: {
-    color: '#fff'
-  },
-  headerContainer: {
-    alignItems: 'center',
-    margin: 10,
     backgroundColor:'transparent',
   },
   recipeCardContainer: {
