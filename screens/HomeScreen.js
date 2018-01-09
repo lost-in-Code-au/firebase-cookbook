@@ -30,14 +30,14 @@ const config = {
 
 firebase.initializeApp(config)
 
-var ScreenHeight = Dimensions.get("window").height
+// var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
 var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
-  };
+  }
 
   constructor() {
   super()
@@ -57,8 +57,6 @@ export default class HomeScreen extends React.Component {
         recipes: data,
         loading: !this.state.loading
       })
-      console.log(data)
-
     })
   // .catch((err) => {
   //   console.log(err)
@@ -190,32 +188,32 @@ export default class HomeScreen extends React.Component {
         <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
           Learn more
         </Text>
-      );
+      )
 
       return (
         <Text style={styles.developmentModeText}>
           Development mode is enabled, your app will be slower but you can use useful development
           tools. {learnMoreButton}
         </Text>
-      );
+      )
     } else {
       return (
         <Text style={styles.developmentModeText}>
           You are not in development mode, your app will run at full speed.
         </Text>
-      );
+      )
     }
   }
 
   _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
+    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode')
+  }
 
   _handleHelpPress = () => {
     WebBrowser.openBrowserAsync(
       'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -235,9 +233,6 @@ const styles = StyleSheet.create({
   },
   footer: {
   },
-  statusBar: {
-    height: 20,
-  },
   loading: {
     textAlign:'center',
     fontSize: 28,
@@ -246,10 +241,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  backGround: {
-    height: ScreenHeight,
-    width: ScreenWidth,
-  },
+  // backGround: {
+  //   height: ScreenHeight,
+  //   width: ScreenWidth,
+  // },
   header: {
     color: '#fff'
   },
@@ -386,4 +381,4 @@ const styles = StyleSheet.create({
 //     fontSize: 14,
 //     color: '#2e78b7',
 //   },
-// });
+// })
