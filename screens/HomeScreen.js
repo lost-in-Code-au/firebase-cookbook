@@ -121,11 +121,13 @@ class HomeScreen extends React.Component {
                 style={styles.recipeImage}
                 source={{uri: this.setImage(item.picture) }}
                 ></Image>
-                <Text style={[styles.name, styles.font]}>{item.name}</Text>
-                <Text style={[styles.snippet, styles.font]}>{this.shortenSnippet(item.snippet)}</Text>
-                <View style={styles.infoContainer}>
-                  <Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
-                  <Text style={[styles.infoText, styles.font]}>Duration: {item.duration}mins</Text>
+                <View style={styles.overlap}>
+                  <Text style={[styles.name, styles.font]}>{item.name}</Text>
+                  <Text style={[styles.snippet, styles.font]}>{this.shortenSnippet(item.snippet)}</Text>
+                  <View style={styles.infoContainer}>
+                    <Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
+                    <Text style={[styles.infoText, styles.font]}>Duration: {item.duration}mins</Text>
+                  </View>
                 </View>
               </View>
             </TouchableHighlight>
@@ -149,6 +151,13 @@ const styles = StyleSheet.create({
   font: {
     fontFamily: 'Baskerville',
   },
+  overlap: {
+    backgroundColor: "#fff",
+    marginTop: -100,
+    paddingTop: -100,
+    opacity: 0.7,
+    width: ScreenWidth,
+  },
   loading: {
     textAlign:'center',
     fontSize: 28,
@@ -156,9 +165,7 @@ const styles = StyleSheet.create({
   },
   recipeCardContainer: {
     backgroundColor: "transparent",
-    borderRadius: 50,
     width: ScreenWidth,
-    borderWidth: 1,
     margin: 10,
   },
   recipeCard: {
@@ -190,7 +197,8 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     width: ScreenWidth,
     height: 300,
-    borderRadius: 50,
+    borderRadius: 10,
+    opacity: 0.9,
   }
 })
 
