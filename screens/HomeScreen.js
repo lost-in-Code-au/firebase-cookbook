@@ -10,6 +10,7 @@ import {
   Image,
   Button,
 } from 'react-native'
+import { SearchBar } from 'react-native-elements'
 
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
@@ -29,19 +30,19 @@ const MAX_SNIPPET_LENGTH = 75
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    headerLeft: <Button title="Search" />,
+    // headerLeft: <Button title="Search" onPress={this._search()} />,//TODO: Build search to look though Data
     // headerRight: <Button title="Add" />,//TODO: create firebase writing Component
     title: 'J&K CookBook'
   }
-
   constructor() {
     super()
     this.state = {
       recipes: [],
       loading: true,
-      error: null
+      error: null,
     }
   }
+
 
   componentDidMount = () => {
     firebase.database().ref().on('value', (snapshot) => {
@@ -50,19 +51,19 @@ class HomeScreen extends React.Component {
         this.forceUpdate(this.setState({
           ...this.state,
           recipes: data,
-          loading: !this.state.loading
+          loading: !this.state.loading,
         }))
       })
   }
 
-  shortenSnippet(snippet) {
+  _shortenSnippet(snippet) {
     if(snippet.length > MAX_SNIPPET_LENGTH){
       snippet = snippet.slice(0, MAX_SNIPPET_LENGTH-5) + "..."
     }
     return snippet
   }
 
-  setImage(url) {
+  _setImage(url) {
     if(!url) {
       return 'https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/placeholder.jpg?alt=media&token=7a619092-d46f-4162-bea1-4be1f6a5c41f'
     } else {
@@ -78,10 +79,10 @@ class HomeScreen extends React.Component {
   //     <View style={styles.recipeCard}>
   //       <Image
   //       style={styles.recipeImage}
-  //       source={{uri: this.setImage(item.picture) }}
+  //       source={{uri: this._setImage(item.picture) }}
   //       ></Image>
   //       <Text style={[styles.name, styles.font]}>{item.name}</Text>
-  //       <Text style={[styles.snippet, styles.font]}>{this.shortenSnippet(item.snippet)}</Text>
+  //       <Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(item.snippet)}</Text>
   //       <View style={styles.infoContainer}>
   //         <Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
   //         <Text style={[styles.infoText, styles.font]}>Duration: {item.duration}mins</Text>
@@ -90,13 +91,25 @@ class HomeScreen extends React.Component {
   //   </TouchableHighlight>
   // )//Won't work without binding the navigate function somehow to the function
 
-  renderLandingPage = () => {
+  _search(text) {
+    const searchField = []
+    // this.setState({
+    //   searchBox: text
+    // })
+    // return 'working'
+  }
+
+  _renderLandingPage = () => {
     const { navigate } = this.props.navigation
     const text = this.state.loading ? 'Loading...' : 'Loaded'
 
     if(this.state.loading) {
       return (
-        <Text style={[styles.loading, styles.backGround, styles.font]}>{text}</Text>
+        <ImageBackground
+        style={styles.backGround}
+        source={require('../assets/images/seigaiha.png')}>
+          <Text style={[styles.loading, styles.font]}>{text}</Text>
+        </ImageBackground>
       )
     }
     else if (this.state.error) {
@@ -108,8 +121,14 @@ class HomeScreen extends React.Component {
     else {
       return (
         <ImageBackground
-        style={[styles.backGround, {width: ScreenWidth, height: ScreenHeight}]}
+        style={styles.backGround}
         source={require('../assets/images/seigaiha.png')}>
+              <SearchBar
+              round
+              lightTheme
+              onChangeText={this._search(text)}
+              // onClearText={someMethod}
+              placeholder='Type Here...' />
           <FlatList
             data={this.state.recipes}
             renderItem={({ item }) => (
@@ -119,11 +138,11 @@ class HomeScreen extends React.Component {
               <View style={styles.recipeCard}>
                 <Image
                 style={styles.recipeImage}
-                source={{uri: this.setImage(item.picture) }}
+                source={{uri: this._setImage(item.picture) }}
                 ></Image>
                 <View style={styles.overlap}>
                   <Text style={[styles.name, styles.font]}>{item.name}</Text>
-                  <Text style={[styles.snippet, styles.font]}>{this.shortenSnippet(item.snippet)}</Text>
+                  <Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(item.snippet)}</Text>
                   <View style={styles.infoContainer}>
                     <Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
                     <Text style={[styles.infoText, styles.font]}>Duration: {item.duration}mins</Text>
@@ -141,7 +160,7 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View>
-        {this.renderLandingPage()}
+        {this._renderLandingPage()}
       </View>
     )
   }
@@ -151,6 +170,9 @@ const styles = StyleSheet.create({
   font: {
     fontFamily: 'Baskerville',
   },
+  backGround: {
+    width: ScreenWidth,
+  },
   overlap: {
     backgroundColor: "#fff",
     marginTop: -100,
@@ -159,6 +181,7 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
   },
   loading: {
+    height: ScreenHeight,
     textAlign:'center',
     fontSize: 28,
     backgroundColor:'transparent',
