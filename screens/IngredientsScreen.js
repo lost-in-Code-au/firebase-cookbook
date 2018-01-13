@@ -41,6 +41,7 @@ class IngredientsScreen extends React.Component {
                   <Text  style={[styles.header, styles.font]}>Ingredients</Text>
                 </View>
               )}
+              keyExtractor={(item, index) => index}
             />
           </ImageBackground>
         </View>
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Baskerville',
   },
   backGround: {
-    height: ScreenHeight,
+    // height: ScreenHeight,
     width: ScreenWidth,
   },
   header: {

@@ -46,13 +46,12 @@ class HomeScreen extends React.Component {
 
   componentDidMount = () => {
     firebase.database().ref().on('value', (snapshot) => {
-        const data = snapshot.val()
-
-        this.forceUpdate(this.setState({
+        const data = snapshot.val().recipesdb
+        this.setState({
           ...this.state,
           recipes: data,
           loading: !this.state.loading,
-        }))
+        })
       })
   }
 
@@ -91,6 +90,14 @@ class HomeScreen extends React.Component {
   //   </TouchableHighlight>
   // )//Won't work without binding the navigate function somehow to the function
 
+
+  // <SearchBar
+  // round
+  // lightTheme
+  // onChangeText={this._search(text)}
+  // // onClearText={someMethod}
+  // placeholder='Type Here...' />
+  //
   _search(text) {
     const searchField = []
     // this.setState({
@@ -123,12 +130,6 @@ class HomeScreen extends React.Component {
         <ImageBackground
         style={styles.backGround}
         source={require('../assets/images/seigaiha.png')}>
-              <SearchBar
-              round
-              lightTheme
-              onChangeText={this._search(text)}
-              // onClearText={someMethod}
-              placeholder='Type Here...' />
           <FlatList
             data={this.state.recipes}
             renderItem={({ item }) => (
@@ -151,6 +152,7 @@ class HomeScreen extends React.Component {
               </View>
             </TouchableHighlight>
           )}
+          keyExtractor={(item, index) => index}
           />
         </ImageBackground>
       )
