@@ -5,6 +5,11 @@ This project was built an recipe book for my family to use, it uses a live datab
 This project was developed two ways, 1) was a normal [react-native](https://facebook.github.io/react-native/) project and 2) was a [Expo](https://expo.io/) react-native project. After I had the basics for react-native I moved everything over to Expo and found that while Expo has some limitations and stabilised a lot of the react-native issues I was having.
 
 ## Tech used
+react-native
+expo SDK
+firebase SDK
+ES6
+
 
 
 

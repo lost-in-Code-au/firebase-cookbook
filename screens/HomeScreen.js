@@ -34,6 +34,7 @@ class HomeScreen extends React.Component {
     // headerRight: <Button title="Add" />,//TODO: create firebase writing Component
     title: 'J&K CookBook'
   }
+
   constructor() {
     super()
     this.state = {
@@ -70,27 +71,6 @@ class HomeScreen extends React.Component {
     }
   }
 
-  // _renderItem = ({item}) => (
-  //   <TouchableHighlight
-  //   onPress={() => navigate('Recipe', item)}
-  //   key={item._id}
-  //   style={styles.recipeCardContainer}>
-  //     <View style={styles.recipeCard}>
-  //       <Image
-  //       style={styles.recipeImage}
-  //       source={{uri: this._setImage(item.picture) }}
-  //       ></Image>
-  //       <Text style={[styles.name, styles.font]}>{item.name}</Text>
-  //       <Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(item.snippet)}</Text>
-  //       <View style={styles.infoContainer}>
-  //         <Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
-  //         <Text style={[styles.infoText, styles.font]}>Duration: {item.duration}mins</Text>
-  //       </View>
-  //     </View>
-  //   </TouchableHighlight>
-  // )//Won't work without binding the navigate function somehow to the function
-
-
   // <SearchBar
   // round
   // lightTheme
@@ -103,7 +83,7 @@ class HomeScreen extends React.Component {
     // this.setState({
     //   searchBox: text
     // })
-    // return 'working'
+    // return new data
   }
 
   _renderLandingPage = () => {
@@ -127,8 +107,7 @@ class HomeScreen extends React.Component {
     }
     else {
       return (
-        <ImageBackground
-        style={styles.backGround}
+        <ImageBackground style={styles.backGround}
         source={require('../assets/images/seigaiha.png')}>
           <FlatList
             data={this.state.recipes}
@@ -140,14 +119,16 @@ class HomeScreen extends React.Component {
                 <Image
                 style={styles.recipeImage}
                 source={{uri: this._setImage(item.picture) }}
-                ></Image>
-                <View style={styles.overlap}>
+                />
+                <View style={styles.textPosition}>
+                <View style={styles.overlaptopText}>
+                  <Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
+                  <Text style={[styles.infoText, styles.font]}>{item.duration}mins</Text>
+                </View>
+                <View style={styles.overlapbottomText}>
                   <Text style={[styles.name, styles.font]}>{item.name}</Text>
                   <Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(item.snippet)}</Text>
-                  <View style={styles.infoContainer}>
-                    <Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
-                    <Text style={[styles.infoText, styles.font]}>Duration: {item.duration}mins</Text>
-                  </View>
+                </View>
                 </View>
               </View>
             </TouchableHighlight>
@@ -170,33 +151,48 @@ class HomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   font: {
-    fontFamily: 'Baskerville',
+    fontFamily: 'American Typewriter',
+    fontSize: 16,
   },
   backGround: {
     width: ScreenWidth,
   },
-  overlap: {
+  textPosition: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    top: 0,
+    ...StyleSheet.absoluteFillObject
+  },
+  overlaptopText: {
     backgroundColor: "#fff",
-    marginTop: -100,
-    paddingTop: -100,
+    flexDirection: "row",
+    justifyContent: "center",
+    opacity: 0.7,
+    width: ScreenWidth
+  },
+  overlapbottomText: {
+    backgroundColor: "#fff",
     opacity: 0.7,
     width: ScreenWidth,
   },
   loading: {
+    backgroundColor:'transparent',
     height: ScreenHeight,
     textAlign:'center',
     fontSize: 28,
-    backgroundColor:'transparent',
+    paddingTop: 250,
   },
   recipeCardContainer: {
     backgroundColor: "transparent",
-    width: ScreenWidth,
-    margin: 10,
+    maxWidth: ScreenWidth,
+    paddingTop: 30,
+    marginBottom: 40,
+    maxHeight: 300,
+    height: 300,
   },
   recipeCard: {
     backgroundColor: "transparent",
     width: "100%",
-    padding: 10,
   },
   name: {
     fontWeight: "bold",
@@ -207,22 +203,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: 5,
   },
-  infoContainer: {
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
   infoText: {
     backgroundColor: "transparent",
     fontWeight: "bold",
     flex: 1,
     textAlign: "center",
+    paddingBottom: 8,
   },
   recipeImage: {
     backgroundColor: "transparent",
     width: ScreenWidth,
     height: 300,
-    borderRadius: 10,
     opacity: 0.9,
   }
 })

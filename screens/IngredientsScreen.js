@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Baskerville',
   },
   backGround: {
-    // height: ScreenHeight,
     width: ScreenWidth,
   },
   header: {

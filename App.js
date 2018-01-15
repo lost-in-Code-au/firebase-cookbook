@@ -35,10 +35,6 @@ try {
   }
 }
 
-var ScreenHeight = Dimensions.get("window").height
-var ScreenWidth = Dimensions.get("window").Width
-const MAX_SNIPPET_LENGTH = 75
-
 const CookBookApp = StackNavigator({
   Home: { screen: HomeScreen },
   Recipe: { screen: RecipeScreen },
@@ -54,6 +50,16 @@ export default class App extends Component<{}> {
       error: null
     }
   }
+
+  static navigationOptions = {
+  header: ({ navigate }) => {
+    return {
+      titleStyle: {
+        fontFamily: 'American Typewriter'
+        },
+      }
+    },
+  }//TODO: Maybe doing nothing, need to be checked.
 
   componentDidMount() {
     firebase.database().ref().on('value', (snapshot) => {
@@ -71,69 +77,3 @@ export default class App extends Component<{}> {
     return <CookBookApp />
   }
 }
-
-const styles = StyleSheet.create({
-  font: {
-    fontFamily: 'Baskerville',
-  },
-  footer: {
-  },
-  loading: {
-    textAlign:'center',
-    fontSize: 28,
-    backgroundColor:'transparent',
-  },
-  container: {
-    flex: 1,
-  },
-  backGround: {
-    height: ScreenHeight,
-    width: ScreenWidth,
-  },
-  header: {
-    color: '#fff'
-  },
-  headerContainer: {
-    alignItems: 'center',
-    margin: 10,
-    backgroundColor:'transparent',
-  },
-  recipeCardContainer: {
-    backgroundColor: "transparent",
-    borderRadius: 50,
-    width: ScreenWidth,
-    borderWidth: 1,
-    margin: 10,
-  },
-  recipeCard: {
-    backgroundColor: "transparent",
-    width: "100%",
-    padding: 10,
-  },
-  name: {
-    fontWeight: "bold",
-    margin: 5,
-  },
-  snippet: {
-    backgroundColor: "transparent",
-    fontWeight: "bold",
-    margin: 5,
-  },
-  infoContainer: {
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  infoText: {
-    backgroundColor: "transparent",
-    fontWeight: "bold",
-    flex: 1,
-    textAlign: "center",
-  },
-  recipeImage: {
-    backgroundColor: "transparent",
-    width: ScreenWidth,
-    height: 300,
-    borderRadius: 50,
-  }
-})
