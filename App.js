@@ -11,13 +11,14 @@ import {
   Button
 } from 'react-native'
 import { StackNavigator } from 'react-navigation' // 1.0.0-beta.23
+import PropTypes from 'prop-types'
 
 // import styles from './styles'
 
-// import { HomeScreen, RecipeScreen, IngredientsScreen } from './screens'//TODO: not sure why couldn't get  this to work
 import HomeScreen from './screens/HomeScreen'
 import RecipeScreen from './screens/RecipeScreen'
 import IngredientsScreen from './screens/IngredientsScreen'
+import SearchScreen from './screens/SearchScreen'
 
 const config = {
   apiKey: "AIzaSyDhsH4FXxdlN9UegLr0_P2UDuOXp-WySk0",
@@ -39,6 +40,7 @@ const CookBookApp = StackNavigator({
   Home: { screen: HomeScreen },
   Recipe: { screen: RecipeScreen },
   Ingredients: { screen: IngredientsScreen },
+  Search: { screen: SearchScreen },
 })
 
 export default class App extends Component<{}> {
@@ -63,7 +65,6 @@ export default class App extends Component<{}> {
 
   componentDidMount() {
     firebase.database().ref().on('value', (snapshot) => {
-      console.log(snapshot.val())
       const data = snapshot.val()
       this.setState({
         ...this.state,

@@ -29,11 +29,7 @@ var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
 
 class HomeScreen extends React.Component {
-  static navigationOptions = {
-    // headerLeft: <Button title="Search" onPress={this._search()} />,//TODO: Build search to look though Data
-    // headerRight: <Button title="Add" />,//TODO: create firebase writing Component
-    title: 'J&K CookBook'
-  }
+
 
   constructor() {
     super()
@@ -44,6 +40,13 @@ class HomeScreen extends React.Component {
     }
   }
 
+  static navigationOptions = {
+    // header: ({ navigate }) => {
+    //   return <Button title="Search" onPress={() => navigate('Search', this.state.recipes)} />
+    // },//TODO: works but clashes with title and does not know what recipes is yet
+    title: 'grEat'
+    // headerRight: <Button title="Add" />,//TODO: create firebase writing Component
+  }
 
   componentDidMount = () => {
     firebase.database().ref().on('value', (snapshot) => {
@@ -69,21 +72,6 @@ class HomeScreen extends React.Component {
     } else {
       return url
     }
-  }
-
-  // <SearchBar
-  // round
-  // lightTheme
-  // onChangeText={this._search(text)}
-  // // onClearText={someMethod}
-  // placeholder='Type Here...' />
-  //
-  _search(text) {
-    const searchField = []
-    // this.setState({
-    //   searchBox: text
-    // })
-    // return new data
   }
 
   _renderLandingPage = () => {
@@ -114,6 +102,8 @@ class HomeScreen extends React.Component {
             renderItem={({ item }) => (
             <TouchableHighlight
             onPress={() => navigate('Recipe', item)}
+            activeOpacity={.5}
+            underlayColor={"#DDDDDD"}
             key={item._id} style={styles.recipeCardContainer}>
               <View style={styles.recipeCard}>
                 <Image
@@ -123,7 +113,7 @@ class HomeScreen extends React.Component {
                 <View style={styles.textPosition}>
                 <View style={styles.overlaptopText}>
                   <Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
-                  <Text style={[styles.infoText, styles.font]}>{item.duration}mins</Text>
+                  <Text style={[styles.infoText, styles.font]}>Takes: {item.duration}mins</Text>
                 </View>
                 <View style={styles.overlapbottomText}>
                   <Text style={[styles.name, styles.font]}>{item.name}</Text>
@@ -157,6 +147,13 @@ const styles = StyleSheet.create({
   backGround: {
     width: ScreenWidth,
   },
+  loading: {
+    backgroundColor:'transparent',
+    height: ScreenHeight,
+    textAlign:'center',
+    fontSize: 28,
+    paddingTop: 230,
+  },
   textPosition: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -175,24 +172,16 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     width: ScreenWidth,
   },
-  loading: {
-    backgroundColor:'transparent',
-    height: ScreenHeight,
-    textAlign:'center',
-    fontSize: 28,
-    paddingTop: 250,
-  },
   recipeCardContainer: {
     backgroundColor: "transparent",
     maxWidth: ScreenWidth,
-    paddingTop: 30,
-    marginBottom: 40,
-    maxHeight: 300,
-    height: 300,
+    marginTop: 10,
+    marginBottom: 10,
   },
   recipeCard: {
     backgroundColor: "transparent",
     width: "100%",
+    height: 300,
   },
   name: {
     fontWeight: "bold",

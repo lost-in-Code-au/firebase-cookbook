@@ -23,29 +23,44 @@ const config = {
 
 firebase.initializeApp(config)
 
-var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
+var ScreenHeight = Dimensions.get("window").height//not in use now, is messes up the background
 var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
 
-class HomeScreen extends React.Component {
+class NewRecipeScreen extends React.Component {
   static navigationOptions = {
     // headerRight: <Button title="Add" />,//TODO: create firebase writing Component
-    title: 'J&K CookBook'
+    title: 'new grEat'
   }
 
   constructor() {
     super()
     this.state = {
-      newRecipe: []
+      newRecipe: {
+        _id: let id = require('crypto').randomBytes(10).toString('hex'),//To be tested.
+        author: authorName,
+        diet: dietType,
+        difficulty: DefLvl,
+        duration: durationCount,
+        ingredients: [
+          { `ingredients builder goes here` id: ingId, name: ingName}
+        ],
+        instructions: [
+          { `instructions builder goes here` step: stepNumber, text: stepText}
+        ],
+        name: dishName,
+        picture: imgUrl,
+        snippet: snippetString
+      }
     }
   }
 
 
-  function writeUserData(userId, name, email, imageUrl) {
+  function writeDataToCloud() {
+
+    //this needs tobe review and wrapped in a promise to save the image and get it's url.
     firebase.database().ref('users/' + userId).set({
-      author: name,
-      : email,
-      profile_picture : imageUrl
+      recipesdb: this.state.newRecipe
     })
   }
 
@@ -55,3 +70,5 @@ class HomeScreen extends React.Component {
     )
   }
 }
+
+export default NewRecipeScreen

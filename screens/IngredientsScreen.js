@@ -21,30 +21,37 @@ class IngredientsScreen extends React.Component {
     // headerRight: <Button title="Rate" />,//TODO: Create rating Component
   })
 
+  // TODO: change flatlist into a scroll view then create a data shape builder for
+  // adding booleans to each ingredient, this will allow for each to have a stored
+  // clickable state. Redux with have to added to mantain the new data shape
+  // Component example
+  //   <CheckBox
+  //   title={<Text style={[styles.name, styles.font]}>{ingredients.name}</Text>}
+  //   checked={this.state.checked}
+  // />
+
   render() {
     const { params: item } = this.props.navigation.state
 
     return (
-        <View>
-          <ImageBackground
-          style={styles.backGround}
-          source={require('../assets/images/seigaiha.png')}>
-            <FlatList
-              data={item.ingredients}
-              renderItem={({item: ingredients}) => (
-                <View key={ingredients.id} style={styles.recipeCard}>
-                  <Text style={[styles.name, styles.font]}>{ingredients.name}</Text>
-                </View>
-              )}
-              ListHeaderComponent={() => (
-                <View style={styles.headerContainer}>
-                  <Text  style={[styles.header, styles.font]}>Ingredients</Text>
-                </View>
-              )}
-              keyExtractor={(item, index) => index}
-            />
-          </ImageBackground>
-        </View>
+      <ImageBackground
+      style={styles.backGround}
+      source={require('../assets/images/seigaiha.png')}>
+        <FlatList
+          data={item.ingredients}
+          renderItem={({item: ingredient}) => (
+            <View key={ingredient.id} style={styles.recipeCard}>
+              <Text style={[styles.name, styles.font]}>{ingredient.name}</Text>
+            </View>
+          )}
+          ListHeaderComponent={() => (
+            <View style={styles.headerContainer}>
+              <Text  style={[styles.header, styles.font]}>Ingredients</Text>
+            </View>
+          )}
+          keyExtractor={(item, index) => index}
+        />
+      </ImageBackground>
     )
   }
 }
@@ -52,7 +59,8 @@ class IngredientsScreen extends React.Component {
 
 const styles = StyleSheet.create({
   font: {
-    fontFamily: 'Baskerville',
+    fontFamily: 'American Typewriter',
+    fontSize: 16,
   },
   backGround: {
     width: ScreenWidth,

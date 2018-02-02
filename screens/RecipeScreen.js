@@ -6,8 +6,8 @@ import {
   View,
   FlatList,
   ImageBackground,
-  Button,
 } from 'react-native'
+import { Button } from 'react-native-elements'
 
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
@@ -18,7 +18,6 @@ class RecipeScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.name,
-    // headerRight: <Button title="Rate" />,//TODO: Create rating Component
   })
 
   render() {
@@ -34,13 +33,14 @@ class RecipeScreen extends React.Component {
             data={item.instructions}
             renderItem={({item: instruction}) => (
               <View key={instruction.step} style={styles.recipeCard}>
+                <Text style={[styles.name, styles.font]}>Step {instruction.step +1}:</Text>
                 <Text style={[styles.name, styles.font]}>{instruction.text}</Text>
               </View>
             )}
             ListHeaderComponent={() => (
               <View style={styles.headerContainer}>
                 <Text style={[styles.name, styles.font]}>{item.name}</Text>
-                <Text style={[styles.name, styles.font]}>{item.author}</Text>
+                <Text style={[styles.name, styles.font]}>By: {item.author}</Text>
                 <Button
                 onPress={() => navigate('Ingredients', item)}
                 key={item._id}
@@ -48,7 +48,7 @@ class RecipeScreen extends React.Component {
                 <Text style={[styles.snippet, styles.font]}>{item.snippet}</Text>
                 <View style={styles.infoContainer}>
                   <Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
-                  <Text style={[styles.infoText, styles.font]}>Duration: {item.duration}mins</Text>
+                  <Text style={[styles.infoText, styles.font]}>Takes: {item.duration}mins</Text>
                 </View>
               </View>
             )}
@@ -62,7 +62,9 @@ class RecipeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   font: {
-    fontFamily: 'Baskerville',
+    fontFamily: 'American Typewriter',
+    fontSize: 16,
+    opacity: 0.9,
   },
   backGround: {
     width: ScreenWidth,
@@ -73,9 +75,12 @@ const styles = StyleSheet.create({
     backgroundColor:'transparent',
   },
   recipeCard: {
-    backgroundColor: "transparent",
+    backgroundColor: "#fff",
     width: "100%",
     padding: 10,
+    opacity: 0.7,
+    borderRadius: .5,
+    marginTop: 10,
   },
   name: {
     fontWeight: "bold",
