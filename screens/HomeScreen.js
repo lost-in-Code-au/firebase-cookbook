@@ -11,6 +11,7 @@ import {
   Button,
 } from 'react-native'
 import { SearchBar } from 'react-native-elements'
+import PropTypes from 'prop-types'
 
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
@@ -34,6 +35,7 @@ class HomeScreen extends React.Component {
   constructor() {
     super()
     this.state = {
+      user: null,
       recipes: [],
       loading: true,
       error: null,
@@ -74,7 +76,7 @@ class HomeScreen extends React.Component {
     }
   }
 
-  _renderLandingPage = () => {
+  _renderHomePage = () => {
     const { navigate } = this.props.navigation
     const text = this.state.loading ? 'Loading...' : 'Loaded'
 
@@ -133,7 +135,7 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View>
-        {this._renderLandingPage()}
+        {this._renderHomePage()}
       </View>
     )
   }
