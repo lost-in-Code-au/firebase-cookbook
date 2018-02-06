@@ -15,14 +15,24 @@ import { Button } from 'react-native-elements'
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
 var ScreenWidth = Dimensions.get("window").Width
 
+import firebase from 'firebase'
+
+const config = {
+  apiKey: "AIzaSyDhsH4FXxdlN9UegLr0_P2UDuOXp-WySk0",
+  authDomain: "react-native-firebase-st-d0137",
+  databaseURL: "https://react-native-firebase-st-d0137.firebaseio.com/"
+}
+
 class LoginScreen extends React.Component {
 
     constructor() {
         super()
         this.state = {
-          user: false,
-          loading: true,
-          error: null,
+            isLoggedIn: false,
+            email: null,
+            password: null,
+            loading: true,
+            error: null,
         }
       }
 
@@ -30,13 +40,39 @@ class LoginScreen extends React.Component {
     title: 'Login',
   })
 
+  _onPress = () => {
+    console.log('you have submited')
+    console.log(this.state.email)
+    console.log(this.state.password)
+    
+    const email = this.state.email
+    const password = this.state.password
+      
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error, res) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+        console.log(res);
+        
+      })
+  }
+  _helloworld = () => {
+      console.log("HELLLLLLO~!!")
+  }
+
   _renderLandingPage = () => {
     const { navigate } = this.props.navigation
 
-    if (this.state.error) {
+    if (this.state.isLoggedIn) {
+    return <Secured 
+        onLogoutPress={() => this.setState({isLoggedIn: false})}
+      />
+    }
+    else if (this.state.error) {
       return <View><Text style={styles.font}>Error: {this.state.error}</Text></View>
     }
-    else if (this.state.user) {
+    else if (this.state.isLoggedIn) {
       return <View><Text style={styles.font}>Already logged in as {this.state.user}</Text></View>
     }
     else {
@@ -49,25 +85,25 @@ class LoginScreen extends React.Component {
                     style = {styles.input} 
                     autoCapitalize="none" 
                     onSubmitEditing={() => this.passwordInput.focus()} 
+                    onChangeText={(text) => this.setState({email: text})}
                     autoCorrect={false} 
                     keyboardType='email-address' 
                     returnKeyType="next" 
                     placeholder='Email' 
-                    placeholderTextColor='#505050'/>
-                </View>
-                <View style={styles.loginContainer}>
+                    placeholderTextColor='#505050' />
                     <TextInput style = {styles.input}   
                     returnKeyType="go" 
                     ref={(input)=> this.passwordInput = input} 
                     placeholder='Password' 
+                    onChangeText={(text) => this.setState({password: text})}
                     placeholderTextColor='#505050' 
-                    secureTextEntry/>
+                    secureTextEntry />
+                    <TouchableOpacity style={styles.buttonContainer} 
+                            onPress={this._onPress}
+                            >
+                        <Text  style={styles.buttonText}>LOGIN</Text>
+                    </TouchableOpacity> 
                 </View>
-                <TouchableOpacity style={styles.buttonContainer} 
-                        //  onPress={onButtonPress}
-                        >
-                    <Text  style={styles.buttonText}>LOGIN</Text>
-                </TouchableOpacity> 
             </ImageBackground>
         </KeyboardAvoidingView>
       )
@@ -85,12 +121,15 @@ class LoginScreen extends React.Component {
 
 const styles = StyleSheet.create({
     input: {
-        height: 20,
-        color: '#fff'
+        color: '#000',
+        height: 40,
+        paddingLeft: 15,
+        margin: 20,
+        width: "90%",
+        backgroundColor: "#fff",
     },
     loginContainer: {
         padding: 20,
-        backgroundColor: "#fff",
         alignItems: 'center',
         width: "90%",
         opacity: 0.7,
@@ -110,7 +149,8 @@ const styles = StyleSheet.create({
     buttonContainer:{
         marginTop: 15,
         backgroundColor: '#2980b6',
-        paddingVertical: 15
+        paddingVertical: 15,
+        width: "90%",
     },
     buttonText:{
         color: '#fff',
