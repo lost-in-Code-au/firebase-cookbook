@@ -10,18 +10,12 @@ import {
 } from 'react-native'
 import { Button } from 'react-native-elements'
 
+import firebase from './Utils/FirebaseUtil'
+
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
 var ScreenWidth = Dimensions.get("window").Width
-
-import firebase from 'firebase'
-
-const config = {
-  apiKey: "AIzaSyDhsH4FXxdlN9UegLr0_P2UDuOXp-WySk0",
-  authDomain: "react-native-firebase-st-d0137",
-  databaseURL: "https://react-native-firebase-st-d0137.firebaseio.com/"
-}
 
 class LoginScreen extends React.Component {
 
@@ -33,6 +27,7 @@ class LoginScreen extends React.Component {
             password: null,
             loading: true,
             error: null,
+            showWaring: null,
         }
       }
 
@@ -41,41 +36,30 @@ class LoginScreen extends React.Component {
   })
 
   _onPress = () => {
-    console.log('you have submited')
-    console.log(this.state.email)
-    console.log(this.state.password)
+    const { navigate } = this.props.navigation
     
     const email = this.state.email
     const password = this.state.password
-      
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error, res) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ...
-        console.log(res);
-        
-      })
-  }
-  _helloworld = () => {
-      console.log("HELLLLLLO~!!")
+    
+    firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((response) => {
+                navigate('Home')
+            })
+            .catch(() => {
+                this.setState({ 
+                    ...this.state,
+                    showWarning: 'Login failed, please check your login details... <3'
+                }) 
+                //Login was not successful, let's create a new account
+                // firebase.auth().createUserWithEmailAndPassword(email, password)
+                //     .then(() => { this.setState({ error: '', loading: false }); })
+                //     .catch(() => {
+                //         this.setState({ error: 'Authentication failed.', loading: false });
+                //     });
+            });
   }
 
   _renderLandingPage = () => {
-    const { navigate } = this.props.navigation
-
-    if (this.state.isLoggedIn) {
-    return <Secured 
-        onLogoutPress={() => this.setState({isLoggedIn: false})}
-      />
-    }
-    else if (this.state.error) {
-      return <View><Text style={styles.font}>Error: {this.state.error}</Text></View>
-    }
-    else if (this.state.isLoggedIn) {
-      return <View><Text style={styles.font}>Already logged in as {this.state.user}</Text></View>
-    }
-    else {
       return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <ImageBackground style={styles.backGround}
@@ -85,19 +69,23 @@ class LoginScreen extends React.Component {
                     style = {styles.input} 
                     autoCapitalize="none" 
                     onSubmitEditing={() => this.passwordInput.focus()} 
-                    onChangeText={(text) => this.setState({email: text})}
+                    onChangeText={(userEmail) => this.setState({email: userEmail})}
                     autoCorrect={false} 
                     keyboardType='email-address' 
                     returnKeyType="next" 
                     placeholder='Email' 
+                    value={this.state.email}
                     placeholderTextColor='#505050' />
                     <TextInput style = {styles.input}   
                     returnKeyType="go" 
                     ref={(input)=> this.passwordInput = input} 
                     placeholder='Password' 
-                    onChangeText={(text) => this.setState({password: text})}
+                    onChangeText={(passwordInput) => this.setState({password: passwordInput})}
                     placeholderTextColor='#505050' 
                     secureTextEntry />
+
+                    {this.state.showWarning && <Text style={styles.showWarning}>{this.state.showWarning}</Text>}
+                    
                     <TouchableOpacity style={styles.buttonContainer} 
                             onPress={this._onPress}
                             >
@@ -107,8 +95,8 @@ class LoginScreen extends React.Component {
             </ImageBackground>
         </KeyboardAvoidingView>
       )
-    }
   }
+  //Velan Questions: 
 
   render() {
     return (
@@ -120,22 +108,29 @@ class LoginScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    showWarning: {
+        color: '#e00f04',
+        backgroundColor:'transparent',
+    },
+    loading: {
+        backgroundColor:'transparent',
+    },
     input: {
         color: '#000',
         height: 40,
         paddingLeft: 15,
         margin: 20,
-        width: "90%",
-        backgroundColor: "#fff",
+        width: '90%',
+        backgroundColor: '#fff',
     },
     loginContainer: {
         padding: 20,
         alignItems: 'center',
-        width: "90%",
+        width: '90%',
         opacity: 0.7,
         borderRadius: .5,
         marginTop: 10,
-        marginLeft: "5%",
+        marginLeft: '5%',
     },
     font: {
         fontFamily: 'American Typewriter',

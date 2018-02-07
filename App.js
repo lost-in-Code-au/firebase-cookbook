@@ -14,9 +14,6 @@ import {
 import { StackNavigator } from 'react-navigation' // 1.0.0-beta.23
 import 'expo'// For dev logs through expo XDE
 
-// import Config from 'react-native-config'//Failed atempt at adding .env
-// console.log(Config.FIREBASE_KEY)
-
 // import styles from './styles'
 
 import LoginScreen from './screens/LoginScreen'
@@ -37,12 +34,16 @@ export default class App extends Component<{}> {
   constructor() {
     super()
     this.state = {
-      user: null,
+      isLoggedIn: false,
+      email: null,
       recipes: [],
       loading: true,
-      error: null
+      error: null,
     }
   }
+  //Velan Answer: state mangment. 
+  // 1) So this state is to be made for the main required props,
+  // 2) then passed down to the important components
 
   static navigationOptions = {
   header: ({ navigate }) => {
