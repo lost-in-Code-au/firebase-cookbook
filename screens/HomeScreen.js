@@ -22,9 +22,6 @@ var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
 
 class HomeScreen extends React.Component {
-
-
-
 	constructor() {
 		super()
 		this.state = {
@@ -34,15 +31,22 @@ class HomeScreen extends React.Component {
 			error: null,
 		}
 	}
+	
+	_logOut() {
+		console.log('Hello logout!')		
+	}
 
-	static navigationOptions = {
-		// headerLeft: 'Logout',
+	static navigationOptions = ({ navigation }) => ({
+        headerLeft: <Button title="Logout" onPress={() => {
+			navigation.navigate('Login')
+			this._logOut
+		}} />,
+        title: 'grEat'
+    })
 		// header: ({ navigate }) => {
 		//   return <Button title="Search" onPress={() => navigate('Search', this.state.recipes)} />
 		// },//TODO: works but clashes with title and does not know what recipes is yet
-		title: 'grEat'
 		// headerRight: <Button title="Add" />,//TODO: create firebase writing Component
-	}
 
 	componentDidMount = () => {
 
@@ -51,7 +55,6 @@ class HomeScreen extends React.Component {
 		firebase.database().ref('recipesdb').once('value').then((snapshot) => {
 			debugger
 			const data = snapshot.val()
-			console.log('firebase loaded')//TODO: remove when finish
 			
 			this.setState({
 				...this.state,
@@ -82,9 +85,7 @@ class HomeScreen extends React.Component {
 		const { navigate } = this.props.navigation
 		const text = this.state.loading ? 'Loading...' : 'Loaded'
 
-		if(this.state.loading) {
-			console.log('if loading hit')
-			
+		if(this.state.loading) {			
 			return (
 				<ImageBackground
 				style={styles.backGround}
@@ -100,7 +101,6 @@ class HomeScreen extends React.Component {
 			return <View><Text style={styles.font}>No recipes</Text></View>
 		}
 		else {
-			console.log('if database hit')
 			return (
 				<ImageBackground style={styles.backGround}
 				source={require('../assets/images/seigaiha.png')}>

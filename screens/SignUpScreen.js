@@ -9,9 +9,8 @@ import {
     KeyboardAvoidingView,
     Alert,
 } from 'react-native'
-import { Button } from 'react-native-elements'
 
-import firebase from './Utils/FirebaseUtil'
+import firebase, { signUp } from './Utils/FirebaseUtil'
 
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
@@ -38,7 +37,9 @@ class SignUpScreen extends React.Component {
         
         const email = this.state.email
         const password = this.state.password
-        
+
+        // signUp(email, password)//TODO: Abstract signup to FirebaseUtil.js
+
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((response) => {
             const { navigate } = this.props.navigation
@@ -50,6 +51,7 @@ class SignUpScreen extends React.Component {
                 ],
                 { cancelable: false }
               )
+
         })
         .catch(() => {
             this.setState({ 
@@ -60,6 +62,10 @@ class SignUpScreen extends React.Component {
     }
 
     _renderLandingPage = () => {
+        // console.log(NavigationActions);
+        console.log(this.props.navigation.navigate);
+        
+        
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <ImageBackground style={styles.backGround}
@@ -89,6 +95,7 @@ class SignUpScreen extends React.Component {
                         <TextInput style = {styles.input}   
                         returnKeyType="go" 
                         placeholder='Password'
+                        onSubmitEditing={this._onPress} 
                         ref={(input) => this.passwordCheck = input} 
                         onChangeText={(value) => this.setState({...this.state, passwordCheck: value})}
                         placeholderTextColor='#505050' 
@@ -141,11 +148,6 @@ const styles = StyleSheet.create({
         borderRadius: .5,
         marginTop: 10,
         marginLeft: '5%',
-    },
-    font: {
-        fontFamily: 'American Typewriter',
-        fontSize: 16,
-        opacity: 0.9,
     },
     backGround: {
      width: ScreenWidth,
