@@ -7,6 +7,7 @@ import {
     ImageBackground, 
     StyleSheet, 
     KeyboardAvoidingView,
+    Alert,
 } from 'react-native'
 import { Button } from 'react-native-elements'
 
@@ -40,6 +41,7 @@ class SignUpScreen extends React.Component {
         
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((response) => {
+            const { navigate } = this.props.navigation
             Alert.alert(
                 'Yay! it worked!',
                 'Successful created your account, please check your email of confirmation link',
