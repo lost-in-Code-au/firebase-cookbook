@@ -17,13 +17,15 @@ import 'expo'// For dev logs through expo XDE
 // import styles from './styles'
 
 import LoginScreen from './screens/LoginScreen'
+import SignUpScreen from './screens/SignUpScreen'
 import HomeScreen from './screens/HomeScreen'
 import RecipeScreen from './screens/RecipeScreen'
 import IngredientsScreen from './screens/IngredientsScreen'
 import SearchScreen from './screens/SearchScreen'
 
 const CookBookApp = StackNavigator({
-  login: { screen: LoginScreen },
+  Login: { screen: LoginScreen },
+  Signup: { screen: SignUpScreen },
   Home: { screen: HomeScreen },
   Recipe: { screen: RecipeScreen },
   Ingredients: { screen: IngredientsScreen },

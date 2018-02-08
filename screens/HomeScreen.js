@@ -36,6 +36,7 @@ class HomeScreen extends React.Component {
 	}
 
 	static navigationOptions = {
+		// headerLeft: 'Logout',
 		// header: ({ navigate }) => {
 		//   return <Button title="Search" onPress={() => navigate('Search', this.state.recipes)} />
 		// },//TODO: works but clashes with title and does not know what recipes is yet
@@ -58,7 +59,7 @@ class HomeScreen extends React.Component {
 				loading: !this.state.loading,
 			})
 		}).catch((response) => {
-			debugger
+			console.log(response)
 		})
 	}
 

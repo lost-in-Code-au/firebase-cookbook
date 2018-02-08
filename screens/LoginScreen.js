@@ -25,15 +25,19 @@ class LoginScreen extends React.Component {
             isLoggedIn: false,
             email: null,
             password: null,
-            loading: true,
             error: null,
-            showWaring: null,
+            showWarning: null,
         }
-      }
+    }
 
   static navigationOptions = ({ navigation }) => ({
     title: 'Login',
   })
+
+  _onSignUp = () => {
+    const { navigate } = this.props.navigation
+    navigate('Signup')
+  }
 
   _onPress = () => {
     const { navigate } = this.props.navigation
@@ -50,13 +54,15 @@ class LoginScreen extends React.Component {
                     ...this.state,
                     showWarning: 'Login failed, please check your login details... <3'
                 }) 
+
+                //
                 //Login was not successful, let's create a new account
                 // firebase.auth().createUserWithEmailAndPassword(email, password)
                 //     .then(() => { this.setState({ error: '', loading: false }); })
                 //     .catch(() => {
                 //         this.setState({ error: 'Authentication failed.', loading: false });
                 //     });
-            });
+            })
   }
 
   _renderLandingPage = () => {
@@ -83,20 +89,22 @@ class LoginScreen extends React.Component {
                     onChangeText={(passwordInput) => this.setState({password: passwordInput})}
                     placeholderTextColor='#505050' 
                     secureTextEntry />
-
                     {this.state.showWarning && <Text style={styles.showWarning}>{this.state.showWarning}</Text>}
-                    
                     <TouchableOpacity style={styles.buttonContainer} 
                             onPress={this._onPress}
                             >
                         <Text  style={styles.buttonText}>LOGIN</Text>
                     </TouchableOpacity> 
                 </View>
+                <TouchableOpacity style={styles.signupContainer}  onPress={this._onSignUp}>
+                    <Text style={styles.signup}>Signup</Text>
+                </TouchableOpacity>
             </ImageBackground>
         </KeyboardAvoidingView>
       )
   }
-  //Velan Questions: 
+  //Velan Questions: how can I improve my image loading before everything else?
+  
 
   render() {
     return (
@@ -108,6 +116,16 @@ class LoginScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    signupContainer: {
+        marginTop: 20,
+        alignItems: 'center',
+    },
+    signup: {
+        backgroundColor:'transparent',
+        color: '#00f',
+        padding: 20,
+        margin:20,
+    },
     showWarning: {
         color: '#e00f04',
         backgroundColor:'transparent',
