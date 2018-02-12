@@ -16,7 +16,7 @@ import { NavigationActions } from 'react-navigation'
 
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
-import firebase from './Utils/FirebaseUtil'
+import firebase, { requestRecipes } from './Utils/FirebaseUtil'
 
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
 var ScreenWidth = Dimensions.get("window").Width
@@ -55,7 +55,7 @@ class HomeScreen extends React.Component {
 
 	componentDidMount = () => {
 
-		// const userId = firebase.auth().currentUser.uid
+		// requestRecipes()
 		
 		firebase.database().ref('recipes').once('value').then((snapshot) => {
 			const data = snapshot.val()
@@ -65,8 +65,8 @@ class HomeScreen extends React.Component {
 				recipes: data,
 				loading: !this.state.loading,
 			})
-		}).catch((response) => {
-			console.log(response)
+		}).catch((error) => {
+			console.log(error.message)
 		})
 
 		firebase.database().ref('users').once('value').then((snapshot) => {
@@ -76,8 +76,8 @@ class HomeScreen extends React.Component {
 				...this.state,
 				users: data,
 			})
-		}).catch((response) => {
-			console.log(response)
+		}).catch((error) => {
+			console.log(error.message)
 		})
 		
 	}
@@ -100,7 +100,7 @@ class HomeScreen extends React.Component {
 	_renderHomePage = () => {
 		const { navigate } = this.props.navigation
 		const text = this.state.loading ? 'Loading...' : 'Loaded'
-		console.log(this.state.users)
+		// console.log(firebase.auth().currentUser)
 
 		if(this.state.loading) {			
 			return (

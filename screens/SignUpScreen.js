@@ -47,18 +47,21 @@ class SignUpScreen extends React.Component {
                 'Yay! it worked!',
                 'Successful created your account, please check your email of confirmation link',
                 [
-                  {text: 'Return to login', onPress: () => navigate('Login')},
+                {text: 'Return to login', onPress: () => navigate('Login')},
                 ],
                 { cancelable: false }
-              )
-
+            )
         })
-        .catch(() => {
-            this.setState({ 
-                ...this.state,
-                showWarning: 'Signup failed, please check your password is 6 charatars long and that your email is correct <3'
-            }) 
+        .catch((error) => {
+			// console.log('signup error: ', error)//please leave for debugging
+			if (error.code === 'auth/email-already-in-use') {
+                this.setState({ 
+                    ...this.state,
+                    showWarning: error.message
+                }) 
+            }
         })
+            
     }
 
     _renderLandingPage = () => {

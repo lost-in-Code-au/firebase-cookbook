@@ -45,22 +45,37 @@ class LoginScreen extends React.Component {
         
         const email = this.state.email
         const password = this.state.password
+        console.log(email)
+        console.log(password)
+        
 
-        // grEatLogin(email, password)
+        // if(email || password === null){
+        //     return this.setState({
+        //         ...this.state,
+        //         showWarning: 'please check both fields are filled in... <3 admin'
+        //     })
+        // } else {
+
+        // grEatLogin(email, password)//not currently working pass issue of giving state to firebaseUtil.js
         
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((response) => {
+                console.log(response)
+                
                 navigate('Home')
             })
-            .catch(() => {
+            .catch((error) => {
+                // console.log('login error: ', error)//please leave for debugging
                 this.setState({ 
                     ...this.state,
-                    showWarning: 'Login failed, please check your login details... <3'
+                    showWarning: error.message + ' Please check your login details, and try again... <3'
                 }) 
             })
+        // }
     }
 
     _renderLandingPage = () => {
+        // console.log(firebase.auth().currentUser)
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <ImageBackground style={styles.backGround}
