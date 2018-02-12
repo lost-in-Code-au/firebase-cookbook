@@ -47,16 +47,6 @@ export default class App extends Component<{}> {
 	// 1) So this state is to be made for the main required props,
 	// 2) then passed down to the important components
 
-	static navigationOptions = {
-	header: ({ navigate }) => {
-		return {
-			titleStyle: {
-				fontFamily: 'American Typewriter'
-				},
-			}
-		},
-	}//TODO: Maybe doing nothing, need to be checked.
-
 	render() {
 		return <CookBookApp />
 	}

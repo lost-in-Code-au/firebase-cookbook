@@ -12,6 +12,7 @@ import {
 } from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import PropTypes from 'prop-types'
+import { NavigationActions } from 'react-navigation' 
 
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
@@ -21,28 +22,32 @@ var ScreenHeight = Dimensions.get("window").height//not in use now that backgrou
 var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
 
+const logout = () => {
+	console.log('Hello logout!')	
+}
+
+const BackButton = ({ navigation: { navigate } }) => (
+	<Button title="Logout" onPress={() => {
+		// Handle Firebase logout
+		return (navigate('Login') && logout())
+	}} />
+)
+
 class HomeScreen extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			user: null,
+			users: [],
 			recipes: [],
 			loading: true,
 			error: null,
 		}
 	}
-	
-	_logOut() {
-		console.log('Hello logout!')		
-	}
 
 	static navigationOptions = ({ navigation }) => ({
-        headerLeft: <Button title="Logout" onPress={() => {
-			navigation.navigate('Login')
-			this._logOut
-		}} />,
+        headerLeft: () => (<BackButton navigation={navigation} />),
         title: 'grEat'
-    })
+    });
 		// header: ({ navigate }) => {
 		//   return <Button title="Search" onPress={() => navigate('Search', this.state.recipes)} />
 		// },//TODO: works but clashes with title and does not know what recipes is yet
@@ -52,8 +57,7 @@ class HomeScreen extends React.Component {
 
 		// const userId = firebase.auth().currentUser.uid
 		
-		firebase.database().ref('recipesdb').once('value').then((snapshot) => {
-			debugger
+		firebase.database().ref('recipes').once('value').then((snapshot) => {
 			const data = snapshot.val()
 			
 			this.setState({
@@ -64,6 +68,18 @@ class HomeScreen extends React.Component {
 		}).catch((response) => {
 			console.log(response)
 		})
+
+		firebase.database().ref('users').once('value').then((snapshot) => {
+			const data = snapshot.val()
+			
+			this.setState({
+				...this.state,
+				users: data,
+			})
+		}).catch((response) => {
+			console.log(response)
+		})
+		
 	}
 
 	_shortenSnippet(snippet) {
@@ -84,6 +100,7 @@ class HomeScreen extends React.Component {
 	_renderHomePage = () => {
 		const { navigate } = this.props.navigation
 		const text = this.state.loading ? 'Loading...' : 'Loaded'
+		console.log(this.state.users)
 
 		if(this.state.loading) {			
 			return (
