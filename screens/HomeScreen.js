@@ -16,19 +16,27 @@ import { NavigationActions } from 'react-navigation'
 
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
-import firebase, { requestRecipes } from './Utils/FirebaseUtil'
+import firebase, { requestRecipes, requestUsers } from './Utils/FirebaseUtil'
 
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
 var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
 
 const logout = () => {
-	console.log('Hello logout!')	
+	// console.log('Hello logout!')	
+		// Handle Firebase logout
+	firebase.auth().signOut().then(function() {
+		console.log('scuuessful logout baby')
+		
+		// Sign-out successful.
+	  }, function(error) {
+		console.log('failed logout baby')
+		// An error happened.
+	});
 }
 
 const BackButton = ({ navigation: { navigate } }) => (
 	<Button title="Logout" onPress={() => {
-		// Handle Firebase logout
 		return (navigate('Login') && logout())
 	}} />
 )
@@ -55,9 +63,7 @@ class HomeScreen extends React.Component {
 
 	componentDidMount = () => {
 
-		// requestRecipes()
-		
-		firebase.database().ref('recipes').once('value').then((snapshot) => {
+		requestRecipes().then((snapshot) => {
 			const data = snapshot.val()
 			
 			this.setState({
@@ -69,7 +75,7 @@ class HomeScreen extends React.Component {
 			console.log(error.message)
 		})
 
-		firebase.database().ref('users').once('value').then((snapshot) => {
+		requestUsers().then((snapshot) => {
 			const data = snapshot.val()
 			
 			this.setState({
@@ -100,7 +106,6 @@ class HomeScreen extends React.Component {
 	_renderHomePage = () => {
 		const { navigate } = this.props.navigation
 		const text = this.state.loading ? 'Loading...' : 'Loaded'
-		// console.log(firebase.auth().currentUser)
 
 		if(this.state.loading) {			
 			return (

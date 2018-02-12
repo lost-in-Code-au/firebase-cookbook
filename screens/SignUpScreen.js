@@ -38,9 +38,9 @@ class SignUpScreen extends React.Component {
         const email = this.state.email
         const password = this.state.password
 
-        // signUp(email, password)//TODO: Abstract signup to FirebaseUtil.js
-
-        firebase.auth().createUserWithEmailAndPassword(email, password)
+        
+        // firebase.auth().createUserWithEmailAndPassword(email, password)
+        signUp(email, password)
         .then((response) => {
             const { navigate } = this.props.navigation
             Alert.alert(

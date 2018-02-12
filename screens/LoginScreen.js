@@ -45,21 +45,15 @@ class LoginScreen extends React.Component {
         
         const email = this.state.email
         const password = this.state.password
-        console.log(email)
-        console.log(password)
-        
 
-        // if(email || password === null){
-        //     return this.setState({
-        //         ...this.state,
-        //         showWarning: 'please check both fields are filled in... <3 admin'
-        //     })
-        // } else {
+        if(!email || !password) {
+            return this.setState({
+                ...this.state,
+                showWarning: 'please check both fields are filled in... <3 admin'
+            })
+        } else {
 
-        // grEatLogin(email, password)//not currently working pass issue of giving state to firebaseUtil.js
-        
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then((response) => {
+            grEatLogin(email, password).then((response) => {
                 console.log(response)
                 
                 navigate('Home')
@@ -71,11 +65,11 @@ class LoginScreen extends React.Component {
                     showWarning: error.message + ' Please check your login details, and try again... <3'
                 }) 
             })
-        // }
+        }
     }
 
     _renderLandingPage = () => {
-        // console.log(firebase.auth().currentUser)
+        console.log(firebase.auth().currentUser)
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <ImageBackground style={styles.backGround}
@@ -114,8 +108,6 @@ class LoginScreen extends React.Component {
             </KeyboardAvoidingView>
         )
     }
-  //Velan Questions: how can I improve my image loading before everything else?
-
 
     render() {
         return (
