@@ -34,7 +34,7 @@ class RecipeScreen extends React.Component {
             renderItem={({item: instruction}) => (
               <View key={instruction.step} style={styles.recipeCard}>
                 <Text style={[styles.name, styles.font]}>Step {instruction.step +1}:</Text>
-                <Text style={[styles.name, styles.font]}>{instruction.text}</Text>
+                <Text style={[styles.name, styles.font]}>{instruction.value}</Text>
               </View>
             )}
             ListHeaderComponent={() => (

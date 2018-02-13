@@ -41,7 +41,7 @@ class IngredientsScreen extends React.Component {
           data={item.ingredients}
           renderItem={({item: ingredient}) => (
             <View key={ingredient.id} style={styles.recipeCard}>
-              <Text style={[styles.name, styles.font]}>{ingredient.name}</Text>
+              <Text style={[styles.name, styles.font]}>{ingredient.value}</Text>
             </View>
           )}
           ListHeaderComponent={() => (

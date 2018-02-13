@@ -1,101 +1,103 @@
 {
+  "cuisines" : [ "Vegan Italian", "Italian", "French", "Vegan Greek", "Greek", "English", "English Australian" ],
   "recipes" : [ {
     "_id" : "5a5a1843583874b963278312",
     "author" : "Thomasina Miers",
+    "cuisine_type" : "Vegan Italian",
     "diet" : "optional VG",
     "difficulty" : 2,
     "duration" : 45,
     "ingredients" : [ {
       "id" : 0,
-      "name" : "1/2 chile de arbol or dried chilli flakes; optional"
+      "value" : "1/2 chile de arbol or dried chilli flakes; optional"
     }, {
       "id" : 1,
-      "name" : "3 tbsp of Olive oil"
+      "value" : "3 tbsp of Olive oil"
     }, {
       "id" : 2,
-      "name" : "75g pancetta or lardons, cut into cubes"
+      "value" : "75g pancetta or lardons, cut into cubes"
     }, {
       "id" : 3,
-      "name" : "1 large Oinon"
+      "value" : "1 large Oinon"
     }, {
       "id" : 4,
-      "name" : "1 Carrot"
+      "value" : "1 Carrot"
     }, {
       "id" : 5,
-      "name" : "1/2 Fennel bulb"
+      "value" : "1/2 Fennel bulb"
     }, {
       "id" : 6,
-      "name" : "2 Garlic cloves"
+      "value" : "2 Garlic cloves"
     }, {
       "id" : 7,
-      "name" : "Salt and Pepper"
+      "value" : "Salt and Pepper"
     }, {
       "id" : 8,
-      "name" : "200g tinned Tomatoes(about half a can)"
+      "value" : "200g tinned Tomatoes(about half a can)"
     }, {
       "id" : 9,
-      "name" : "30g Parmesan; optional"
+      "value" : "30g Parmesan; optional"
     }, {
       "id" : 10,
-      "name" : "1 Bay leaf"
+      "value" : "1 Bay leaf"
     }, {
       "id" : 11,
-      "name" : "1 sprig of Rosemary"
+      "value" : "1 sprig of Rosemary"
     }, {
       "id" : 12,
-      "name" : "200g of Puy or Lentils"
+      "value" : "200g of Puy or Lentils"
     }, {
       "id" : 13,
-      "name" : "1.4l vegetable stock"
+      "value" : "1.4l vegetable stock"
     }, {
       "id" : 14,
-      "name" : "250g short Penne"
+      "value" : "250g short Penne"
     }, {
       "id" : 15,
-      "name" : "150g Kale"
+      "value" : "150g Kale"
     }, {
       "id" : 16,
-      "name" : "100g single cream or for a non-dariy coconut milk"
+      "value" : "100g single cream or for a non-dariy coconut milk"
     }, {
       "id" : 17,
-      "name" : "Hand full of parsley"
+      "value" : "Hand full of parsley"
     }, {
       "id" : 18,
-      "name" : "A bottle of white wine, to server with ;)"
+      "value" : "A bottle of white wine, to server with ;)"
     } ],
     "instructions" : [ {
       "step" : 0,
-      "text" : "Warm up a large deep pan over a meduim flame, then gently toast the chile, if using, for 30-40 sec, until aromatic.\r\n"
+      "value" : "Warm up a large deep pan over a meduim flame, then gently toast the chile, if using, for 30-40 sec, until aromatic.\r\n"
     }, {
       "step" : 1,
-      "text" : "Remove from the pan then add a tablespoon of oil and, once that's hot, the pancetta.\r\n"
+      "value" : "Remove from the pan then add a tablespoon of oil and, once that's hot, the pancetta.\r\n"
     }, {
       "step" : 2,
-      "text" : "Fry, stirring, for a few minutes, until the pancetta releases its fat and starts to colour, then add the onion, carrot, fennel, garlic and toasted chile, and season generously.\r\n"
+      "value" : "Fry, stirring, for a few minutes, until the pancetta releases its fat and starts to colour, then add the onion, carrot, fennel, garlic and toasted chile, and season generously.\r\n"
     }, {
       "step" : 3,
-      "text" : "Cook gently, stirring occasionally, for 8 to 10mins, until the vegetables are soft.\r\n"
+      "value" : "Cook gently, stirring occasionally, for 8 to 10mins, until the vegetables are soft.\r\n"
     }, {
       "step" : 4,
-      "text" : "Add the Tomatoes, herbs, lentils and remaining oil, stir for a minute or two, so everything is well coated, then pour in the stock and bring it to a gentle simmer.\r\n"
+      "value" : "Add the Tomatoes, herbs, lentils and remaining oil, stir for a minute or two, so everything is well coated, then pour in the stock and bring it to a gentle simmer.\r\n"
     }, {
       "step" : 5,
-      "text" : "Leave to cook for 15-20mins, until lentils are done but still have some bite.\r\n"
+      "value" : "Leave to cook for 15-20mins, until lentils are done but still have some bite.\r\n"
     }, {
       "step" : 6,
-      "text" : "Stir the pasta into the pot, add a little more salt, then cook for 10-12mins, stirring often so the pasta doesn't stick together; add the kale to the pot after 5mins.\r\n"
+      "value" : "Stir the pasta into the pot, add a little more salt, then cook for 10-12mins, stirring often so the pasta doesn't stick together; add the kale to the pot after 5mins.\r\n"
     }, {
       "step" : 7,
-      "text" : "When pasta is just al dente and the liquid has reduced to a sauce, stir in the cream/coconut milk and bring to a boil.\r\n"
+      "value" : "When pasta is just al dente and the liquid has reduced to a sauce, stir in the cream/coconut milk and bring to a boil.\r\n"
     }, {
       "step" : 8,
-      "text" : "Stir in the parsley, check the seasoning and transfer the pasta to the pasta bowls.\r\n"
+      "value" : "Stir in the parsley, check the seasoning and transfer the pasta to the pasta bowls.\r\n"
     }, {
       "step" : 9,
-      "text" : "(Optional) Scatter the grated Parmesan over the bowls and drizzle some oil over it for a finishing touch.\r\n"
+      "value" : "(Optional) Scatter the grated Parmesan over the bowls and drizzle some oil over it for a finishing touch.\r\n"
     }, {
       "step" : 10,
-      "text" : "Serve it warm with the chilled white wine and enjoy.\r\n"
+      "value" : "Serve it warm with the chilled white wine and enjoy.\r\n"
     } ],
     "name" : "Penne, Lentil Kale Dish",
     "picture" : "https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/G_one-pot_penne_lentil.jpg?alt=media&token=0572d25f-1685-4d9c-bb9e-902a7c25a8eb",
@@ -108,68 +110,68 @@
     "duration" : 25,
     "ingredients" : [ {
       "id" : 0,
-      "name" : "200g Fusilli"
+      "value" : "200g Fusilli"
     }, {
       "id" : 1,
-      "name" : "150g fresh Salmon"
+      "value" : "150g fresh Salmon"
     }, {
       "id" : 2,
-      "name" : "1 clove of Garlic"
+      "value" : "1 clove of Garlic"
     }, {
       "id" : 3,
-      "name" : "Salt & Pepper"
+      "value" : "Salt & Pepper"
     }, {
       "id" : 4,
-      "name" : "100g Zucchini"
+      "value" : "100g Zucchini"
     }, {
       "id" : 5,
-      "name" : "70g Extra Olive oil"
+      "value" : "70g Extra Olive oil"
     }, {
       "id" : 6,
-      "name" : "30g Pine nuts"
+      "value" : "30g Pine nuts"
     }, {
       "id" : 7,
-      "name" : "10g Almonds"
+      "value" : "10g Almonds"
     }, {
       "id" : 8,
-      "name" : "10g Basil"
+      "value" : "10g Basil"
     }, {
       "id" : 9,
-      "name" : "30g Parmesan(optional)"
+      "value" : "30g Parmesan(optional)"
     }, {
       "id" : 10,
-      "name" : "A bottle of white wine"
+      "value" : "A bottle of white wine"
     } ],
     "instructions" : [ {
       "step" : 0,
-      "text" : "Wash the Zucchini cut off the extremities and, with the help of a grater, cut them into chunks.\r\n"
+      "value" : "Wash the Zucchini cut off the extremities and, with the help of a grater, cut them into chunks.\r\n"
     }, {
       "step" : 1,
-      "text" : "Place the grated Zucchini in a colander and salt them lightly, so they lose the excess liquid.\r\n"
+      "value" : "Place the grated Zucchini in a colander and salt them lightly, so they lose the excess liquid.\r\n"
     }, {
       "step" : 2,
-      "text" : "Meanwhile in a blender, place your Basil leaves and sliced Almonds, also add the Pine nuts, a pinch of salt and Olive oil. (optional:) Then add the grated Parmesan and blend it all.\r\n"
+      "value" : "Meanwhile in a blender, place your Basil leaves and sliced Almonds, also add the Pine nuts, a pinch of salt and Olive oil. (optional:) Then add the grated Parmesan and blend it all.\r\n"
     }, {
       "step" : 3,
-      "text" : "Drain the Zucchini, which has lost its water, and adds them to the mixture with a little pinch of Olive oil and the Pesto will be completed with a final round of blades(blending) to make it creamy and smoothy(love how Francesca puts things ^.^).\r\n"
+      "value" : "Drain the Zucchini, which has lost its water, and adds them to the mixture with a little pinch of Olive oil and the Pesto will be completed with a final round of blades(blending) to make it creamy and smoothy(love how Francesca puts things ^.^).\r\n"
     }, {
       "step" : 4,
-      "text" : "Now that the Pesto is ready, keep aside in the cool and continue the preparation.\r\n"
+      "value" : "Now that the Pesto is ready, keep aside in the cool and continue the preparation.\r\n"
     }, {
       "step" : 5,
-      "text" : "On the cutting board lay the Salmon steak and cut it into strips.\r\n"
+      "value" : "On the cutting board lay the Salmon steak and cut it into strips.\r\n"
     }, {
       "step" : 6,
-      "text" : "In a large fry pan, put a little Olive oil and add a glove of Garlic peeled. Turn on the heat, then put the strips of Salmon in, and stir with wooden spoon as soon as they are coloured, add the white wine and cook on high for 1 min, then turn the heat off and dress with Pepper.\r\n"
+      "value" : "In a large fry pan, put a little Olive oil and add a glove of Garlic peeled. Turn on the heat, then put the strips of Salmon in, and stir with wooden spoon as soon as they are coloured, add the white wine and cook on high for 1 min, then turn the heat off and dress with Pepper.\r\n"
     }, {
       "step" : 7,
-      "text" : "Cook the pasta (when the salty water boils, put the pasta and cook for 2min less then wrote on the box) and when cooked drain it, keeping the water on the side(you'll use it later if the Pesto is too thick).\r\n"
+      "value" : "Cook the pasta (when the salty water boils, put the pasta and cook for 2min less then wrote on the box) and when cooked drain it, keeping the water on the side(you'll use it later if the Pesto is too thick).\r\n"
     }, {
       "step" : 8,
-      "text" : "Put everything in the big pan and mix on the heat for a few seconds, until the pasta is amalgamated with the Pesto (add the water if necessary).\r\n"
+      "value" : "Put everything in the big pan and mix on the heat for a few seconds, until the pasta is amalgamated with the Pesto (add the water if necessary).\r\n"
     }, {
       "step" : 9,
-      "text" : "Serve it warm and enjoy! <3 Francesca.\r\n"
+      "value" : "Serve it warm and enjoy! <3 Francesca.\r\n"
     } ],
     "name" : "Fusilli, Pesto Salmon",
     "picture" : "https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/fusilli.jpg?alt=media&token=b2ce67b1-9e8f-4305-b998-1944028ee98a",
@@ -182,38 +184,38 @@
     "duration" : 5,
     "ingredients" : [ {
       "id" : 0,
-      "name" : "1 slice Whole grain bread"
+      "value" : "1 slice Whole grain bread"
     }, {
       "id" : 1,
-      "name" : "2 meduim sized Eggs"
+      "value" : "2 meduim sized Eggs"
     }, {
       "id" : 2,
-      "name" : "1/2 Avocado"
+      "value" : "1/2 Avocado"
     }, {
       "id" : 3,
-      "name" : "1 massive chunk of Feta(let's be real)"
+      "value" : "1 massive chunk of Feta(let's be real)"
     }, {
       "id" : 4,
-      "name" : "Hot sauce, Salt & Pepper"
+      "value" : "Hot sauce, Salt & Pepper"
     } ],
     "instructions" : [ {
       "step" : 0,
-      "text" : "Toast the bread as desired.\r\n"
+      "value" : "Toast the bread as desired.\r\n"
     }, {
       "step" : 1,
-      "text" : "Fry eggs as desired.\r\n"
+      "value" : "Fry eggs as desired.\r\n"
     }, {
       "step" : 2,
-      "text" : "Slice Avocado as desired.\r\n"
+      "value" : "Slice Avocado as desired.\r\n"
     }, {
       "step" : 3,
-      "text" : "Put it all together on decorative plate.\r\n"
+      "value" : "Put it all together on decorative plate.\r\n"
     }, {
       "step" : 4,
-      "text" : "Top with Feta, Hot sauce, Salt & Pepper.\r\n"
+      "value" : "Top with Feta, Hot sauce, Salt & Pepper.\r\n"
     }, {
       "step" : 5,
-      "text" : "Don't be stingy. We're not trying to impress anybody here.\r\n"
+      "value" : "Don't be stingy. We're not trying to impress anybody here.\r\n"
     } ],
     "name" : "Kyla's 5min Breakfast",
     "picture" : "https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/avotoast.jpg?alt=media&token=b7d1e754-5fd5-4260-baf0-a4ee3edf4367",
@@ -226,68 +228,68 @@
     "duration" : 60,
     "ingredients" : [ {
       "id" : 0,
-      "name" : "2 teaspoons of Salt"
+      "value" : "2 teaspoons of Salt"
     }, {
       "id" : 1,
-      "name" : "1 teaspoon Turmeric"
+      "value" : "1 teaspoon Turmeric"
     }, {
       "id" : 2,
-      "name" : "3 teaspoons of Garam"
+      "value" : "3 teaspoons of Garam"
     }, {
       "id" : 3,
-      "name" : "2 teaspoons of ground Coriander"
+      "value" : "2 teaspoons of ground Coriander"
     }, {
       "id" : 4,
-      "name" : "2 teaspoons of ground Cumin"
+      "value" : "2 teaspoons of ground Cumin"
     }, {
       "id" : 5,
-      "name" : "1 teaspoons of ground Chilli(2 if you like it hot)"
+      "value" : "1 teaspoons of ground Chilli(2 if you like it hot)"
     }, {
       "id" : 6,
-      "name" : "600-700g of Lamb in bit sized pieces"
+      "value" : "600-700g of Lamb in bit sized pieces"
     }, {
       "id" : 7,
-      "name" : "2 medium Onions finely chopped"
+      "value" : "2 medium Onions finely chopped"
     }, {
       "id" : 8,
-      "name" : "2 cloves of Garlic finely chopped"
+      "value" : "2 cloves of Garlic finely chopped"
     }, {
       "id" : 9,
-      "name" : "1 teaspoon of fresh Ginger"
+      "value" : "1 teaspoon of fresh Ginger"
     }, {
       "id" : 10,
-      "name" : "400g tin chopped Tomatoes"
+      "value" : "400g tin chopped Tomatoes"
     }, {
       "id" : 11,
-      "name" : "2 dessert spoons plain natural Yogurt"
+      "value" : "2 dessert spoons plain natural Yogurt"
     }, {
       "id" : 12,
-      "name" : "3 tablespoons of fresh Coriander, chopped"
+      "value" : "3 tablespoons of fresh Coriander, chopped"
     }, {
       "id" : 12,
-      "name" : "enough basmati rice for 4-6 people depending on amount of food cooked"
+      "value" : "enough basmati rice for 4-6 people depending on amount of food cooked"
     } ],
     "instructions" : [ {
       "step" : 0,
-      "text" : "Note: Use a meduim heart to high theoughout.\r\n"
+      "value" : "Note: Use a meduim heart to high theoughout.\r\n"
     }, {
       "step" : 1,
-      "text" : "Pour a couple of tablespoons of Olive oil into a pot and heat until very hot. Throw in the finely chopped Onions, stir until translucent.\r\n"
+      "value" : "Pour a couple of tablespoons of Olive oil into a pot and heat until very hot. Throw in the finely chopped Onions, stir until translucent.\r\n"
     }, {
       "step" : 2,
-      "text" : "Throw in the Garlic and Ginger and keep stirring. Then throw in the bowl of spices and keep stirring until spices are fragrant, this is called dry frying, about 2mins.\r\n"
+      "value" : "Throw in the Garlic and Ginger and keep stirring. Then throw in the bowl of spices and keep stirring until spices are fragrant, this is called dry frying, about 2mins.\r\n"
     }, {
       "step" : 3,
-      "text" : "Then add the Lamb and guess what?? keep stirring (for about 5mins) then throw in the tin Tomatoes, stir, stir, stir.\r\n"
+      "value" : "Then add the Lamb and guess what?? keep stirring (for about 5mins) then throw in the tin Tomatoes, stir, stir, stir.\r\n"
     }, {
       "step" : 4,
-      "text" : "Add the Yogurt and stir.\r\n"
+      "value" : "Add the Yogurt and stir.\r\n"
     }, {
       "step" : 5,
-      "text" : "Place the heat on low, put the lid on and simmer until Lamb is tender (usually an hour) stir occasionally and in between stirs you should have a martini, a margarita or glass of wine, whatever takes your fancy, just don't forget to stir it occasionally!.\r\n"
+      "value" : "Place the heat on low, put the lid on and simmer until Lamb is tender (usually an hour) stir occasionally and in between stirs you should have a martini, a margarita or glass of wine, whatever takes your fancy, just don't forget to stir it occasionally!.\r\n"
     }, {
       "step" : 6,
-      "text" : "Done! taste to determine if it needs more Salt or Chilli put a generous amount of chopped Coriander in it, and let it sit for about 5mins, then serve with basmati rice. I add a little mustard seed, cumin, and a bay leaf while cooking the rice to bring out the flavor of the whole dish.\r\n"
+      "value" : "Done! taste to determine if it needs more Salt or Chilli put a generous amount of chopped Coriander in it, and let it sit for about 5mins, then serve with basmati rice. I add a little mustard seed, cumin, and a bay leaf while cooking the rice to bring out the flavor of the whole dish.\r\n"
     } ],
     "name" : "No Fuss Lamb",
     "picture" : "https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/pulledlamb.jpg?alt=media&token=e659bc18-a428-4ab4-a8a9-080473fd3d3e",
@@ -300,59 +302,59 @@
     "duration" : 40,
     "ingredients" : [ {
       "id" : 0,
-      "name" : "1 Echalion Shallot"
+      "value" : "1 Echalion Shallot"
     }, {
       "id" : 1,
-      "name" : "1 Garlic Clove"
+      "value" : "1 Garlic Clove"
     }, {
       "id" : 2,
-      "name" : "1 Fennel"
+      "value" : "1 Fennel"
     }, {
       "id" : 3,
-      "name" : "1 pack of Asparagus"
+      "value" : "1 pack of Asparagus"
     }, {
       "id" : 4,
-      "name" : "A small hand full of Sun-dried Tomatoes(30g)"
+      "value" : "A small hand full of Sun-dried Tomatoes(30g)"
     }, {
       "id" : 5,
-      "name" : "750ml of Water"
+      "value" : "750ml of Water"
     }, {
       "id" : 6,
-      "name" : "1 Vegetable stock pot"
+      "value" : "1 Vegetable stock pot"
     }, {
       "id" : 7,
-      "name" : "1 tablespoon of Tomato Puree(15g)"
+      "value" : "1 tablespoon of Tomato Puree(15g)"
     }, {
       "id" : 8,
-      "name" : "1 and a half Arborio Rice(175g)"
+      "value" : "1 and a half Arborio Rice(175g)"
     }, {
       "id" : 9,
-      "name" : "1 tablespoon of balsamic Vinegar"
+      "value" : "1 tablespoon of balsamic Vinegar"
     }, {
       "id" : 10,
-      "name" : "small amount of Hard Italian Cheese(40g)"
+      "value" : "small amount of Hard Italian Cheese(40g)"
     }, {
       "id" : 11,
-      "name" : "small amount of Netherend Butter(15g)"
+      "value" : "small amount of Netherend Butter(15g)"
     } ],
     "instructions" : [ {
       "step" : 0,
-      "text" : "Prep the veggies. \r\n Halve, peel and chop the shallot into 1/2 cm pieces. Peel and grate the garlic (or use a garlic press). Cut the Fennel in half lengthways, remove the tough triangular core and then cut into 1cm thick slices. Chop the bottom 1cm off the Asparagus and discard. Halve the Asparagus widthways. Chop the Sun-dried tomatoes into thin strips.\r\n"
+      "value" : "Prep the veggies. \r\n Halve, peel and chop the shallot into 1/2 cm pieces. Peel and grate the garlic (or use a garlic press). Cut the Fennel in half lengthways, remove the tough triangular core and then cut into 1cm thick slices. Chop the bottom 1cm off the Asparagus and discard. Halve the Asparagus widthways. Chop the Sun-dried tomatoes into thin strips.\r\n"
     }, {
       "step" : 1,
-      "text" : "Roast the Fennel.\r\n Put the Fennel on half a baking tray. Drizzle on a splash of oil and season with Salt and Black Pepper. Roast on top shelf of your oven until golden and crisp around the edges, 20mins. Turn halfway through cooking. Boil water (amount specified in the ingredient list) in a saucepan over medium heat. Once boiling, turn the heat on low and add vegetable stock pot. Stir to dissolve.\r\n"
+      "value" : "Roast the Fennel.\r\n Put the Fennel on half a baking tray. Drizzle on a splash of oil and season with Salt and Black Pepper. Roast on top shelf of your oven until golden and crisp around the edges, 20mins. Turn halfway through cooking. Boil water (amount specified in the ingredient list) in a saucepan over medium heat. Once boiling, turn the heat on low and add vegetable stock pot. Stir to dissolve.\r\n"
     }, {
       "step" : 2,
-      "text" : "Start the Risotto.\r\n Keep the stock on low heat so it stays warm but isn't bubbling ferociously! Heat a glug of oil in a frying pan over medium heat. Add Shallot and Sun-dried Tomatoes. Cook until the Shallot has softened, 3-4mins. Then add the garlic and Tomato Puree. Stir and cook for 1min more.\r\n"
+      "value" : "Start the Risotto.\r\n Keep the stock on low heat so it stays warm but isn't bubbling ferociously! Heat a glug of oil in a frying pan over medium heat. Add Shallot and Sun-dried Tomatoes. Cook until the Shallot has softened, 3-4mins. Then add the garlic and Tomato Puree. Stir and cook for 1min more.\r\n"
     }, {
       "step" : 3,
-      "text" : "Finish the Risotto.\r\n Add Arborio rice to the pan. Stir, so the rice gets coated in oil, then add a ladle of stock. Cook still stirring, until the rice has absorbed the stock. Then add another ladleful and continue the process until all of the stock is used. This should take about 20mins. (*TIP You may not need all the stock. Or if it's all gone and your rice is still a bit chalky, add a splash of water and keep cooking 'til it's done.).\r\n"
+      "value" : "Finish the Risotto.\r\n Add Arborio rice to the pan. Stir, so the rice gets coated in oil, then add a ladle of stock. Cook still stirring, until the rice has absorbed the stock. Then add another ladleful and continue the process until all of the stock is used. This should take about 20mins. (*TIP You may not need all the stock. Or if it's all gone and your rice is still a bit chalky, add a splash of water and keep cooking 'til it's done.).\r\n"
     }, {
       "step" : 4,
-      "text" : "Roast the Asparagus.\r\n After the Fennel has been cooking for 10mins, add the Asparagus to the other side of the baking tray. Drizzle the Balsamic Vinegar on and a splash of water. Pop back in the oven to roast until the Asparagus is tender, 10 more mins. When the Risotto is done, remove from the heat and stir in two-thirds of the hard Italian cheese and all the butter. Season to taste.\r\n"
+      "value" : "Roast the Asparagus.\r\n After the Fennel has been cooking for 10mins, add the Asparagus to the other side of the baking tray. Drizzle the Balsamic Vinegar on and a splash of water. Pop back in the oven to roast until the Asparagus is tender, 10 more mins. When the Risotto is done, remove from the heat and stir in two-thirds of the hard Italian cheese and all the butter. Season to taste.\r\n"
     }, {
       "step" : 5,
-      "text" : "Finish off.\r\n When the veggies are ready, stir the Fennel through the Risotto. Serve in bowls with Asparagus on top. Drizzle over any juices from the baking tray and sprinkle on the remaining cheese. EAT WITHOUT DELAY(this one's for you rob!)\r\n"
+      "value" : "Finish off.\r\n When the veggies are ready, stir the Fennel through the Risotto. Serve in bowls with Asparagus on top. Drizzle over any juices from the baking tray and sprinkle on the remaining cheese. EAT WITHOUT DELAY(this one's for you rob!)\r\n"
     } ],
     "name" : "Sun-dried Tomato Risotto",
     "picture" : "https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/sun-driedTomatoRisotto.jpeg?alt=media&token=5757a20e-bb72-427a-ae8a-50b1da358202",
@@ -365,71 +367,71 @@
     "duration" : 45,
     "ingredients" : [ {
       "id" : 0,
-      "name" : "1 can of chickpeas"
+      "value" : "1 can of chickpeas"
     }, {
       "id" : 1,
-      "name" : "1 Aubergine(Egg plant for us normal people)"
+      "value" : "1 Aubergine(Egg plant for us normal people)"
     }, {
       "id" : 2,
-      "name" : "1 Brown Onion"
+      "value" : "1 Brown Onion"
     }, {
       "id" : 3,
-      "name" : "1 Courgette(A.K.A they Zucchini)"
+      "value" : "1 Courgette(A.K.A they Zucchini)"
     }, {
       "id" : 4,
-      "name" : "1 Yellow Pepper"
+      "value" : "1 Yellow Pepper"
     }, {
       "id" : 5,
-      "name" : "1 Garlic clovers"
+      "value" : "1 Garlic clovers"
     }, {
       "id" : 6,
-      "name" : "Fresh Oregano"
+      "value" : "Fresh Oregano"
     }, {
       "id" : 7,
-      "name" : "1 and 1/2 tablespoons Tomato Puree"
+      "value" : "1 and 1/2 tablespoons Tomato Puree"
     }, {
       "id" : 8,
-      "name" : "Vegetable Stock pot"
+      "value" : "Vegetable Stock pot"
     }, {
       "id" : 9,
-      "name" : "1 Cinnamon Stick"
+      "value" : "1 Cinnamon Stick"
     }, {
       "id" : 10,
-      "name" : "Red Split Lentils"
+      "value" : "Red Split Lentils"
     }, {
       "id" : 11,
-      "name" : "1 tablespoon of Worcestershire Sauce"
+      "value" : "1 tablespoon of Worcestershire Sauce"
     }, {
       "id" : 12,
-      "name" : "Diced Tomatoes(1 tin)"
+      "value" : "Diced Tomatoes(1 tin)"
     }, {
       "id" : 13,
-      "name" : "1 Ciabatta"
+      "value" : "1 Ciabatta"
     }, {
       "id" : 14,
-      "name" : "1 small pot Creme Fraiche"
+      "value" : "1 small pot Creme Fraiche"
     }, {
       "id" : 15,
-      "name" : "Hard Italian Cheese(40g)"
+      "value" : "Hard Italian Cheese(40g)"
     } ],
     "instructions" : [ {
       "step" : 0,
-      "text" : "Prep the Veggies.\r\n Cut the Aubergine into 1cm thick slices. Halve, peel and chop the Onion into 1/2cm pieces. Remove the top and bottom from the Courgette and chop into 1/2cm chunks. Halve then remove the core into 1cm pieces. Peel and grate all but one garlic clove (or use a garlic press). Cut the remaining garlic in half. Pick the Oregano leaves from their stalks and finely chop (discard the stalks).\r\n"
+      "value" : "Prep the Veggies.\r\n Cut the Aubergine into 1cm thick slices. Halve, peel and chop the Onion into 1/2cm pieces. Remove the top and bottom from the Courgette and chop into 1/2cm chunks. Halve then remove the core into 1cm pieces. Peel and grate all but one garlic clove (or use a garlic press). Cut the remaining garlic in half. Pick the Oregano leaves from their stalks and finely chop (discard the stalks).\r\n"
     }, {
       "step" : 1,
-      "text" : "Grill the Aubergine.\r\n Put the Aubergine on a baking tray in a single layer and drizzle over some oil. Season with a pinch of salt and a grind of black Pepper. Grill for 8-9mins on each side, until browned and soft. Remove and set aside. (*TIP: Keep an eye on them to make sure they don't burn. If they aren't soft after this time, just leave them under your grill for a little longer.)\r\n"
+      "value" : "Grill the Aubergine.\r\n Put the Aubergine on a baking tray in a single layer and drizzle over some oil. Season with a pinch of salt and a grind of black Pepper. Grill for 8-9mins on each side, until browned and soft. Remove and set aside. (*TIP: Keep an eye on them to make sure they don't burn. If they aren't soft after this time, just leave them under your grill for a little longer.)\r\n"
     }, {
       "step" : 2,
-      "text" : "Start the sauce.\r\n Meanwhile, make the tomato sauce. Heat a drizzle of oil in a frying pan and put on medium heat. Add the Onion. Cook until soft, 5mins. Add the Courgette and Yellow Pepper with a pinch of salt and Pepper. Cook until soft and slightly browned, 5mins. Add the grated Garlic, Oregano, Tomato Puree and Cinnamon stick. Cook for 1 min more.\r\n"
+      "value" : "Start the sauce.\r\n Meanwhile, make the tomato sauce. Heat a drizzle of oil in a frying pan and put on medium heat. Add the Onion. Cook until soft, 5mins. Add the Courgette and Yellow Pepper with a pinch of salt and Pepper. Cook until soft and slightly browned, 5mins. Add the grated Garlic, Oregano, Tomato Puree and Cinnamon stick. Cook for 1 min more.\r\n"
     }, {
       "step" : 3,
-      "text" : "Finish the sauce.\r\n Next, add the Lentils, Worcestershire sauce, vegetable stock pot and diced Tomatoes. Refill the tin(s) a third with water and pour that in too. Add a pinch of sugar. Simmer until the lentils are soft, 15-20mins. If the sauce gets too dry, just add a splash of water.\r\n"
+      "value" : "Finish the sauce.\r\n Next, add the Lentils, Worcestershire sauce, vegetable stock pot and diced Tomatoes. Refill the tin(s) a third with water and pour that in too. Add a pinch of sugar. Simmer until the lentils are soft, 15-20mins. If the sauce gets too dry, just add a splash of water.\r\n"
     }, {
       "step" : 4,
-      "text" : "Cheat the bread!.\r\n Cut the ciabatta into 1cm thick slices and place them on another baking tray. Pop them under your grill for 2-3mins on each side, then remove. Rub the cut sides of the remaining Garlic clove across both sides of the ciabatta slices. We call this 'cheat's garlic bread.\r\n"
+      "value" : "Cheat the bread!.\r\n Cut the ciabatta into 1cm thick slices and place them on another baking tray. Pop them under your grill for 2-3mins on each side, then remove. Rub the cut sides of the remaining Garlic clove across both sides of the ciabatta slices. We call this 'cheat's garlic bread.\r\n"
     }, {
       "step" : 5,
-      "text" : "Finish and serve.\r\n When the tomato sauce is ready, remove the cinnamon stick and transfer the sauce to an ovenproof dish. Layer over the Aubergine slices. Spoon on the creme fraiche and spread it out across the top. Sprinkle over the hard Italian cheese and add a grind of black pepper. Put the moussaka under the grill for 5mins, or until the cheese is golden and bubbling. Server in bowls with cheat's garlic bread on the side. Enjoy!\r\n"
+      "value" : "Finish and serve.\r\n When the tomato sauce is ready, remove the cinnamon stick and transfer the sauce to an ovenproof dish. Layer over the Aubergine slices. Spoon on the creme fraiche and spread it out across the top. Sprinkle over the hard Italian cheese and add a grind of black pepper. Put the moussaka under the grill for 5mins, or until the cheese is golden and bubbling. Server in bowls with cheat's garlic bread on the side. Enjoy!\r\n"
     } ],
     "name" : "Veggie-packed Moussaka",
     "picture" : "https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/Veggie-packed%20Moussaka.jpg?alt=media&token=fb43a27b-496f-498a-959d-6de49c62ddb5",
@@ -442,47 +444,47 @@
     "duration" : 32,
     "ingredients" : [ {
       "id" : 0,
-      "name" : "1 can of chickpeas"
+      "value" : "1 can of chickpeas"
     }, {
       "id" : 1,
-      "name" : "2 tablespoons of Olive oil"
+      "value" : "2 tablespoons of Olive oil"
     }, {
       "id" : 2,
-      "name" : "1 Lemon or 4 tablespoons of Lemon juice"
+      "value" : "1 Lemon or 4 tablespoons of Lemon juice"
     }, {
       "id" : 3,
-      "name" : "1 and a half of Garlic clovers"
+      "value" : "1 and a half of Garlic clovers"
     }, {
       "id" : 4,
-      "name" : "3/4 teaspoon of Cumin"
+      "value" : "3/4 teaspoon of Cumin"
     }, {
       "id" : 5,
-      "name" : "1 and a half of teaspoons of Salt"
+      "value" : "1 and a half of teaspoons of Salt"
     }, {
       "id" : 6,
-      "name" : "1 tablespoon of Tahini"
+      "value" : "1 tablespoon of Tahini"
     }, {
       "id" : 7,
-      "name" : "3/4 teaspoon of Paprika"
+      "value" : "3/4 teaspoon of Paprika"
     }, {
       "id" : 8,
-      "name" : "1/2 teaspoon of Chilli powder"
+      "value" : "1/2 teaspoon of Chilli powder"
     }, {
       "id" : 9,
-      "name" : "1 tablespoon of Hot sauce/Saracha"
+      "value" : "1 tablespoon of Hot sauce/Saracha"
     } ],
     "instructions" : [ {
       "step" : 0,
-      "text" : "Drain can of chickpeas but leave some of the juice.\r\n"
+      "value" : "Drain can of chickpeas but leave some of the juice.\r\n"
     }, {
       "step" : 1,
-      "text" : "Squeeze the lemon for all its lemony goodness.\r\n"
+      "value" : "Squeeze the lemon for all its lemony goodness.\r\n"
     }, {
       "step" : 2,
-      "text" : "Combine all ingredients into the blender and blend until your desired consistency (I like it chunky).\r\n"
+      "value" : "Combine all ingredients into the blender and blend until your desired consistency (I like it chunky).\r\n"
     }, {
       "step" : 3,
-      "text" : "Enjoy this equisite hummus and don't forget - it's better than Roberts...\r\n"
+      "value" : "Enjoy this equisite hummus and don't forget - it's better than Roberts...\r\n"
     } ],
     "name" : "Joel's Award Winning Hummus",
     "picture" : "https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/joelHummus.jpg?alt=media&token=cb5cd2ef-b8ff-4bc9-abf2-ab45ab568dfc",
@@ -498,9 +500,8 @@
     "favourite_recipes" : [ {
       "recipes_id" : "5a0c45b8765c7dcd19286700"
     } ],
-    "id" : 1,
     "messages" : [ {
-      "id" : "5a0c45b8765c7dcd19286700",
+      "_id" : "5a0c45b8765c7dcd19286700",
       "message" : "Hello Reece",
       "seen" : false
     } ],
