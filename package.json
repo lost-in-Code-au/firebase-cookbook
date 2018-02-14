@@ -22,6 +22,7 @@
     "babel-core": "^6.26.0",
     "eslint": "^4.17.0",
     "eslint-plugin-react": "^7.6.1",
-    "jest-expo": "^24.0.0"
+    "jest-expo": "^24.0.0",
+    "react-native-mock": "^0.3.1"
   }
 }
