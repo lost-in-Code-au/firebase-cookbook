@@ -20,7 +20,7 @@ var ScreenWidth = Dimensions.get("window").Width
 class SignUpScreen extends React.Component {
 
     state = {
-        isLoggedIn: false,
+        currentUser: false,
         email: null,
         passwordCheck: null,
         password: null,
@@ -64,11 +64,7 @@ class SignUpScreen extends React.Component {
             
     }
 
-    _renderLandingPage = () => {
-        // console.log(NavigationActions);
-        console.log(this.props.navigation.navigate);
-        
-        
+    _renderLandingPage = () => {        
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <ImageBackground style={styles.backGround}

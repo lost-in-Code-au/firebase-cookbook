@@ -21,15 +21,6 @@ class IngredientsScreen extends React.Component {
     // headerRight: <Button title="Rate" />,//TODO: Create rating Component
   })
 
-  // TODO: change flatlist into a scroll view then create a data shape builder for
-  // adding booleans to each ingredient, this will allow for each to have a stored
-  // clickable state. Redux with have to added to mantain the new data shape
-  // Component example
-  //   <CheckBox
-  //   title={<Text style={[styles.name, styles.font]}>{ingredients.name}</Text>}
-  //   checked={this.state.checked}
-  // />
-
   render() {
     const { params: item } = this.props.navigation.state
 

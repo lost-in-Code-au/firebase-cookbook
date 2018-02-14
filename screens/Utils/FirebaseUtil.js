@@ -11,7 +11,29 @@ const config = {
 
 firebase.initializeApp(config)
 
-export const grEatLogin = (email, password) => {
+export const authConfigLocal = (input, code) => {
+
+	var email = input
+	var password = code
+	return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+		.then(function(response) {
+			console.log(response)
+			// LOCAL Indicates that the state will be persisted even when the browser window is 
+			// closed or the activity is destroyed in React Native. An explicit sign out is 
+			// needed to clear that state. Note that Firebase Auth web sessions are single host 
+
+			//TODO: doesn't work, signIn can't see what email and password params are.
+			return firebase.auth().signInWithEmailAndPassword(email, password)
+		})
+		.catch(function(error) {
+			// Handle Errors here.
+			// var errorCode = error.code
+			var errorMessage = error.message
+			console.log(errorMessage)
+		})
+}
+
+export const userLogin = (email, password) => {
 	return firebase.auth().signInWithEmailAndPassword(email, password)
 }
 
@@ -26,5 +48,15 @@ export const requestRecipes = () => {
 export const requestUsers = () => {
 	return firebase.database().ref('users').once('value')
 }
+
+export const userCheck = () => {
+	return firebase.auth().currentUser
+}
+
+export const userSignOut = () => {
+	return firebase.auth().signOut()
+}
+
+
 
 export default firebase

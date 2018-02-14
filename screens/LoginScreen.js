@@ -1,5 +1,6 @@
 import React from 'react'
-import { 
+import {
+    AsyncStorage,
     View, Text, 
     TextInput, 
     TouchableOpacity, 
@@ -10,7 +11,7 @@ import {
 } from 'react-native'
 import { Button } from 'react-native-elements'
 
-import firebase, { grEatLogin } from './Utils/FirebaseUtil'
+import firebase, { authConfigLocal, userLogin } from './Utils/FirebaseUtil'
 
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
@@ -22,7 +23,7 @@ class LoginScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            isLoggedIn: false,
+            currentUser: null,
             email: null,
             password: null,
             error: null,
@@ -34,6 +35,10 @@ class LoginScreen extends React.Component {
         headerLeft: null,
         title: 'Login',
     })
+
+    ComponentDidMount = () => {
+
+    }
 
     _onSignUp = () => {
         const { navigate } = this.props.navigation
@@ -52,11 +57,16 @@ class LoginScreen extends React.Component {
                 showWarning: 'please check both fields are filled in... <3 admin'
             })
         } else {
+            userLogin(email, password).then((response) => {                
+                // const user = firebase.auth().currentUser
+                // this.setState({
+                //     ...this.state,
+                //     currentUser: user.uid
+                // })                	
+                // console.log(this.state.currentUser)//may not be required
+                navigate('Home', this.state.currentUser)
+            
 
-            grEatLogin(email, password).then((response) => {
-                console.log(response)
-                
-                navigate('Home')
             })
             .catch((error) => {
                 // console.log('login error: ', error)//please leave for debugging
@@ -69,7 +79,6 @@ class LoginScreen extends React.Component {
     }
 
     _renderLandingPage = () => {
-        console.log(firebase.auth().currentUser)
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <ImageBackground style={styles.backGround}
