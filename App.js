@@ -2,7 +2,7 @@ import 'expo'// For dev logs through expo XDE
 import React from 'react'
 import { StackNavigator } from 'react-navigation' // 1.0.0-beta.23
 
-import firebase, { userCheck, userLogin } from './screens/Utils/FirebaseUtil'//to start FB instance and check if a user is logged in already.
+import firebase, { userCheck } from './screens/Utils/FirebaseUtil'//to start FB instance and check if a user is logged in already.
 
 // import styles from './styles'
 
@@ -12,8 +12,10 @@ import HomeScreen from './screens/HomeScreen'
 import RecipeScreen from './screens/RecipeScreen'
 import IngredientsScreen from './screens/IngredientsScreen'
 import SearchScreen from './screens/SearchScreen'
+import NewRecipeScreen from './screens/NewRecipeScreen'
 
 const CookBookApp = StackNavigator({
+	NewRecipe: { screen: NewRecipeScreen },
 	Login: { screen: LoginScreen },
 	Signup: { screen: SignUpScreen },
 	Home: { screen: HomeScreen },
@@ -28,6 +30,7 @@ const UserCookBookApp = StackNavigator({
 	Signup: { screen: SignUpScreen },
 	Recipe: { screen: RecipeScreen },
 	Ingredients: { screen: IngredientsScreen },
+	NewRecipe: { screen: NewRecipeScreen },
 	Search: { screen: SearchScreen },
 })
 

@@ -40,6 +40,11 @@ export const userLogin = (email, password) => {
 export const signUp = (email, password) => {
 	return firebase.auth().createUserWithEmailAndPassword(email, password)
 }
+// firebase.database().ref('users/' + userId).set({
+// 	username: name,
+// 	email: email,
+// 	profile_picture : imageUrl
+//   })
 
 export const requestRecipes = () => {
 	return firebase.database().ref('recipes').once('value')
@@ -49,6 +54,10 @@ export const requestUsers = () => {
 	return firebase.database().ref('users').once('value')
 }
 
+export const requestDiets = () => {
+	return firebase.database().ref('dietTypes').once('value')
+}
+
 export const userCheck = () => {
 	return firebase.auth().currentUser
 }
@@ -56,7 +65,9 @@ export const userCheck = () => {
 export const userSignOut = () => {
 	return firebase.auth().signOut()
 }
-
+export const createRecipe = (newRecipe) => {
+	return firebase.database().ref('recipes').set(newRecipe)
+}
 
 
 export default firebase
