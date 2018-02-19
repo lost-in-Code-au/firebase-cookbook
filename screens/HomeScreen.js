@@ -23,16 +23,22 @@ var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
 
 const logout = () => {
-	// 	userSignOut().then(function() {
-	// 	console.log('scuuessful logout')
-	//   }, function(error) {
-	// 	console.log(error.message)
-	// })
+		userSignOut().then(function() {
+		console.log('scuuessful logout')
+	  }, function(error) {
+		console.log(error.message)
+	})
 }
 
 const BackButton = ({ navigation: { navigate } }) => (
 	<Button title="Logout" onPress={() => {
 		return (navigate('Login') && logout())
+	}} />
+)
+
+const NewRecipeButton = ({ navigation: { navigate } }) => (
+	<Button title="Add" onPress={() => {
+		return navigate('NewRecipe')
 	}} />
 )
 
@@ -49,13 +55,10 @@ class HomeScreen extends React.Component {
 	}
 
 	static navigationOptions = ({ navigation }) => ({
-        headerLeft: () => (<BackButton navigation={navigation} />),
-        title: 'grEat'
-    });
-		// header: ({ navigate }) => {
-		//   return <Button title="Search" onPress={() => navigate('Search', this.state.recipes)} />
-		// },//TODO: works but clashes with title and does not know what recipes is yet
-		// headerRight: <Button title="Add" />,//TODO: create firebase writing Component
+		headerTitle: 'grEat',
+        headerLeft: <BackButton navigation={navigation} />,
+		headerRight: <NewRecipeButton navigation={navigation} />
+	})
 
 	componentDidMount = () => {
 		

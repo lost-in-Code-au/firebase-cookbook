@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-    AsyncStorage,
     View, Text, 
     TextInput, 
     TouchableOpacity, 
@@ -40,7 +39,7 @@ class LoginScreen extends React.Component {
 
     }
 
-    _onSignUp = () => {
+    _redirectToSignUp = () => {
         const { navigate } = this.props.navigation
         navigate('Signup')
     }
@@ -105,12 +104,11 @@ class LoginScreen extends React.Component {
                         secureTextEntry />
                         {this.state.showWarning && <Text style={styles.showWarning}>{this.state.showWarning}</Text>}
                         <TouchableOpacity style={styles.buttonContainer} 
-                                onPress={this._onPress}
-                                >
+                            onPress={this._onPress} >
                             <Text  style={styles.buttonText}>LOGIN</Text>
                         </TouchableOpacity> 
                     </View>
-                    <TouchableOpacity style={styles.signupContainer}  onPress={this._onSignUp}>
+                    <TouchableOpacity style={styles.signupContainer}  onPress={this._redirectToSignUp}>
                         <Text style={styles.signup}>Signup</Text>
                     </TouchableOpacity>
                 </ImageBackground>
