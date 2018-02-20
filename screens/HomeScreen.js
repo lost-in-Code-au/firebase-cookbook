@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-	AsyncStorage,
 	Dimensions,
 	StyleSheet,
 	ImageBackground,
@@ -11,14 +10,13 @@ import {
 	Image,
 	Button,
 } from 'react-native'
-import { SearchBar } from 'react-native-elements'
+// import { SearchBar } from 'react-native-elements'
 import PropTypes from 'prop-types'
 
-// import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
-import firebase, { dataBaseRequest, userCheck, userSignOut, requestRecipes, requestUsers } from './Utils/FirebaseUtil'
+import firebase, { dataBaseRequest, userSignOut } from './Utils/FirebaseUtil'
 
-var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
+var ScreenHeight = Dimensions.get("window").height
 var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
 

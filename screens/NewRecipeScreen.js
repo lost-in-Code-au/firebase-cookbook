@@ -13,15 +13,11 @@ import {
 	KeyboardAvoidingView,
 } from 'react-native'
 
-// import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
-
 import firebase, { createRecipe, requestDiets } from './Utils/FirebaseUtil'
 
-var ScreenHeight = Dimensions.get("window").height//not in use now, is messes up the background
+var ScreenHeight = Dimensions.get("window").height
 var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
-
-
 
 class NewRecipeScreen extends React.Component {
 	static navigationOptions = {

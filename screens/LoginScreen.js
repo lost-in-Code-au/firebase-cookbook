@@ -57,15 +57,7 @@ class LoginScreen extends React.Component {
             })
         } else {
             userLogin(email, password).then((response) => {                
-                // const user = firebase.auth().currentUser
-                // this.setState({
-                //     ...this.state,
-                //     currentUser: user.uid
-                // })                	
-                // console.log(this.state.currentUser)//may not be required
                 navigate('Home', this.state.currentUser)
-            
-
             })
             .catch((error) => {
                 // console.log('login error: ', error)//please leave for debugging
