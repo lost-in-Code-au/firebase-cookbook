@@ -21,6 +21,7 @@ class RecipeScreen extends React.Component {
   })
 
   render() {
+    console.log('recipe screen')
     const { params: item } = this.props.navigation.state
     const { navigate } = this.props.navigation
 

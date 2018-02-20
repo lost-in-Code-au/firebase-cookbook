@@ -23,7 +23,7 @@ class IngredientsScreen extends React.Component {
 
   render() {
     const { params: item } = this.props.navigation.state
-
+    console.log('ingredients screen')
     return (
       <ImageBackground
       style={styles.backGround}
