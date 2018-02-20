@@ -13,7 +13,7 @@ import {
 	KeyboardAvoidingView,
 } from 'react-native'
 
-import firebase, { createRecipe, requestDiets } from './Utils/FirebaseUtil'
+import firebase, { createRecipe, dataBaseRequest } from './Utils/FirebaseUtil'
 
 var ScreenHeight = Dimensions.get("window").height
 var ScreenWidth = Dimensions.get("window").Width
@@ -53,7 +53,7 @@ class NewRecipeScreen extends React.Component {
 	}
 
 	componentDidMount() {
-		requestDiets().then((snapshot) => {
+		dataBaseRequest('dietTypes').then((snapshot) => {
 			let data = snapshot.val()
 			data['Cancel'] = 'cancel'
 			this.setState({
