@@ -20,17 +20,13 @@ var ScreenHeight = Dimensions.get("window").height
 var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
 
-const logout = () => {
-		userSignOut().then(function() {
-		console.log('scuuessful logout')
-	  }, function(error) {
-		console.log(error.message)
-	})
-}
-
 const BackButton = ({ navigation: { navigate } }) => (
 	<Button title="Logout" onPress={() => {
-		return (navigate('Login') && logout())
+		return (		userSignOut().then(function() {
+			console.log('scuuessful logout')
+		  }, function(error) {
+			console.log(error.message)
+		}))
 	}} />
 )
 
