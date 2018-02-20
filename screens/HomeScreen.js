@@ -30,6 +30,7 @@ const logout = () => {
 
 const BackButton = ({ navigation: { navigate } }) => (
 	<Button title="Logout" onPress={() => {
+		console.log('From Back to Login')
 		return (navigate('Login') && logout())
 	}} />
 )
@@ -101,6 +102,7 @@ class HomeScreen extends React.Component {
 	}
 
 	_renderHomePage = () => {
+		console.log('home screen')
 		const { navigate } = this.props.navigation
 		const text = this.state.loading ? 'Loading...' : 'Loaded'
 

@@ -15,7 +15,7 @@ import firebase, { authConfigLocal, userLogin } from './Utils/FirebaseUtil'
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
-var ScreenWidth = Dimensions.get("window").Width
+var ScreenWidth = Dimensions.get("window").width
 
 class LoginScreen extends React.Component {
 
@@ -34,10 +34,6 @@ class LoginScreen extends React.Component {
         headerLeft: null,
         title: 'Login',
     })
-
-    ComponentDidMount = () => {
-
-    }
 
     _redirectToSignUp = () => {
         const { navigate } = this.props.navigation
@@ -70,6 +66,7 @@ class LoginScreen extends React.Component {
     }
 
     _renderLandingPage = () => {
+        console.log('login screen')
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <ImageBackground style={styles.backGround}
