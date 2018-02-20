@@ -11,8 +11,9 @@ const config = {
 
 firebase.initializeApp(config)
 
+//this export still needs work, if used it creates bugs within the signin error handling
+// might need to change const to function like dataBaseRequest(dBRoot)
 export const authConfigLocal = (input, code) => {
-
 	var email = input
 	var password = code
 	return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
@@ -33,30 +34,31 @@ export const authConfigLocal = (input, code) => {
 		})
 }
 
-export const userLogin = (email, password) => {
+export function userLogin(email, password) {
 	return firebase.auth().signInWithEmailAndPassword(email, password)
 }
 
-export const signUp = (email, password) => {
+export function signUp(email, password) {
 	return firebase.auth().createUserWithEmailAndPassword(email, password)
 }
-// firebase.database().ref('users/' + userId).set({
-// 	username: name,
-// 	email: email,
-// 	profile_picture : imageUrl
-//   })
 
-export const requestRecipes = () => {
-	return firebase.database().ref('recipes').once('value')
+
+export function dataBaseRequest(dBRoot) {
+	return firebase.database().ref(dBRoot).once('value')
 }
 
-export const requestUsers = () => {
-	return firebase.database().ref('users').once('value')
-}
+// No longer required to hit database
+// export const requestRecipes = () => {
+// 	return firebase.database().ref('recipes').once('value')
+// }
 
-export const requestDiets = () => {
-	return firebase.database().ref('dietTypes').once('value')
-}
+// export const requestUsers = () => {
+// 	return firebase.database().ref('users').once('value')
+// }
+
+// export const requestDiets = () => {
+// 	return firebase.database().ref('dietTypes').once('value')
+// }
 
 export const userCheck = () => {
 	return firebase.auth().currentUser

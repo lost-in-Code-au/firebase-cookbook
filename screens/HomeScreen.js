@@ -16,7 +16,7 @@ import PropTypes from 'prop-types'
 
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
-import firebase, { userCheck, userSignOut, requestRecipes, requestUsers } from './Utils/FirebaseUtil'
+import firebase, { dataBaseRequest, userCheck, userSignOut, requestRecipes, requestUsers } from './Utils/FirebaseUtil'
 
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
 var ScreenWidth = Dimensions.get("window").Width
@@ -62,7 +62,7 @@ class HomeScreen extends React.Component {
 
 	componentDidMount = () => {
 		
-		requestRecipes().then((snapshot) => {
+		dataBaseRequest('recipes').then((snapshot) => {
 			const data = snapshot.val()
 			
 			this.setState({
@@ -74,7 +74,7 @@ class HomeScreen extends React.Component {
 			console.log(error.message)
 		})
 
-		requestUsers().then((snapshot) => {
+		dataBaseRequest('users').then((snapshot) => {
 			const data = snapshot.val()
 			
 			this.setState({
