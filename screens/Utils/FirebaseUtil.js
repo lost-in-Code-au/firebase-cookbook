@@ -30,9 +30,19 @@ export const userSignOut = () => {
 	return firebase.auth().signOut()
 }
 
-export const createRecipe = (newRecipe) => {
-	return firebase.database().ref('recipes').set(newRecipe)
+export function createKeyForPost(dBRoot) {
+	return firebase.database().ref().child(dBRoot).push().key
 }
+
+//you'll have to call createKeyForPost first before calling this function, then you'll have to new id for the new object
+export function createRecipe(dBRoot, newRecipe) {
+	return firebase.database().ref(dBRoot).update(newRecipe)
+}
+
+//User .set carefully! it rewrites over all children... basically don't user it, use update instead ^
+// export function createNewRoot(newRoot, newObject) {
+// 	return firebase.database().ref(newRoot).set(newObject)
+// }
 
 
 export default firebase

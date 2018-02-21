@@ -490,6 +490,14 @@
     "picture" : "https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/joelHummus.jpg?alt=media&token=cb5cd2ef-b8ff-4bc9-abf2-ab45ab568dfc",
     "snippet" : "3 time winner, HOT HUMMUS you'll be loving it.\r\n"
   } ],
+  "dietTypes" : {
+    "Dairy Free" : "Dairy Free",
+    "Gluten Free" : "Gluten Free",
+    "Gluten Free & Dairy Free" : "Gluten Free & Dairy Free",
+    "No diet" : "No diet",
+    "Vegan" : "VG",
+    "Vegetarian" : "Vegetarian"
+  },
   "users" : [ {
     "added_recipes" : [ {
       "recipes_id" : "5a0c45b8765c7dcd19286700"
