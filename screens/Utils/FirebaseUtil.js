@@ -1,5 +1,3 @@
-
-
 import firebase from 'firebase'
 
 const config = {
@@ -31,6 +29,7 @@ export const userCheck = () => {
 export const userSignOut = () => {
 	return firebase.auth().signOut()
 }
+
 export const createRecipe = (newRecipe) => {
 	return firebase.database().ref('recipes').set(newRecipe)
 }
