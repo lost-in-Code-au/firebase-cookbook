@@ -14,11 +14,71 @@ import {
 } from 'react-native'
 import uuid from 'uuid'//keyGen
 
-import firebase, { createRecipe, dataBaseRequest, createKeyForPost } from './Utils/FirebaseUtil'
+import firebase, { dataBaseRequest, createKeyForPostFrom, createNewObjIn } from './Utils/FirebaseUtil'
 
 var ScreenHeight = Dimensions.get("window").height
 var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
+
+//Test identifier to ref without text in state.
+const DIETS = ['No Diets', 'Vegeterian']
+
+//abstracted fucntions
+// const CustomTextInput = ({ maxLength, ref, submit, onChange, autoCorrect, returnKey, placeHolder, value}) => (
+// 	<TextInput 
+// 		style = {styles.textInputContainer} 
+// 		maxLength={maxLength}
+// 		ref={(input)=> this.{ref} = input} //should it be `this.${ref}.focus()`?
+// 		onSubmitEditing={() => this.{submit}.focus()} //should it be `this.${submit}.focus()`?
+// 		onChangeText={onChange}
+// 		autoCorrect={autoCorrect}
+// 		returnKeyType={returnKey}
+// 		placeholder={placeHolder}
+// 		value={value}
+// 		placeholderTextColor='#505050' />
+// )
+// 	======>exaple component<=======
+//		<CustomTextInput
+//		maxLength=30
+//		ref='authorInput'
+//		submit='snippetInput'
+//		onChange={(authorName) => this.setState({ ...this.state, author: authorName })} //handled in the element
+//		autoCorrect={true}
+// 		returnKey='next'
+// 		placeHolder='Name of author'
+// 		value={this.state.author}
+//		/>
+// 	
+
+const submitionAlert = (options, callback) => {
+	console.log('hellow!')
+	const isfalse = (currentValue) => {
+		return currentValue
+	}//needs to be tested a bit
+
+	if( options.every(isfalse) === false ){
+		Alert.alert(
+			'Wait up!',
+			"Something's is missing from your recipe",
+			{ cancelable: true }
+		)
+	} else {
+		callback()
+	}
+}
+
+const customActionSheet = (options, callback) => {
+	ActionSheetIOS.showActionSheetWithOptions({
+		options,
+		destructiveButtonIndex: options.length,
+		cancelButtonIndex: options.length
+	}, (index) => {
+		if(index === options.length) {
+			return
+		}
+		callback(index)
+	})
+}//callback that doesn't concern it's self with class functions such as state.
 
 class NewRecipeScreen extends React.Component {
 	
@@ -29,17 +89,23 @@ class NewRecipeScreen extends React.Component {
 			//setup
 			error: null,
 			dietTypes: null,
-
-			name: null,
-			author: null,
-			snippet: null,
-			diet: 'No diet',
-			difficulty: 1,
-			duration: null,
-			ingredients: [],
-			instructions: [],
+	
+			//models
+			recipe: {
+				name: null,
+				author: null,
+				snippet: null,
+				diet: 0,
+				difficulty: 1,
+				duration: null,
+			},//move all of stage one into here
+			ingredients: { id: 0,
+			value: 'food' },//move all of stage two into here
+			steps: { step: 0,
+			value: 'here is a step' },//move all of stage three into here
 			picture: 'http://via.placeholder.com/300.png/09f/fff',
 			
+			//flags
 			firstStageSubmit: false,
 			secoundStageSubmit: false,
 			thridStageSubmit: false,
@@ -66,91 +132,66 @@ class NewRecipeScreen extends React.Component {
 		})
 	}
 
-
 	_dietActionSheet = () => {
-		let diets = this.state.dietTypes
-		const toArray = Object.values(diets)
-		const arrayLength = diets.length
+		// const options = this.state.dietTypes
+		
 
-		ActionSheetIOS.showActionSheetWithOptions({
-			options: toArray,
-			destructiveButtonIndex: arrayLength,
-			cancelButtonIndex: arrayLength,
-		},
-		(buttonIndex) => {
-			if(toArray[buttonIndex] === 'cancel' ) { return }
-			else {
-				this.setState({...this.state, diet: toArray[buttonIndex]})
-			}
-		}) 
+		customActionSheet(DIETS, (index) => {
+			this.setState({...this.state, recipe: 
+				{
+					...this.state.recipe,
+					diet: DIETS[index]
+				}
+			})
+		})
 	}
 	
 	_difActionSheet = () => {
-		const defTypes = [ '1', '2', '3', '4', '5', 'cancel']
+		const options = [ '1', '2', '3', '4', '5', 'cancel']
 
-		ActionSheetIOS.showActionSheetWithOptions({
-			options: defTypes,
-			destructiveButtonIndex: 5,
-			cancelButtonIndex: 5,
-		},
-		(buttonIndex) => {
-			if(defTypes[buttonIndex] === 'cancel' ) { return }
-			else {
-				this.setState({...this.state, difficulty: defTypes[buttonIndex]})
-			}
+		customActionSheet(options, (index) => {
+			this.setState({...this.state, recipe: 
+				{ 
+					...this.state.recipe,
+					difficulty: options[index]
+				}
+			})
 		}) 
 	}
  
-	//This submitStage's needs to be made into a dynamic function, but having some trouble with the setStage accepting dynamic input.
-	_submitStageOne = () =>{
-		const s = this.state
+//Refactor 0.2 <==================================================================
+//submitStage's needs to be made into a dynamic function, but having some trouble with the setStage accepting dynamic input.
 
-		console.log('stage1')
-		console.log(s)
-
-		if(!s.name || !s.author || !s.snippet || !s.diet || !s.difficulty){
-			Alert.alert(
-                'Wait up!',
-                "Something's is missing from your recipe brief",
-                { cancelable: true }
-            )
-		} else {
+	_submitRecipe = () =>{
+		const recipe = this.state.recipe
+		const options = [ recipe.name, recipe.author, recipe.snippet, recipe.duration, recipe.diet, recipe.difficulty ]
+		
+		submitionAlert(options, (callback) => {
 			this.setState({ ...this.state, firstStageSubmit: true })
-		}
+		}) 
 	}
 
-	_submitStageTwo = () => {
-		const s = this.state
-		// console.log('stage2')
-		// console.log(s)
+	_submitRecipeIngreedients = () => {
+		const ingredients = this.state.ingredients
+		const options = [ ingredients.placeholder ]
+		console.log(options)
 
-		// if(!ingredients){
-		// 	Alert.alert(
-        //         'Wait up!',
-        //         "You need to add ingredients to your recipe",
-        //         { cancelable: true }
-        //     )
-		// } else {
-		this.setState({ ...this.state, secoundStageSubmit: true })
-		// }
+
+		// submitionAlert(options, (callback) => {
+			this.setState({ ...this.state, secoundStageSubmit: true })
+		// })
 	}
 
-	_submitStageThree = () => {
-		const s = this.state
-		// console.log('stage3')
-		// console.log(s)
+	_submitRecipeSteps = () => {
+		const steps = this.state.steps
+		const options = [ steps.placeholder ]
 
-		// if(!ingredients){
-		// 	Alert.alert(
-        //         'Wait up!',
-        //         "You need to add the steps for your recipe",
-        //         { cancelable: true }
-        //     )
-		// } else {
-		this.setState({ ...this.state, thridStageSubmit: true })
-		// }
+		// submitionAlert(options, (callback) => {
+			this.setState({ ...this.state, thridStageSubmit: true })
+		// })
 	}
-	//same thing as above, having some trouble with the setStage accepting dynamic input.
+// <=============================same thing as above=====================================
+//having some trouble with the setStage accepting dynamic input.
 	_stepBackToStageOne = () => {
 		this.setState({ ...this.state, firstStageSubmit: false })
 	}
@@ -162,32 +203,68 @@ class NewRecipeScreen extends React.Component {
 	_stepBackToStageThree = () => {
 		this.setState({ ...this.state, thridStageSubmit: false })
 	}
-	/////////////////////////////////////////////////////////////////
+//End of Refactor 0.2 <==================================================================
 
 	_submitToFirebase = () => {
-		const s = this.state
-		const newKey = createKeyForPost('recipes')
-		console.log(newKey)
-		const newId = uuid()
-		let updates = {}
-		newRecipe = {
-			_id: newId,
-			name: s.name,
-			author: s.author,
-			snippet: s.snippet,
-			difficulty: s.difficulty,
-			duration: s.duration,
-			ingredients: s.ingredients,
-			instructions: s.instructions,
-			picture: s.picture
+		const recipe = this.state.recipe
+		const ingredients = this.state.ingredients
+		const steps = this.state.steps
+
+		const difficulty = parseInt(recipe.difficulty)
+		console.log(difficulty)
+		const duration = parseInt(recipe.duration)
+		console.log(duration)
+
+		const newKey = createKeyForPostFrom('recipes')
+		
+		// const newId = uuid()
+		// let newRecipe = {}
+		obj = {
+			_id: newKey,
+			name: recipe.name,
+			author: recipe.author,
+			snippet: recipe.snippet,
+			difficulty: difficulty,
+			duration: duration,
+			diet: recipe.diet,
+			ingredients: ingredients,
+			instructions: steps,
+			picture: this.state.picture
 		}
-  		updates[newKey] = newRecipe
-		createRecipe('recipes', updates)
+  		// newRecipe[newKey] = obj
+		createNewObjIn('recipes', obj)
 	}
+
+	// _submitToFirebase = () => {
+	// 	// const s = this.state
+	// 	// const newKey = createKeyForPost('recipes')
+		
+	// 	// const newId = uuid()
+	// 	let updates = {}
+	// 	newRecipe = {
+	// 		_id: newId,
+	// 		name: s.name,
+	// 		author: s.author,
+	// 		snippet: s.snippet,
+	// 		difficulty: s.difficulty,
+	// 		duration: s.duration,
+	// 		ingredients: s.ingredients,
+	// 		instructions: s.instructions,
+	// 		picture: s.picture
+	// 	}
+  	// 	updates[newKey] = newRecipe
+	// 	createRecipe('recipes', updates)
+	// }
 
 	_renderForm = () => {
 		//First landing page for creating a recipe, it includes the basic data info such as:
 		// Name, Author, Snippet, Diet, Difficulty, Duration.
+
+//Refactor 0.3 <=========================================================
+// some of these components are very simlair and could be put into one dynamic component
+// components by grouping: 	
+// 		TextInput: {name, author, snippet, duration}	
+// 		ActoinSheet: {diet, difficulty}
 		if(!this.state.firstStageSubmit) {			
 			return (
 				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
@@ -199,11 +276,11 @@ class NewRecipeScreen extends React.Component {
 									style = {styles.textInputContainer} 
 									maxLength={35}
 									onSubmitEditing={() => this.authorInput.focus()} 
-									onChangeText={(nameInput) => this.setState({ ...this.state, name: nameInput })}
+									onChangeText={(nameInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, name: nameInput }})}
 									autoCorrect={true} 
 									returnKeyType='next'
 									placeholder='Name of recipe' 
-									value={this.state.name}
+									value={this.state.recipe.name}
 									placeholderTextColor='#505050' />
 
 								<TextInput 
@@ -211,24 +288,23 @@ class NewRecipeScreen extends React.Component {
 									maxLength={30}
 									ref={(input)=> this.authorInput = input} 
 									onSubmitEditing={() => this.snippetInput.focus()} 
-									onChangeText={(authorName) => this.setState({ ...this.state, author: authorName })}
+									onChangeText={(authorName) => this.setState({ ...this.state, recipe: { ...this.state.recipe, author: authorName }})}
 									autoCorrect={true} 
 									returnKeyType='next'
 									placeholder='Name of author' 
-									value={this.state.author}
+									value={this.state.recipe.author}
 									placeholderTextColor='#505050' />
 								
-
 								<TextInput 
 									style = {styles.textInputContainer} 
 									maxLength={100}
 									ref={(input)=> this.snippetInput = input} 
 									onSubmitEditing={() => this.durationInput.focus()} 
-									onChangeText={(snippetInput) => this.setState({ ...this.state, snippet: snippetInput })}
+									onChangeText={(snippetInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, snippet: snippetInput }})}
 									autoCorrect={true} 
 									returnKeyType='next'
 									placeholder='Snippet of Recipe' 
-									value={this.state.snippet}
+									value={this.state.recipe.snippet}
 									placeholderTextColor='#505050' />
 
 								<TextInput 
@@ -236,24 +312,25 @@ class NewRecipeScreen extends React.Component {
 									maxLength={3}
 									ref={(input)=> this.durationInput = input} 
 									onSubmitEditing={() => this.durationInput.focus()} 
-									onChangeText={(durationInput) => this.setState({ ...this.state, duration: durationInput })}
+									onChangeText={(durationInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, duration: durationInput }})}
 									autoCorrect={false} 
 									keyboardType='numeric'
 									returnKeyType='done'
 									placeholder='Duration of Recipe' 
-									value={this.state.duration}
+									value={this.state.recipe.duration}
 									placeholderTextColor='#505050' />
 
 								<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._dietActionSheet}>
-									<Text style={styles.buttonText}>{this.state.diet}</Text>
-								</TouchableOpacity>
+									<Text style={styles.buttonText}>{DIETS[this.state.recipe.diet]}</Text>
+								</TouchableOpacity> 
+								{/* issue: DIETS[this.state.recipe.diet] not showing once set on change	 */}
 
 								<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._difActionSheet}>
-									<Text style={styles.buttonText}>{this.state.difficulty}</Text>
+									<Text style={styles.buttonText}>{this.state.recipe.difficulty}</Text>
 								</TouchableOpacity>
 
 
-								<TouchableOpacity style={styles.stage1ButtonContainer}  onPress={this._submitStageOne}>
+								<TouchableOpacity style={styles.stage1ButtonContainer}  onPress={this._submitRecipe}>
 									<Text style={styles.buttonText}>Next</Text>
 								</TouchableOpacity>
 
@@ -263,7 +340,7 @@ class NewRecipeScreen extends React.Component {
 					</ScrollView>
 				</KeyboardAvoidingView>
 			)
-		}//TODO: add duration into stage one.//////////////////////////////////////////////////// <===
+		}//TODO: Build TextInput step/ingredent builder
 		else if (!this.state.secoundStageSubmit) {
 			return (
 				<View>
@@ -272,7 +349,7 @@ class NewRecipeScreen extends React.Component {
 						<TouchableOpacity style={styles.buttonContainer}  onPress={this._stepBackToStageOne}>
 							<Text style={styles.buttonText}>Back</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.buttonContainer}  onPress={this._submitStageTwo}>
+						<TouchableOpacity style={styles.buttonContainer}  onPress={this._submitRecipeIngreedients}>
 							<Text style={styles.buttonText}>Next</Text>
 						</TouchableOpacity>
 					</View>
@@ -287,7 +364,7 @@ class NewRecipeScreen extends React.Component {
 						<TouchableOpacity style={styles.buttonContainer}  onPress={this._stepBackToStageTwo}>
 							<Text style={styles.buttonText}>back</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.buttonContainer}  onPress={this._submitStageThree}>
+						<TouchableOpacity style={styles.buttonContainer}  onPress={this._submitRecipeSteps}>
 							<Text style={styles.buttonText}>Preview</Text>
 						</TouchableOpacity>
 					</View>
@@ -346,6 +423,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 	},
 	stage1ButtonContainer: {
+		padding: 10,
 		marginLeft: '50%',
 		marginTop: 20,
 		backgroundColor: '#2980b6',
@@ -354,7 +432,7 @@ const styles = StyleSheet.create({
 	},
 	buttonContainer: {
 		marginBottom: 10,
-		paddingLeft: '50%',
+		marginLeft: '10%',
 		marginTop: 15,
 		backgroundColor: '#2980b6',
 		paddingVertical: 15,

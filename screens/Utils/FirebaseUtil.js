@@ -19,8 +19,14 @@ export function signUp(email, password) {
 
 
 export function dataBaseRequest(dBRoot) {
-	return firebase.database().ref(dBRoot).once('value')
-}
+	const result = []
+
+	return firebase.database().ref(dBRoot).once('value', (data) => {
+		data.forEach((childSnapshot) => {
+			result.push(childSnapshot.val())
+		})
+	}).then(() => result)
+}//TODO: add limitor to prevent over downloading infomation
 
 export const userCheck = () => {
 	return firebase.auth().currentUser
@@ -30,13 +36,13 @@ export const userSignOut = () => {
 	return firebase.auth().signOut()
 }
 
-export function createKeyForPost(dBRoot) {
+export function createKeyForPostFrom(dBRoot) {
 	return firebase.database().ref().child(dBRoot).push().key
 }
 
 //you'll have to call createKeyForPost first before calling this function, then you'll have to new id for the new object
-export function createRecipe(dBRoot, newRecipe) {
-	return firebase.database().ref(dBRoot).update(newRecipe)
+export function createNewObjIn(dBRoot, newObject) {
+	return firebase.database().ref(dBRoot).push(newObject)
 }
 
 //User .set carefully! it rewrites over all children... basically don't user it, use update instead ^

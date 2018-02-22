@@ -56,8 +56,11 @@ class HomeScreen extends React.Component {
 
 	componentDidMount = () => {
 		
-		dataBaseRequest('recipes').then((snapshot) => {
-			const data = snapshot.val()
+		dataBaseRequest('recipes').then((data) => {
+			console.log(data)
+			// const data = snapshot.val()
+			// arr = [data]
+			// console.log(data)
 			
 			this.setState({
 				...this.state,
@@ -68,16 +71,16 @@ class HomeScreen extends React.Component {
 			console.log(error.message)
 		})
 
-		dataBaseRequest('users').then((snapshot) => {
-			const data = snapshot.val()
+		// dataBaseRequest('users').then((snapshot) => {
+		// 	const data = snapshot.val()
 			
-			this.setState({
-				...this.state,
-				users: data,
-			})
-		}).catch((error) => {
-			console.log(error.message)
-		})
+		// 	this.setState({
+		// 		...this.state,
+		// 		users: data,
+		// 	})
+		// }).catch((error) => {
+		// 	console.log(error.message)
+		// })
 		
 	}
 
@@ -97,6 +100,8 @@ class HomeScreen extends React.Component {
 	}
 
 	_renderHomePage = () => {
+		console.log(typeof this.state.recipes)
+		
 		const { navigate } = this.props.navigation
 		const text = this.state.loading ? 'Loading...' : 'Loaded'
 
