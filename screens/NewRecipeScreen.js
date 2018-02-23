@@ -208,20 +208,19 @@ class NewRecipeScreen extends React.Component {
 //End of Refactor 0.2 <==================================================================
 
 _submitPreviewedRecipe = () => {
-	console.log(this._submitToFirebase)
-	
 	Alert.alert(
 		'Hold your horses!',
 		'Are you sure your happy with the preview?',
 		[
-			{text: 'Cancel', onPress: () => {return}},
-			{text: 'OK', onPress: () => {this._submitToFirebase}}
+			{text: 'Cancel' },
+			{text: 'OK', onPress: this._submitToFirebase}
 		],
 		{ cancelable: true }
 	)
 }
 
 _submitToFirebase = () => {
+		
 		const recipe = this.state.recipe
 		const ingredients = this.state.ingredients
 		const steps = this.state.steps
@@ -229,7 +228,7 @@ _submitToFirebase = () => {
 		const difficulty = parseInt(recipe.difficulty)
 		const duration = parseInt(recipe.duration)
 		
-		let newRecipe = {}
+
 		obj = {
 			_id: createKeyForPostFrom('recipes'),
 			name: recipe.name,
@@ -242,13 +241,24 @@ _submitToFirebase = () => {
 			instructions: steps,
 			picture: this.state.picture
 		}
-		createNewObjIn('recipes', obj).catch((error) => {
+		createNewObjIn('recipes', obj).then(()=>{
+			navigate('home')
+		}).catch((error) => {
 			console.log(error.message)
+			Alert.alert(
+				'Sorry somehing went wrong!',
+				error.message,
+				[
+					{text: 'Ok' }
+				],
+				{ cancelable: true }
+			)
 		})
 
 	}
 
 	_renderForm = () => {
+		const { navigate } = this.props.navigation
 		//First landing page for creating a recipe, it includes the basic data info such as:
 		// Name, Author, Snippet, Diet, Difficulty, Duration.
 
@@ -356,7 +366,7 @@ _submitToFirebase = () => {
 						<TouchableOpacity style={styles.buttonContainer}  onPress={this._stepBackToStageTwo}>
 							<Text style={styles.buttonText}>back</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.buttonContainer}  onPress={this._submitRecipeSteps}>
+						<TouchableOpacity style={styles.buttonContainer} onPress={this._submitRecipeSteps}>
 							<Text style={styles.buttonText}>Preview</Text>
 						</TouchableOpacity>
 					</View>
@@ -371,7 +381,7 @@ _submitToFirebase = () => {
 						<TouchableOpacity style={styles.buttonContainer}  onPress={this._stepBackToStageThree}>
 							<Text style={styles.buttonText}>back</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.buttonContainer}  onPress={this._submitPreviewedRecipe}>
+						<TouchableOpacity style={styles.buttonContainer}   navitgate={navigate} onPress={this._submitPreviewedRecipe}>
 							<Text style={styles.buttonText}>Submit Recipe</Text>
 						</TouchableOpacity>
 					</View>
@@ -416,11 +426,10 @@ const styles = StyleSheet.create({
 	},
 	stage1ButtonContainer: {
 		padding: 10,
-		marginLeft: '50%',
 		marginTop: 20,
 		backgroundColor: '#2980b6',
 		// paddingVertical: 15,
-		width: "35%",
+		width: "100%",
 	},
 	buttonContainer: {
 		marginBottom: 10,
@@ -431,6 +440,8 @@ const styles = StyleSheet.create({
 		width: "40%",
 	},
 	buttonText: {
+		fontWeight: 'bold',
+		textAlign: "center",
 		color: '#505050',
 	},
 	backGround: {
