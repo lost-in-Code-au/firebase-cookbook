@@ -54,14 +54,8 @@ class HomeScreen extends React.Component {
 		headerRight: <NewRecipeButton navigation={navigation} />
 	})
 
-	componentDidMount = () => {
-		
+	componentDidMount = () => {	
 		dataBaseRequest('recipes').then((data) => {
-			console.log(data)
-			// const data = snapshot.val()
-			// arr = [data]
-			// console.log(data)
-			
 			this.setState({
 				...this.state,
 				recipes: data,
@@ -70,18 +64,6 @@ class HomeScreen extends React.Component {
 		}).catch((error) => {
 			console.log(error.message)
 		})
-
-		// dataBaseRequest('users').then((snapshot) => {
-		// 	const data = snapshot.val()
-			
-		// 	this.setState({
-		// 		...this.state,
-		// 		users: data,
-		// 	})
-		// }).catch((error) => {
-		// 	console.log(error.message)
-		// })
-		
 	}
 
 	_shortenSnippet(snippet) {

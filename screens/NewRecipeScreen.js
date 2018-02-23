@@ -21,7 +21,7 @@ var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
 
 //Test identifier to ref without text in state.
-const DIETS = ['No Diets', 'Vegeterian']
+const DIETS = ['No Diets', 'Vegeterian', 'Gluten Free', 'Dairy Free', 'Gluten Free & Dairy Free', 'Vegan']
 
 //abstracted fucntions
 // const CustomTextInput = ({ maxLength, ref, submit, onChange, autoCorrect, returnKey, placeHolder, value}) => (
@@ -51,7 +51,6 @@ const DIETS = ['No Diets', 'Vegeterian']
 // 	
 
 const submitionAlert = (options, callback) => {
-	console.log('hellow!')
 	const isfalse = (currentValue) => {
 		return currentValue
 	}//needs to be tested a bit
@@ -85,6 +84,7 @@ class NewRecipeScreen extends React.Component {
 	constructor() {
 		super()
 		this.state = {
+			data: null,
 
 			//setup
 			error: null,
@@ -95,14 +95,13 @@ class NewRecipeScreen extends React.Component {
 				name: null,
 				author: null,
 				snippet: null,
-				diet: 0,
+				diet: null,
 				difficulty: 1,
 				duration: null,
 			},//move all of stage one into here
-			ingredients: { id: 0,
-			value: 'food' },//move all of stage two into here
-			steps: { step: 0,
-			value: 'here is a step' },//move all of stage three into here
+			ingredients: [{ value: 'food' }],//move all of stage two into here
+			steps: [{ step: 0,
+			value: 'here is a step' }],
 			picture: 'http://via.placeholder.com/300.png/09f/fff',
 			
 			//flags
@@ -119,8 +118,7 @@ class NewRecipeScreen extends React.Component {
 	})
 
 	componentDidMount() {
-		dataBaseRequest('dietTypes').then((snapshot) => {
-			let data = snapshot.val()
+		dataBaseRequest('dietTypes').then((data) => {
 			data['Cancel'] = 'cancel'
 			this.setState({
 				...this.state,
@@ -132,15 +130,19 @@ class NewRecipeScreen extends React.Component {
 		})
 	}
 
+	_checkDietInput = () => {
+		if(!this.state.recipe.diet) { return 'Diet type' } else {return this.state.recipe.diet }
+	}
+
 	_dietActionSheet = () => {
-		// const options = this.state.dietTypes
+		const options = this.state.dietTypes
 		
 
-		customActionSheet(DIETS, (index) => {
+		customActionSheet(options, (index) => {
 			this.setState({...this.state, recipe: 
 				{
 					...this.state.recipe,
-					diet: DIETS[index]
+					diet: options[index]
 				}
 			})
 		})
@@ -205,22 +207,31 @@ class NewRecipeScreen extends React.Component {
 	}
 //End of Refactor 0.2 <==================================================================
 
-	_submitToFirebase = () => {
+_submitPreviewedRecipe = () => {
+	console.log(this._submitToFirebase)
+	
+	Alert.alert(
+		'Hold your horses!',
+		'Are you sure your happy with the preview?',
+		[
+			{text: 'Cancel', onPress: () => {return}},
+			{text: 'OK', onPress: () => {this._submitToFirebase}}
+		],
+		{ cancelable: true }
+	)
+}
+
+_submitToFirebase = () => {
 		const recipe = this.state.recipe
 		const ingredients = this.state.ingredients
 		const steps = this.state.steps
 
 		const difficulty = parseInt(recipe.difficulty)
-		console.log(difficulty)
 		const duration = parseInt(recipe.duration)
-		console.log(duration)
-
-		const newKey = createKeyForPostFrom('recipes')
 		
-		// const newId = uuid()
-		// let newRecipe = {}
+		let newRecipe = {}
 		obj = {
-			_id: newKey,
+			_id: createKeyForPostFrom('recipes'),
 			name: recipe.name,
 			author: recipe.author,
 			snippet: recipe.snippet,
@@ -231,30 +242,11 @@ class NewRecipeScreen extends React.Component {
 			instructions: steps,
 			picture: this.state.picture
 		}
-  		// newRecipe[newKey] = obj
-		createNewObjIn('recipes', obj)
-	}
+		createNewObjIn('recipes', obj).catch((error) => {
+			console.log(error.message)
+		})
 
-	// _submitToFirebase = () => {
-	// 	// const s = this.state
-	// 	// const newKey = createKeyForPost('recipes')
-		
-	// 	// const newId = uuid()
-	// 	let updates = {}
-	// 	newRecipe = {
-	// 		_id: newId,
-	// 		name: s.name,
-	// 		author: s.author,
-	// 		snippet: s.snippet,
-	// 		difficulty: s.difficulty,
-	// 		duration: s.duration,
-	// 		ingredients: s.ingredients,
-	// 		instructions: s.instructions,
-	// 		picture: s.picture
-	// 	}
-  	// 	updates[newKey] = newRecipe
-	// 	createRecipe('recipes', updates)
-	// }
+	}
 
 	_renderForm = () => {
 		//First landing page for creating a recipe, it includes the basic data info such as:
@@ -321,7 +313,7 @@ class NewRecipeScreen extends React.Component {
 									placeholderTextColor='#505050' />
 
 								<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._dietActionSheet}>
-									<Text style={styles.buttonText}>{DIETS[this.state.recipe.diet]}</Text>
+									<Text style={styles.buttonText}>{this.state.recipe.diet ? this.state.recipe.diet :  'Add diet type' }</Text>
 								</TouchableOpacity> 
 								{/* issue: DIETS[this.state.recipe.diet] not showing once set on change	 */}
 
@@ -379,7 +371,7 @@ class NewRecipeScreen extends React.Component {
 						<TouchableOpacity style={styles.buttonContainer}  onPress={this._stepBackToStageThree}>
 							<Text style={styles.buttonText}>back</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.buttonContainer}  onPress={this._submitToFirebase}>
+						<TouchableOpacity style={styles.buttonContainer}  onPress={this._submitPreviewedRecipe}>
 							<Text style={styles.buttonText}>Submit Recipe</Text>
 						</TouchableOpacity>
 					</View>
