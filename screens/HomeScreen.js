@@ -82,8 +82,6 @@ class HomeScreen extends React.Component {
 	}
 
 	_renderHomePage = () => {
-		console.log(typeof this.state.recipes)
-		
 		const { navigate } = this.props.navigation
 		const text = this.state.loading ? 'Loading...' : 'Loaded'
 
