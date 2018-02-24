@@ -7,64 +7,27 @@
     "diet" : "optional VG",
     "difficulty" : 2,
     "duration" : 45,
-    "ingredients" : [ {
-      "id" : 0,
-      "value" : "1/2 chile de arbol or dried chilli flakes; optional"
-    }, {
-      "id" : 1,
-      "value" : "3 tbsp of Olive oil"
-    }, {
-      "id" : 2,
-      "value" : "75g pancetta or lardons, cut into cubes"
-    }, {
-      "id" : 3,
-      "value" : "1 large Oinon"
-    }, {
-      "id" : 4,
-      "value" : "1 Carrot"
-    }, {
-      "id" : 5,
-      "value" : "1/2 Fennel bulb"
-    }, {
-      "id" : 6,
-      "value" : "2 Garlic cloves"
-    }, {
-      "id" : 7,
-      "value" : "Salt and Pepper"
-    }, {
-      "id" : 8,
-      "value" : "200g tinned Tomatoes(about half a can)"
-    }, {
-      "id" : 9,
-      "value" : "30g Parmesan; optional"
-    }, {
-      "id" : 10,
-      "value" : "1 Bay leaf"
-    }, {
-      "id" : 11,
-      "value" : "1 sprig of Rosemary"
-    }, {
-      "id" : 12,
-      "value" : "200g of Puy or Lentils"
-    }, {
-      "id" : 13,
-      "value" : "1.4l vegetable stock"
-    }, {
-      "id" : 14,
-      "value" : "250g short Penne"
-    }, {
-      "id" : 15,
-      "value" : "150g Kale"
-    }, {
-      "id" : 16,
-      "value" : "100g single cream or for a non-dariy coconut milk"
-    }, {
-      "id" : 17,
-      "value" : "Hand full of parsley"
-    }, {
-      "id" : 18,
-      "value" : "A bottle of white wine, to server with ;)"
-    } ],
+    "ingredients" : [
+      "1/2 chile de arbol or dried chilli flakes; optional",
+      "3 tbsp of Olive oil",
+      "75g pancetta or lardons, cut into cubes",
+      "1 large Oinon",
+      "1 Carrot",
+      "1/2 Fennel bulb",
+      "2 Garlic cloves",
+      "Salt and Pepper",
+      "200g tinned Tomatoes(about half a can)",
+      "30g Parmesan; optional",
+      "1 Bay leaf",
+      "1 sprig of Rosemary",
+      "200g of Puy or Lentils",
+      "1.4l vegetable stock",
+      "250g short Penne",
+      "150g Kale",
+      "100g single cream or for a non-dariy coconut milk",
+      "Hand full of parsley",
+      "A bottle of white wine, to server with ;)"
+    ],
     "instructions" : [ {
       "step" : 0,
       "value" : "Warm up a large deep pan over a meduim flame, then gently toast the chile, if using, for 30-40 sec, until aromatic.\r\n"
@@ -108,40 +71,19 @@
     "diet" : "VG",
     "difficulty" : 3,
     "duration" : 25,
-    "ingredients" : [ {
-      "id" : 0,
-      "value" : "200g Fusilli"
-    }, {
-      "id" : 1,
-      "value" : "150g fresh Salmon"
-    }, {
-      "id" : 2,
-      "value" : "1 clove of Garlic"
-    }, {
-      "id" : 3,
-      "value" : "Salt & Pepper"
-    }, {
-      "id" : 4,
-      "value" : "100g Zucchini"
-    }, {
-      "id" : 5,
-      "value" : "70g Extra Olive oil"
-    }, {
-      "id" : 6,
-      "value" : "30g Pine nuts"
-    }, {
-      "id" : 7,
-      "value" : "10g Almonds"
-    }, {
-      "id" : 8,
-      "value" : "10g Basil"
-    }, {
-      "id" : 9,
-      "value" : "30g Parmesan(optional)"
-    }, {
-      "id" : 10,
-      "value" : "A bottle of white wine"
-    } ],
+    "ingredients" : [ 
+      "200g Fusilli",
+      "150g fresh Salmon",
+      "1 clove of Garlic",
+      "Salt & Pepper",
+      "100g Zucchini",
+      "70g Extra Olive oil",
+      "30g Pine nuts",
+      "10g Almonds",
+      "10g Basil",
+      "30g Parmesan(optional)",
+      "A bottle of white wine"
+    ],
     "instructions" : [ {
       "step" : 0,
       "value" : "Wash the Zucchini cut off the extremities and, with the help of a grater, cut them into chunks.\r\n"
@@ -182,22 +124,13 @@
     "diet" : "VG",
     "difficulty" : 1,
     "duration" : 5,
-    "ingredients" : [ {
-      "id" : 0,
-      "value" : "1 slice Whole grain bread"
-    }, {
-      "id" : 1,
-      "value" : "2 meduim sized Eggs"
-    }, {
-      "id" : 2,
-      "value" : "1/2 Avocado"
-    }, {
-      "id" : 3,
-      "value" : "1 massive chunk of Feta(let's be real)"
-    }, {
-      "id" : 4,
-      "value" : "Hot sauce, Salt & Pepper"
-    } ],
+    "ingredients" : [
+      "1 slice Whole grain bread",
+      "2 meduim sized Eggs",
+      "1/2 Avocado",
+      "1 massive chunk of Feta(let's be real)",
+      "Hot sauce, Salt & Pepper"
+    ],
     "instructions" : [ {
       "step" : 0,
       "value" : "Toast the bread as desired.\r\n"
@@ -226,49 +159,22 @@
     "diet" : "Red Meat",
     "difficulty" : 2,
     "duration" : 60,
-    "ingredients" : [ {
-      "id" : 0,
-      "value" : "2 teaspoons of Salt"
-    }, {
-      "id" : 1,
-      "value" : "1 teaspoon Turmeric"
-    }, {
-      "id" : 2,
-      "value" : "3 teaspoons of Garam"
-    }, {
-      "id" : 3,
-      "value" : "2 teaspoons of ground Coriander"
-    }, {
-      "id" : 4,
-      "value" : "2 teaspoons of ground Cumin"
-    }, {
-      "id" : 5,
-      "value" : "1 teaspoons of ground Chilli(2 if you like it hot)"
-    }, {
-      "id" : 6,
-      "value" : "600-700g of Lamb in bit sized pieces"
-    }, {
-      "id" : 7,
-      "value" : "2 medium Onions finely chopped"
-    }, {
-      "id" : 8,
-      "value" : "2 cloves of Garlic finely chopped"
-    }, {
-      "id" : 9,
-      "value" : "1 teaspoon of fresh Ginger"
-    }, {
-      "id" : 10,
-      "value" : "400g tin chopped Tomatoes"
-    }, {
-      "id" : 11,
-      "value" : "2 dessert spoons plain natural Yogurt"
-    }, {
-      "id" : 12,
-      "value" : "3 tablespoons of fresh Coriander, chopped"
-    }, {
-      "id" : 12,
-      "value" : "enough basmati rice for 4-6 people depending on amount of food cooked"
-    } ],
+    "ingredients" : [ 
+      "2 teaspoons of Salt",
+      "1 teaspoon Turmeric",
+      "3 teaspoons of Garam",
+      "2 teaspoons of ground Coriander",
+      "2 teaspoons of ground Cumin",
+      "1 teaspoons of ground Chilli(2 if you like it hot)",
+      "600-700g of Lamb in bit sized pieces",
+      "2 medium Onions finely chopped",
+      "2 cloves of Garlic finely chopped",
+      "1 teaspoon of fresh Ginger",
+      "400g tin chopped Tomatoes",
+      "2 dessert spoons plain natural Yogurt",
+      "3 tablespoons of fresh Coriander, chopped",
+      "enough basmati rice for 4-6 people depending on amount of food cooked"
+    ],
     "instructions" : [ {
       "step" : 0,
       "value" : "Note: Use a meduim heart to high theoughout.\r\n"
@@ -300,43 +206,21 @@
     "diet" : "flexitarian",
     "difficulty" : 3,
     "duration" : 40,
-    "ingredients" : [ {
-      "id" : 0,
-      "value" : "1 Echalion Shallot"
-    }, {
-      "id" : 1,
-      "value" : "1 Garlic Clove"
-    }, {
-      "id" : 2,
-      "value" : "1 Fennel"
-    }, {
-      "id" : 3,
-      "value" : "1 pack of Asparagus"
-    }, {
-      "id" : 4,
-      "value" : "A small hand full of Sun-dried Tomatoes(30g)"
-    }, {
-      "id" : 5,
-      "value" : "750ml of Water"
-    }, {
-      "id" : 6,
-      "value" : "1 Vegetable stock pot"
-    }, {
-      "id" : 7,
-      "value" : "1 tablespoon of Tomato Puree(15g)"
-    }, {
-      "id" : 8,
-      "value" : "1 and a half Arborio Rice(175g)"
-    }, {
-      "id" : 9,
-      "value" : "1 tablespoon of balsamic Vinegar"
-    }, {
-      "id" : 10,
-      "value" : "small amount of Hard Italian Cheese(40g)"
-    }, {
-      "id" : 11,
-      "value" : "small amount of Netherend Butter(15g)"
-    } ],
+    "ingredients" : [ 
+      "1 Echalion Shallot",
+    
+      "1 Garlic Clove",
+      "1 Fennel",
+      "1 pack of Asparagus",
+      "A small hand full of Sun-dried Tomatoes(30g)",
+      "750ml of Water",
+      "1 Vegetable stock pot",
+      "1 tablespoon of Tomato Puree(15g)",
+      "1 and a half Arborio Rice(175g)",
+      "1 tablespoon of balsamic Vinegar",
+      "small amount of Hard Italian Cheese(40g)",
+      "small amount of Netherend Butter(15g)"
+    ],
     "instructions" : [ {
       "step" : 0,
       "value" : "Prep the veggies. \r\n Halve, peel and chop the shallot into 1/2 cm pieces. Peel and grate the garlic (or use a garlic press). Cut the Fennel in half lengthways, remove the tough triangular core and then cut into 1cm thick slices. Chop the bottom 1cm off the Asparagus and discard. Halve the Asparagus widthways. Chop the Sun-dried tomatoes into thin strips.\r\n"
@@ -365,55 +249,24 @@
     "diet" : "flexitarian",
     "difficulty" : 4,
     "duration" : 45,
-    "ingredients" : [ {
-      "id" : 0,
-      "value" : "1 can of chickpeas"
-    }, {
-      "id" : 1,
-      "value" : "1 Aubergine(Egg plant for us normal people)"
-    }, {
-      "id" : 2,
-      "value" : "1 Brown Onion"
-    }, {
-      "id" : 3,
-      "value" : "1 Courgette(A.K.A they Zucchini)"
-    }, {
-      "id" : 4,
-      "value" : "1 Yellow Pepper"
-    }, {
-      "id" : 5,
-      "value" : "1 Garlic clovers"
-    }, {
-      "id" : 6,
-      "value" : "Fresh Oregano"
-    }, {
-      "id" : 7,
-      "value" : "1 and 1/2 tablespoons Tomato Puree"
-    }, {
-      "id" : 8,
-      "value" : "Vegetable Stock pot"
-    }, {
-      "id" : 9,
-      "value" : "1 Cinnamon Stick"
-    }, {
-      "id" : 10,
-      "value" : "Red Split Lentils"
-    }, {
-      "id" : 11,
-      "value" : "1 tablespoon of Worcestershire Sauce"
-    }, {
-      "id" : 12,
-      "value" : "Diced Tomatoes(1 tin)"
-    }, {
-      "id" : 13,
-      "value" : "1 Ciabatta"
-    }, {
-      "id" : 14,
-      "value" : "1 small pot Creme Fraiche"
-    }, {
-      "id" : 15,
-      "value" : "Hard Italian Cheese(40g)"
-    } ],
+    "ingredients" : [
+      "1 can of chickpeas",
+      "1 Aubergine(Egg plant for us normal people)",
+      "1 Brown Onion",
+      "1 Courgette(A.K.A they Zucchini)",
+      "1 Yellow Pepper",
+      "1 Garlic clovers",
+      "Fresh Oregano",
+      "1 and 1/2 tablespoons Tomato Puree",
+      "Vegetable Stock pot",
+      "1 Cinnamon Stick",
+      "Red Split Lentils",
+      "1 tablespoon of Worcestershire Sauce",
+      "Diced Tomatoes(1 tin)",
+      "1 Ciabatta",
+      "1 small pot Creme Fraiche",
+      "Hard Italian Cheese(40g)"
+    ],
     "instructions" : [ {
       "step" : 0,
       "value" : "Prep the Veggies.\r\n Cut the Aubergine into 1cm thick slices. Halve, peel and chop the Onion into 1/2cm pieces. Remove the top and bottom from the Courgette and chop into 1/2cm chunks. Halve then remove the core into 1cm pieces. Peel and grate all but one garlic clove (or use a garlic press). Cut the remaining garlic in half. Pick the Oregano leaves from their stalks and finely chop (discard the stalks).\r\n"
@@ -442,37 +295,18 @@
     "diet" : "VG",
     "difficulty" : 1,
     "duration" : 32,
-    "ingredients" : [ {
-      "id" : 0,
-      "value" : "1 can of chickpeas"
-    }, {
-      "id" : 1,
-      "value" : "2 tablespoons of Olive oil"
-    }, {
-      "id" : 2,
-      "value" : "1 Lemon or 4 tablespoons of Lemon juice"
-    }, {
-      "id" : 3,
-      "value" : "1 and a half of Garlic clovers"
-    }, {
-      "id" : 4,
-      "value" : "3/4 teaspoon of Cumin"
-    }, {
-      "id" : 5,
-      "value" : "1 and a half of teaspoons of Salt"
-    }, {
-      "id" : 6,
-      "value" : "1 tablespoon of Tahini"
-    }, {
-      "id" : 7,
-      "value" : "3/4 teaspoon of Paprika"
-    }, {
-      "id" : 8,
-      "value" : "1/2 teaspoon of Chilli powder"
-    }, {
-      "id" : 9,
-      "value" : "1 tablespoon of Hot sauce/Saracha"
-    } ],
+    "ingredients" : [ 
+      "1 can of chickpeas",    
+      "2 tablespoons of Olive oil",
+      "1 Lemon or 4 tablespoons of Lemon juice",
+      "1 and a half of Garlic clovers",
+      "3/4 teaspoon of Cumin",
+      "1 and a half of teaspoons of Salt",
+      "1 tablespoon of Tahini",
+      "3/4 teaspoon of Paprika",
+      "1/2 teaspoon of Chilli powder",
+      "1 tablespoon of Hot sauce/Saracha"
+    ],
     "instructions" : [ {
       "step" : 0,
       "value" : "Drain can of chickpeas but leave some of the juice.\r\n"

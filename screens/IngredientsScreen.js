@@ -31,8 +31,8 @@ class IngredientsScreen extends React.Component {
         <FlatList
           data={item.ingredients}
           renderItem={({item: ingredient}) => (
-            <View key={ingredient.id} style={styles.recipeCard}>
-              <Text style={[styles.name, styles.font]}>{ingredient.value}</Text>
+            <View key={ingredient.index} style={styles.recipeCard}>
+              <Text style={[styles.name, styles.font]}>{ingredient}</Text>
             </View>
           )}
           ListHeaderComponent={() => (
