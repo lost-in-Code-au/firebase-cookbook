@@ -104,7 +104,7 @@ class NewRecipeScreen extends React.Component {
 				duration: null,
 			},//move all of stage one into here
 			ingredients: [''],//create a check to prevent ininate creating of objests
-			steps: [{step: 0, value: "here's what you do"}],
+			steps: [{}],
 			picture: 'http://via.placeholder.com/300.png/09f/fff',
 			
 			//flags
@@ -203,44 +203,71 @@ class NewRecipeScreen extends React.Component {
 	}
 //End of Refactor 0.2 <==================================================================
 
-_ingredentBuilder = () => {
-	const build = this.state.ingredients
+	_ingredentBuilder = () => {
+		const build = this.state.ingredients
 
-	return build.map((value, index) => (								
-		<TextInput 
-			style = {styles.textInputContainer} 
-			maxLength={15}
-			ref={(input)=> this.foodInput = input} 
-			onSubmitEditing={() => this.foodInput.focus()} 
-			onChangeText={(foodInput) => this.setState({
-				...this.state,
-				ingredients: this.state.ingredients.map((_, inputIndex) => inputIndex === index ? foodInput : _)
-			})}
-			autoCorrect={true} 
-			returnKeyType='next'
-			placeholder='Add name of ingredient' 
-			value={value}
-			placeholderTextColor='#505050' />
-	))
+		return build.map((value, index) => (								
+			<TextInput 
+				style = {styles.textInputContainer} 
+				maxLength={30}
+				ref={(input)=> this.foodInput = input} 
+				onSubmitEditing={() => this.foodInput.focus()} 
+				onChangeText={(foodInput) => this.setState({
+					...this.state,
+					ingredients: this.state.ingredients.map((_, inputIndex) => inputIndex === index ? foodInput : _)
+				})}
+				autoCorrect={true} 
+				keyExtractor={(index) => index}
+				returnKeyType='next'
+				placeholder='Add name of ingredient' 
+				value={value}
+				placeholderTextColor='#505050' />
+		))
+	}	
+
+	_addIngredentTextInput = () => {
+		this.setState({ ...this.state, ingredients: [...this.state.ingredients, ''] })
+	}
+
+	_stepsBuilder = () => {
+		const build = this.state.steps
+
+		return build.map((value, index) => (								
+			<TextInput 
+				style = {styles.textInputContainer} 
+				maxLength={200}
+				ref={(input)=> this.stepInput = input} 
+				onSubmitEditing={() => this.stepInput.focus()} 
+				onChangeText={(stepInput) => this.setState({
+					...this.state,
+					steps: this.state.steps.map((_, inputIndex) => inputIndex === index ? stepInput : _)
+				})}
+				autoCorrect={true} 
+				keyExtractor={(index) => index}
+				returnKeyType='next'
+				placeholder='Add new step' 
+				value={value}
+				placeholderTextColor='#505050' />
+		))
+	}
+
+	_addStepsTextInput = () => {
+		this.setState({ ...this.state, steps: [...this.state.steps, ''] })
+	}
+
+	_submitPreviewedRecipe = () => {
+		Alert.alert(
+			'Hold your horses!',
+			'Are you sure your happy with the preview?',
+			[
+				{text: 'Cancel' },
+				{text: 'OK', onPress: this._submitToFirebase}
+			],
+			{ cancelable: true }
+		)
 }
 
-_addTextInput = () => {
-	this.setState({ ...this.state, ingredients: [...this.state.ingredients, ''] })
-}
-
-_submitPreviewedRecipe = () => {
-	Alert.alert(
-		'Hold your horses!',
-		'Are you sure your happy with the preview?',
-		[
-			{text: 'Cancel' },
-			{text: 'OK', onPress: this._submitToFirebase}
-		],
-		{ cancelable: true }
-	)
-}
-
-_submitToFirebase = () => {
+	_submitToFirebase = () => {
 		
 		const recipe = this.state.recipe
 		const ingredients = this.state.ingredients
@@ -375,11 +402,11 @@ _submitToFirebase = () => {
 						<ImageBackground style={styles.backGround}
 							source={require('../assets/images/seigaiha.png')}>
 							<View style={styles.page}>
-								<Text>Hello and welcome to stage 2, please input the ingredients that are required for your recipe</Text>
+								<Text>Hello and welcome to the Ingredents stage, please input the ingredients that are required for your recipe</Text>
 								
 								{this._ingredentBuilder()}
 
-									<TouchableOpacity style={styles.addIngredent}  onPress={this._addTextInput}>
+									<TouchableOpacity style={styles.addIngredent}  onPress={this._addIngredentTextInput}>
 										<Text style={styles.addIngredentText}>+</Text>
 									</TouchableOpacity>
 								
@@ -405,13 +432,21 @@ _submitToFirebase = () => {
 
 
 		else if (!this.state.thridStageSubmit) {
+			console.log(this.state.steps)
 			return (
 				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
 					<ScrollView >
 						<ImageBackground style={styles.backGround}
 							source={require('../assets/images/seigaiha.png')}>
 							<View style={styles.page}>
-								<Text>Hello and welcome to stage 3, please input the steps that are required for your recipe</Text>
+								<Text>Hello and welcome to the Instructions stage, please input the steps that are required for your recipe</Text>
+								
+								{this._stepsBuilder()}
+
+								<TouchableOpacity style={styles.addIngredent}  onPress={this._addStepsTextInput}>
+									<Text style={styles.addIngredentText}>+</Text>
+								</TouchableOpacity>
+
 								<View style={styles.stageButtons}>
 									<TouchableOpacity style={styles.buttonContainer}  onPress={this._stepBackToStageTwo}>
 										<Text style={styles.buttonText}>back</Text>

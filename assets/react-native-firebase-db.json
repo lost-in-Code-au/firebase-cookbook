@@ -208,7 +208,6 @@
     "duration" : 40,
     "ingredients" : [ 
       "1 Echalion Shallot",
-    
       "1 Garlic Clove",
       "1 Fennel",
       "1 pack of Asparagus",
@@ -323,7 +322,50 @@
     "name" : "Joel's Award Winning Hummus",
     "picture" : "https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/joelHummus.jpg?alt=media&token=cb5cd2ef-b8ff-4bc9-abf2-ab45ab568dfc",
     "snippet" : "3 time winner, HOT HUMMUS you'll be loving it.\r\n"
-  } ],
+  }, {
+    "_id" : "412361285230984503425",
+    "author" : "smittenkitchen",
+    "diet" : "VG",
+    "difficulty" : 2,
+    "duration" : 45,
+    "ingredients" : [ 
+      "CAKE",
+      "1 1/2 cups (195 grams) all-purpose flour",
+      "3/4 cup (60 grams) unsweetened cocoa, any variety, sifted if lumpy",
+      "1 1/2 teaspoons baking soda",
+      "1/2 teaspoon fine sea salt",
+      "3/4 cup (150 grams) granulated sugar",
+      "3/4 cup (145 grams) dark brown sugar",
+      "1/2 cup (120 ml) olive oil",
+      "1 1/2 cups (355 ml) water or coffee",
+      "1 tablespoon (15 ml) cider vinegar or white vinegar",
+      "GLAZE",
+      "3/4 cup (135 grams) semisweet chocolate chips",
+      "2 tablespoons (10 grams) cocoa powder",
+      "3 tablespoons (45 ml) olive oil",
+      "1 tablespoon (20 grams) light corn syrup (for shine)",
+      "A pinch or two of flaky sea salt"
+    ],
+    "instructions" : [ {
+      "step" : 0,
+      "value" : "Make cake: Heat oven to 350 degrees F. Line the bottom of 9-inch round cake pan with a fitted round of parchment paper and coat the bottoms and sides with nonstick cooking spray..\r\n"
+    }, {
+      "step" : 1,
+      "value" : "Whisk together flour, cocoa, baking soda, salt and granulated sugar in the bottom of a large mixing bowl. Add brown sugar and olive oil, and whisk to combine. Add water and vinegar and whisk until smooth.\r\n"
+    }, {
+      "step" : 2,
+      "value" : "Pour into prepared pan. Bake for 30 to 35 minutes, or until the top is springy and a tester inserted in the center comes out with just a few sticky crumbs (but not wet or loose batter). Cool the cake in the pan on a wire rack for 10 minutes, then cut around it with a knife to ensure it is loosened and flip it out onto a cooling rack to cool the rest of the way.\r\n"
+    }, {
+      "step" : 3,
+      "value" : "Make glaze: Combine chocolate, cocoa powder, olive oil, corn syrup, and salt in a medium bowl and microwave to melt, in 15 to 30 second increments, stirring between each until just melted. Whisk until smooth. Pour over completely cooled cake and use spatula to gently nudge it down the sides.\r\n"
+    }, {
+      "step" : 4,
+      "value" : "Cake keeps: At room temperature for 2 to 3 days and up to a week in the fridge. On day 4 in the fridge, ours was as moist as day one, basically a miracle.\r\n"
+    }  ],
+    "name" : "Chocolate olive oil cake",
+    "picture" : "https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/olivcake.jpg?alt=media&token=fa3eb496-fc56-4799-9a4d-c5146005707d",
+    "snippet" : "Dairy free, tasty Chocolate cake.\r\n"
+  }  ],
   "dietTypes" : {
     "Dairy Free" : "Dairy Free",
     "Gluten Free" : "Gluten Free",
@@ -348,19 +390,5 @@
       "seen" : false
     } ],
     "name" : "Jeol"
-  }, {
-    "added_recipes" : [ {
-      "recipes_id" : "0"
-    } ],
-    "favourite_recipes" : [ {
-      "recipes_id" : "5a0c45b8765c7dcd19286700"
-    } ],
-    "id" : 2,
-    "messages" : [ {
-      "id" : "6587578548",
-      "message" : "Hello Reece",
-      "seen" : false
-    } ],
-    "name" : "Reece"
-  } ]
+  }]
 }
