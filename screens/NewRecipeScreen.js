@@ -10,11 +10,12 @@ import {
 	FlatList,
 	TouchableOpacity, 
 	KeyboardAvoidingView,
-	Button, Alert
+	Button, Alert,
+	Image
 } from 'react-native'
 import uuid from 'uuid'//keyGen
 
-import firebase, { dataBaseRequest, createKeyForPostFrom, createNewObjIn } from './Utils/FirebaseUtil'
+import firebase, { dataBaseRequest, createKeyForPostFrom, createNewObjIn } from '../components/Utils/FirebaseUtil'
 
 var ScreenHeight = Dimensions.get("window").height
 var ScreenWidth = Dimensions.get("window").Width
@@ -102,6 +103,7 @@ class NewRecipeScreen extends React.Component {
 				diet: null,
 				difficulty: null,
 				duration: null,
+				rating: null,
 			},//move all of stage one into here
 			ingredients: [''],//create a check to prevent ininate creating of objests
 			steps: [{}],
@@ -287,7 +289,8 @@ class NewRecipeScreen extends React.Component {
 			diet: recipe.diet,
 			ingredients: ingredients,
 			instructions: steps,
-			picture: this.state.picture
+			picture: this.state.picture,
+			rating: [this.state.recipe.rating]
 		}
 		createNewObjIn('recipes', obj).then(()=>{
 			navigate('home')
@@ -305,14 +308,25 @@ class NewRecipeScreen extends React.Component {
 
 	}
 
+	//+======================= Preview functions =========================
+	_shortenSnippet(snippet) {
+		if(snippet.length > MAX_SNIPPET_LENGTH){
+			snippet = snippet.slice(0, MAX_SNIPPET_LENGTH-5) + "..."
+		}
+		return snippet
+	}
+
+	_setImage(url) {
+		if(!url) {
+			return 'https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/placeholder.jpg?alt=media&token=7a619092-d46f-4162-bea1-4be1f6a5c41f'
+		} else {
+			return url
+		}
+	}
+	//+=====================================================================
+
 	_renderForm = () => {
 		const { navigate } = this.props.navigation
-
-//Refactor 0.3 <=========================================================
-// some of these components are very simlair and could be put into one dynamic component
-// components by grouping: 	
-// 		TextInput: {name, author, snippet, duration}	
-// 		ActoinSheet: {diet, difficulty}
 		if(!this.state.firstStageSubmit) {			
 			return (
 				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
@@ -385,17 +399,7 @@ class NewRecipeScreen extends React.Component {
 					</ScrollView>
 				</KeyboardAvoidingView>
 			)
-		}//TODO: Build TextInput step/ingredent builder
-
-
-
-//================================================> stage two <=========================================
-
-
-
-		// will need a func that records the index of each created textInput
-
-		else if (!this.state.secoundStageSubmit) {
+		} else if (!this.state.secoundStageSubmit) {
 			return (
 				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
 					<ScrollView >
@@ -423,15 +427,7 @@ class NewRecipeScreen extends React.Component {
 					</ScrollView>
 				</KeyboardAvoidingView> 
 			)
-		}
-
-
-
-
-//================================================> stage three <=========================================
-
-
-		else if (!this.state.thridStageSubmit) {
+		} else if (!this.state.thridStageSubmit) {
 			console.log(this.state.steps)
 			return (
 				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
@@ -470,7 +466,23 @@ class NewRecipeScreen extends React.Component {
 						<ImageBackground style={styles.backGround}
 							source={require('../assets/images/seigaiha.png')}>
 						<View style={styles.page}>
-							<Text>Hello Preview</Text>
+							<Text>Preview of how your recipe will look</Text>
+							<View style={styles.recipeCard}>
+								<Image
+								style={styles.recipeImage}
+								source={{uri: this._setImage(this.state.picture) }}
+								/>
+								<View style={styles.textPosition}>
+								<View style={styles.overlaptopText}>
+									<Text style={[styles.infoText, styles.font]}>Difficulty: {this.state.recipe.difficulty}/5</Text>
+									<Text style={[styles.infoText, styles.font]}>Takes: {this.state.recipe.duration}mins</Text>
+								</View>
+								<View style={styles.overlapbottomText}>
+									<Text style={[styles.name, styles.font]}>{this.state.recipe.name}</Text>
+									<Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(this.state.recipe.snippet)}</Text>
+								</View>
+								</View>
+							</View>
 							<View style={styles.stageButtons}>
 								<TouchableOpacity style={styles.buttonContainer}  onPress={this._stepBackToStageThree}>
 									<Text style={styles.buttonText}>back</Text>
@@ -569,6 +581,39 @@ const styles = StyleSheet.create({
 	},
 	page: {
 		backgroundColor: "transparent",
+	},
+	recipeCardContainer: {
+		backgroundColor: "transparent",
+		maxWidth: ScreenWidth,
+		marginTop: 10,
+		marginBottom: 10,
+	},
+	recipeCard: {
+		backgroundColor: "transparent",
+		width: "100%",
+		height: 300,
+	},
+	name: {
+		fontWeight: "bold",
+		margin: 5,
+	},
+	snippet: {
+		backgroundColor: "transparent",
+		fontWeight: "bold",
+		margin: 5,
+	},
+	infoText: {
+		backgroundColor: "transparent",
+		fontWeight: "bold",
+		flex: 1,
+		textAlign: "center",
+		paddingBottom: 8,
+	},
+	recipeImage: {
+		backgroundColor: "transparent",
+		width: ScreenWidth,
+		height: 300,
+		opacity: 0.9,
 	}
 })
 

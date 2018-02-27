@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { Button } from 'react-native-elements'
 
-import firebase, { authConfigLocal, userLogin } from './Utils/FirebaseUtil'
+import firebase, { authConfigLocal, userLogin } from '../components/Utils/FirebaseUtil'
 
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 

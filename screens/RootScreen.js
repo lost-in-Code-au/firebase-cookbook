@@ -1,6 +1,6 @@
 import React from 'react'
 import { ImageBackground, Text, View, Dimensions, StyleSheet } from 'react-native'
-import firebase from '../screens/Utils/FirebaseUtil'//to start FB instance and check if a user is logged in already.
+import firebase from '../components/Utils/FirebaseUtil'//to start FB instance and check if a user is logged in already.
 var ScreenHeight = Dimensions.get('window').height
 var ScreenWidth = Dimensions.get('window').width
 

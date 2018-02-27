@@ -16,7 +16,7 @@ import PropTypes from 'prop-types'
 //Alpha ver feedback
 import Modal from 'react-native-modal'
 
-import firebase, { createNewObjIn, dataBaseRequest, userSignOut } from './Utils/FirebaseUtil'
+import firebase, { createNewObjIn, dataBaseRequest, userSignOut } from '../components/Utils/FirebaseUtil'
 
 var ScreenHeight = Dimensions.get("window").height
 var ScreenWidth = Dimensions.get("window").Width
@@ -172,7 +172,6 @@ class HomeScreen extends React.Component {
 			return (
 				<ImageBackground style={styles.backGround}
 				source={require('../assets/images/seigaiha.png')}>
-					
 					<FlatList
 						data={this.state.recipes}
 						renderItem={({ item }) => (
@@ -201,7 +200,7 @@ class HomeScreen extends React.Component {
 					)}
 					keyExtractor={(item, index) => index}
 					/>
-					{this._renderButton('add', () => this.setState({ visibleModal: 1 }))}
+					{this._renderButton(' ', () => this.setState({ visibleModal: 1 }))}
 					<Modal isVisible={this.state.visibleModal === 1}>
 						{this._renderModalContent()}
 					</Modal>
@@ -222,10 +221,8 @@ class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
 	buttonImage: {
 		padding: 16,
-		borderRadius: 4,
-		backgroundColor: '#fff'
-        // justifyContent: 'center',
-        // alignItems: 'center',		
+		borderRadius: 8,
+		backgroundColor: '#fff'	
 	},
 	modalButtons: {
 		flexDirection: "row",

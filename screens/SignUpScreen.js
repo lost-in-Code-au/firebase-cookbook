@@ -10,7 +10,7 @@ import {
     Alert,
 } from 'react-native'
 
-import firebase, { signUp } from './Utils/FirebaseUtil'
+import firebase, { signUp } from '../components/Utils/FirebaseUtil'
 
 // import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
 
