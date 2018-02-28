@@ -3,20 +3,20 @@ import {
 	Dimensions,
 	StyleSheet,
 	ImageBackground,
-	Text,
 	ActionSheetIOS,
 	View, ScrollView,
 	TextInput,
-	FlatList,
+	FlatList, Text,
 	TouchableOpacity, 
 	KeyboardAvoidingView,
-	Button, Alert,
-	Image
+	Button, Alert, Image
 } from 'react-native'
+
+import { ImagePicker } from 'expo'// For dev logs through expo XDE
 
 import Feedback from '../components/Utils/AlphaUserFeedback'
 
-import firebase, { dataBaseRequest, createKeyForPostFrom, createNewObjIn } from '../components/Utils/FirebaseUtil'
+import firebase, { dataBaseRequest, createNewObjIn } from '../components/Utils/FirebaseUtil'
 
 var ScreenHeight = Dimensions.get("window").height
 var ScreenWidth = Dimensions.get("window").Width
@@ -76,7 +76,7 @@ const customActionSheet = (options, callback) => {
 		}
 		callback(index)
 	})
-}//callback that doesn't concern it's self with class functions such as state.
+}
 
 class NewRecipeScreen extends React.Component {
 	
@@ -102,7 +102,7 @@ class NewRecipeScreen extends React.Component {
 			picture: 'http://via.placeholder.com/300.png/09f/fff',
 			
 			//flags
-			firstStageSubmit: false,
+			firstStageSubmit: true,
 			secoundStageSubmit: false,
 			thridStageSubmit: false,
 
@@ -127,6 +127,18 @@ class NewRecipeScreen extends React.Component {
 		})
 	}
 
+	// <TouchableOpacity style={styles.actionSheetContainer}  onPress={this._dietActionSheet}>
+	// <Text style={styles.textInput}>{this.state.recipe.diet ? this.state.recipe.diet :  'Add diet type of the recipe' }</Text>
+	// </TouchableOpacity> 
+
+	// {this._renderButton(this.state.recipe.diet ? this.state.recipe.diet :  'Add diet type of the recipe', this._dietActionSheet, 'actionSheetContainer')}
+
+    _renderButton = (text, onPress, buttonStyle, textStyle) => (
+        <TouchableOpacity  style={buttonStyle} onPress={onPress}>
+                <Text style={textStyle}>{text}</Text>
+        </TouchableOpacity>
+	)
+	
 	_checkDietInput = () => {
 		if(!this.state.recipe.diet) { return 'Diet type' } else {return this.state.recipe.diet }
 	}
@@ -259,7 +271,14 @@ class NewRecipeScreen extends React.Component {
 			],
 			{ cancelable: true }
 		)
-}
+	}
+
+	_imagePicker = () => {
+		ImagePicker.launchImageLibraryAsync({
+			mediaTypes: 'Images',
+			allowsEditing: false,
+		})
+	}
 
 	_submitToFirebase = () => {
 		
@@ -321,144 +340,117 @@ class NewRecipeScreen extends React.Component {
 		const { navigate } = this.props.navigation
 		if(!this.state.firstStageSubmit) {			
 			return (
-						<View style={styles.container}>
-							<TextInput 
-								style = {styles.textInputContainer} 
-								maxLength={35}
-								onSubmitEditing={() => this.authorInput.focus()} 
-								onChangeText={(nameInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, name: nameInput }})}
-								autoCorrect={true} 
-								returnKeyType='next'
-								placeholder='Add the name of recipe' 
-								value={this.state.recipe.name}
-								placeholderTextColor='#505050' />
+				<View style={styles.container}>
+					<TextInput 
+						style = {styles.textInputContainer} 
+						maxLength={35}
+						onSubmitEditing={() => this.authorInput.focus()} 
+						onChangeText={(nameInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, name: nameInput }})}
+						autoCorrect={true} 
+						returnKeyType='next'
+						placeholder='Add the name of recipe' 
+						value={this.state.recipe.name}
+						placeholderTextColor='#505050' />
+					<TextInput 
+						style = {styles.textInputContainer} 
+						maxLength={30}
+						ref={(input)=> this.authorInput = input} 
+						onSubmitEditing={() => this.snippetInput.focus()} 
+						onChangeText={(authorName) => this.setState({ ...this.state, recipe: { ...this.state.recipe, author: authorName }})}
+						autoCorrect={true} 
+						returnKeyType='next'
+						placeholder='Add the name of author' 
+						value={this.state.recipe.author}
+						placeholderTextColor='#505050' />
+					<TextInput 
+						style = {styles.textInputContainer} 
+						maxLength={100}
+						ref={(input)=> this.snippetInput = input} 
+						onSubmitEditing={() => this.durationInput.focus()} 
+						onChangeText={(snippetInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, snippet: snippetInput }})}
+						autoCorrect={true} 
+						returnKeyType='next'
+						placeholder='Add your summary of the Recipe' 
+						value={this.state.recipe.snippet}
+						placeholderTextColor='#505050' />
+					<TextInput 
+						style = {styles.textInputContainer} 
+						maxLength={3}
+						ref={(input)=> this.durationInput = input} 
+						onSubmitEditing={() => this.durationInput.focus()} 
+						onChangeText={(durationInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, duration: durationInput }})}
+						autoCorrect={false} 
+						keyboardType='numeric'
+						returnKeyType='done'
+						placeholder='Add the time your Recipe takes' 
+						value={this.state.recipe.duration}
+						placeholderTextColor='#505050' />
 
-							<TextInput 
-								style = {styles.textInputContainer} 
-								maxLength={30}
-								ref={(input)=> this.authorInput = input} 
-								onSubmitEditing={() => this.snippetInput.focus()} 
-								onChangeText={(authorName) => this.setState({ ...this.state, recipe: { ...this.state.recipe, author: authorName }})}
-								autoCorrect={true} 
-								returnKeyType='next'
-								placeholder='Add the name of author' 
-								value={this.state.recipe.author}
-								placeholderTextColor='#505050' />
-							
-							<TextInput 
-								style = {styles.textInputContainer} 
-								maxLength={100}
-								ref={(input)=> this.snippetInput = input} 
-								onSubmitEditing={() => this.durationInput.focus()} 
-								onChangeText={(snippetInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, snippet: snippetInput }})}
-								autoCorrect={true} 
-								returnKeyType='next'
-								placeholder='Add your summary of the Recipe' 
-								value={this.state.recipe.snippet}
-								placeholderTextColor='#505050' />
+					<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._dietActionSheet}>
+						<Text style={styles.textInput}>{this.state.recipe.diet ? this.state.recipe.diet :  'Add diet type of the recipe' }</Text>
+					</TouchableOpacity> 
 
-							<TextInput 
-								style = {styles.textInputContainer} 
-								maxLength={3}
-								ref={(input)=> this.durationInput = input} 
-								onSubmitEditing={() => this.durationInput.focus()} 
-								onChangeText={(durationInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, duration: durationInput }})}
-								autoCorrect={false} 
-								keyboardType='numeric'
-								returnKeyType='done'
-								placeholder='Add the time your Recipe takes' 
-								value={this.state.recipe.duration}
-								placeholderTextColor='#505050' />
+					<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._difActionSheet}>
+						<Text style={styles.textInput}>{this.state.recipe.difficulty ? this.state.recipe.difficulty + ' lvl' : 'Add the difficulty of the recipe'}</Text>
+					</TouchableOpacity>
 
-							<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._dietActionSheet}>
-								<Text style={styles.textInput}>{this.state.recipe.diet ? this.state.recipe.diet :  'Add diet type of the recipe' }</Text>
-							</TouchableOpacity> 
-
-							<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._difActionSheet}>
-								<Text style={styles.textInput}>{this.state.recipe.difficulty ? this.state.recipe.difficulty + ' lvl' : 'Add the difficulty of the recipe'}</Text>
-							</TouchableOpacity>
-
-
-							<TouchableOpacity style={styles.stage1ButtonContainer}  onPress={this._submitRecipe}>
-								<Text style={styles.buttonText}>Next</Text>
-							</TouchableOpacity>
-						</View>
+					{this._renderButton('Next', this._submitRecipe, styles.stage1ButtonContainer, styles.buttonText)}
+				</View>
 			)
 		} else if (!this.state.secoundStageSubmit) {
 			return (
-							<View style={styles.page}>
-								<Text>Hello and welcome to the Ingredents stage, please input the ingredients that are required for your recipe</Text>
-								
-								{this._ingredentBuilder()}
-
-									<TouchableOpacity style={styles.addIngredent}  onPress={this._addIngredentTextInput}>
-										<Text style={styles.addIngredentText}>+</Text>
-									</TouchableOpacity>
-								
-								<View style={styles.stageButtons}>
-									<TouchableOpacity style={styles.buttonContainer}  onPress={this._stepBackToStageOne}>
-										<Text style={styles.buttonText}>Back</Text>
-									</TouchableOpacity>
-									<TouchableOpacity style={styles.buttonContainer}  onPress={this._submitRecipeIngreedients}>
-										<Text style={styles.buttonText}>Next</Text>
-									</TouchableOpacity>
-								</View>
-							</View>
+				<View style={styles.page}>
+					<Text>Hello and welcome to the Ingredents stage, please input the ingredients that are required for your recipe</Text>
+					{this._ingredentBuilder()}
+					{this._renderButton('+', this._addIngredentTextInput, styles.addField, styles.addFieldText)}
+					<View style={styles.stageButtons}>
+						{this._renderButton('Back', this._stepBackToStageOne, styles.buttonContainer, styles.buttonText)}
+						{this._renderButton('Next', this._submitRecipeIngreedients, styles.buttonContainer, styles.buttonText)}
+					</View>
+				</View>
 			)
 		} else if (!this.state.thridStageSubmit) {
-			console.log(this.state.steps)
 			return (
-							<View style={styles.page}>
-								<Text>Hello and welcome to the Instructions stage, please input the steps that are required for your recipe</Text>
-								
-								{this._stepsBuilder()}
-
-								<TouchableOpacity style={styles.addIngredent}  onPress={this._addStepsTextInput}>
-									<Text style={styles.addIngredentText}>+</Text>
-								</TouchableOpacity>
-
-								<View style={styles.stageButtons}>
-									<TouchableOpacity style={styles.buttonContainer}  onPress={this._stepBackToStageTwo}>
-										<Text style={styles.buttonText}>back</Text>
-									</TouchableOpacity>
-									<TouchableOpacity style={styles.buttonContainer} onPress={this._submitRecipeSteps}>
-										<Text style={styles.buttonText}>Preview</Text>
-									</TouchableOpacity>
-								</View>
-							</View>
+				<View style={styles.page}>
+					<Text>Hello and welcome to the Instructions stage, please input the steps that are required for your recipe</Text>
+					{this._stepsBuilder()}
+					{this._renderButton('+', this._addStepsTextInput, styles.addField, styles.addFieldText)}
+					<View style={styles.stageButtons}>
+						{this._renderButton('Back', this._stepBackToStageTwo, styles.buttonContainer, styles.buttonText)}
+						{this._renderButton('Next', this._submitRecipeSteps, styles.buttonContainer, styles.buttonText)}
+					</View>
+				</View>
 			)
 		}
 //================================================> Preview stage <=========================================
 		
 		else if (!this.previewStage) {
 			return (
-						<View style={styles.page}>
-							<Text>Preview of how your recipe will look</Text>
-							<View style={styles.recipeCard}>
-								<Image
-								style={styles.recipeImage}
-								source={{uri: this._setImage(this.state.picture) }}
-								/>
-								<View style={styles.textPosition}>
-								<View style={styles.overlaptopText}>
-									<Text style={[styles.infoText, styles.font]}>Difficulty: {this.state.recipe.difficulty}/5</Text>
-									<Text style={[styles.infoText, styles.font]}>Takes: {this.state.recipe.duration}mins</Text>
-								</View>
-								<View style={styles.overlapbottomText}>
-									<Text style={[styles.name, styles.font]}>{this.state.recipe.name}</Text>
-									<Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(this.state.recipe.snippet)}</Text>
-								</View>
-								</View>
-							</View>
-							<View style={styles.stageButtons}>
-								<TouchableOpacity style={styles.buttonContainer}  onPress={this._stepBackToStageThree}>
-									<Text style={styles.buttonText}>back</Text>
-								</TouchableOpacity>
-								<TouchableOpacity style={styles.buttonContainer}   navitgate={navigate} onPress={this._submitPreviewedRecipe}>
-									<Text style={styles.buttonText}>Submit Recipe</Text>
-								</TouchableOpacity>
-							</View>
+				<View style={styles.page}>
+					<Text>Preview of how your recipe will look</Text>
+					<View style={styles.recipeCard}>
+						<TouchableOpacity style={styles.buttonContainer}  onPress={this._imagePicker}>
+							<Image
+							style={styles.recipeImage}
+							source={{uri: this._setImage(this.state.picture) }}
+							/>
+						</TouchableOpacity>
+						<View style={styles.textPosition}>
+						<View style={styles.overlaptopText}>
+							<Text style={[styles.infoText, styles.font]}>Difficulty: {this.state.recipe.difficulty}/5</Text>
+							<Text style={[styles.infoText, styles.font]}>Takes: {this.state.recipe.duration}mins</Text>
 						</View>
+						<View style={styles.overlapbottomText}>
+							<Text style={[styles.name, styles.font]}>{this.state.recipe.name}</Text>
+							<Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(this.state.recipe.snippet)}</Text>
+						</View>
+						</View>
+					</View>
+					<View style={styles.stageButtons}>
+						{this._renderButton('Back', this._stepBackToStageThree, styles.buttonContainer, styles.buttonText)}
+						{this._renderButton('Submit Recipe', this._submitPreviewedRecipe, styles.buttonContainer, styles.buttonText)}
+					</View>
+				</View>
 			)
 		}
 	}
@@ -467,10 +459,10 @@ class NewRecipeScreen extends React.Component {
 		return(
 			<ImageBackground style={styles.backGround}
 				source={require('../assets/images/seigaiha.png')}>
-					<Feedback page='New Recipe Screen' />
 				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
 					<ScrollView >
 					{this._renderForm()}
+					<Feedback page='New Recipe Screen' />
 					</ScrollView>
 				</KeyboardAvoidingView> 
 			</ImageBackground>
@@ -493,8 +485,8 @@ const styles = StyleSheet.create({
 	textInputContainer: {
 		color: '#505050',
 		height: 40,
-		paddingLeft: 10,//text spacing from left
-		marginTop: 20,//buffer on top of each textBox 
+		paddingLeft: 10,
+		marginTop: 20,
 		marginLeft: '10%',
 		width: '80%',
 		backgroundColor: '#fff',
@@ -516,20 +508,26 @@ const styles = StyleSheet.create({
 		padding: 10,
 		marginTop: 20,
 		backgroundColor: '#4097c9',
-		width: "100%",
+		width: '100%',
 	},
-	addIngredent: {
+	buttonText: {
+		fontWeight: 'bold',
+		textAlign: 'center',
+		color: '#505050',
+	},
+	addField: {
 		padding: 10,
 		marginTop: 20,
 		backgroundColor: '#4097c9',
-		width: "20%",
-		height: 50,
+		width: '20%',
+		height: 48,
 		justifyContent: 'center',
+		marginLeft: '40%'
 	},
-	addIngredentText:{
+	addFieldText:{
 		color: '#fff',
 		fontWeight: 'bold',
-		textAlign: "center",
+		textAlign: 'center',
 		fontSize: 34,
 	},
 	buttonContainer: {
@@ -538,12 +536,7 @@ const styles = StyleSheet.create({
 		marginTop: 15,
 		backgroundColor: '#4097c9',
 		paddingVertical: 15,
-		width: "100%",
-	},
-	buttonText: {
-		fontWeight: 'bold',
-		textAlign: "center",
-		color: '#505050',
+		width: '100%',
 	},
 	backGround: {
 		width: ScreenWidth,
@@ -554,31 +547,31 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 	},
 	page: {
-		backgroundColor: "transparent",
+		backgroundColor: 'transparent',
 	},
 	recipeCardContainer: {
-		backgroundColor: "transparent",
+		backgroundColor: 'transparent',
 		maxWidth: ScreenWidth,
 		marginTop: 10,
 		marginBottom: 10,
 	},
 	recipeCard: {
-		backgroundColor: "transparent",
-		width: "100%",
+		backgroundColor: 'transparent',
+		width: '100%',
 		height: 300,
 	},
 	name: {
-		fontWeight: "bold",
+		fontWeight: 'bold',
 		margin: 5,
 	},
 	snippet: {
-		backgroundColor: "transparent",
-		fontWeight: "bold",
+		backgroundColor: 'transparent',
+		fontWeight: 'bold',
 		margin: 5,
 	},
 	infoText: {
-		backgroundColor: "transparent",
-		fontWeight: "bold",
+		backgroundColor: 'transparent',
+		fontWeight: 'bold',
 		flex: 1,
 		textAlign: "center",
 		paddingBottom: 8,

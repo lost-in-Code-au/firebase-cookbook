@@ -22,14 +22,12 @@ class RecipeScreen extends React.Component {
 	render() {
 		const { params: item } = this.props.navigation.state
 		const { navigate } = this.props.navigation
-		// console.log(item)
 		
 		return (
 			<View>
 				<ImageBackground
 				style={styles.backGround}
 				source={require('../assets/images/seigaiha.png')}>
-					<Feedback page='Recipe Show Screen' />
 					<FlatList
 					data={item.instructions}
 					renderItem={({item: instruction, index}) => (
@@ -54,7 +52,8 @@ class RecipeScreen extends React.Component {
 						</View>
 					)}
 					keyExtractor={(index) => index}
-				/>
+					/>
+				<Feedback page='Recipe Show Screen' />
 				</ImageBackground>
 			</View>
 		)

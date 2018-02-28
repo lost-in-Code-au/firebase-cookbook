@@ -36,11 +36,10 @@ export const userSignOut = () => {
 	return firebase.auth().signOut()
 }
 
-export function createKeyForPostFrom(dBRoot) {
-	return firebase.database().ref().child(dBRoot).push().key
-}
+// export function createKeyForPostFrom(dBRoot) {
+// 	return firebase.database().ref().child(dBRoot).push().key
+// } // you're ment to create a key first but it seams like it will work just fine without
 
-//you'll have to call createKeyForPost first before calling this function, then you'll have to new id for the new object
 export function createNewObjIn(dBRoot, newObject) {
 	return firebase.database().ref(dBRoot).push(newObject)
 }

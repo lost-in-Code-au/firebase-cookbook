@@ -58,11 +58,11 @@ export default class Feedback extends Component {
             <Text>Hello, please leave a comment on how this page can be better!</Text>
             <TextInput
                 style={styles.textInputContainer} 
-                maxLength={45} 
+                maxLength={90} 
                 onChangeText={(input) => this.setState({ ...this.state, userFeedback: input })}
                 autoCorrect={true} 
                 returnKeyType='done'
-                placeholder='Add comment(max 45 words pls).' 
+                placeholder='Add comment(max 90 char pls).' 
                 value={this.state.userFeedback}
                 placeholderTextColor='#505050' />
             <View style={styles.modalButtons}>
@@ -79,7 +79,7 @@ export default class Feedback extends Component {
     render() {
         return (
             <View style={styles.box}>
-                {this._renderButton(' + ', () => this.setState({ visibleModal: 1 }))}
+                {this._renderButton('    ', () => this.setState({ visibleModal: 1 }))}
                 <Modal isVisible={this.state.visibleModal === 1}>
                     {this._renderModalContent()}
                 </Modal>
@@ -94,14 +94,15 @@ const styles = StyleSheet.create({
         width: 16,
         height:16,
         marginLeft: '80%'
-        // alignSelf: 'flex-end'
     },  
     text: {
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
+        color: '#505050',
+        fontSize: 20,
     },
 	buttonImage: {
 		padding: 16,
-		borderRadius: 4,
+		borderRadius: 10,
 		backgroundColor: '#fff'		
 	},
 	modalButtons: {
@@ -113,14 +114,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalButton: {
+        borderRadius: 10,
 		position: 'absolute',
 		alignSelf: 'flex-end',
-        backgroundColor: 'transparent',
         padding: 16,
 		marginTop: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        borderColor: 'rgba(0, 0, 0, 0.1)',
 	},
 	button: {
         backgroundColor: 'lightblue',
