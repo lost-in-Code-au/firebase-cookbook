@@ -1,59 +1,57 @@
-import React, { Component } from 'react';
-import { Text, TouchableOpacity, StyleSheet, View, TextInput } from 'react-native';
-import Modal from 'react-native-modal'; // 2.4.0
+import React, { Component } from 'react'
+import { Text, TouchableOpacity, ImageBackground, StyleSheet, View, TextInput, Alert } from 'react-native'
+import Modal from 'react-native-modal' // 2.4.0
 
-import firebase, { createNewObjIn } from './Utils/FirebaseUtil'
+import firebase, { createNewObjIn } from './FirebaseUtil'
 
 
-export default class feedback extends Component {
+export default class Feedback extends Component {
 	constructor() {
 		super()
 		this.state = {
             visibleModal: null,
-            userFeedback: null,
+            userFeedback: null
         }
     }
 
-    _postCommentToFirebase = () => {
-        console.log(this.state.userFeedback)
-        this.setState({ visibleModal: null })
+	_postCommentToFirebase = () => {
+		this.setState({ visibleModal: null })
 
-        const newObject = {
-            page: 'Homescreen',
-            feedback: this.state.userFeedback
-        }
-        createNewObjIn('feedback', newObject).then((res)=>{
-            console.log(res.message)
-            Alert.alert(
-                'Great! thank you for the feedback you beautiful person!',
-                res.message,
-                [
-                    {text: 'Ok' }
-                ],
-                { cancelable: true }
-            )
-        }).catch((error) => {
-            console.log(error.message)
-            Alert.alert(
-                'Sorry somehing went wrong!',
-                error.message,
-                [
-                    {text: 'Ok' }
-                ],
-                { cancelable: true }
-            )
-        })
-
-    }
+		const newObject = {
+			page: this.props.page,
+			feedback: this.state.userFeedback
+		}
+		createNewObjIn('feedback', newObject).then((res)=>{
+			console.log(res.message)
+			Alert.alert(
+				'Great! thank you for the feedback you beautiful person!',
+				res.message,
+				[
+					{text: 'Ok' }
+				],
+				{ cancelable: true }
+			)
+		}).catch((error) => {
+			console.log(error.message)
+			Alert.alert(
+				'Sorry somehing went wrong!',
+				error.message,
+				[
+					{text: 'Ok' }
+				],
+				{ cancelable: true }
+			)
+		})
+	}
 
     _renderButton = (text, onPress) => (
         <TouchableOpacity  style={styles.modalButton} onPress={onPress}>
-        <ImageBackground style={styles.buttonImage}
-                source={require('../assets/images/feedback.png')}>
-            <Text>{text}</Text>
+            <ImageBackground style={styles.buttonImage}
+                source={require('../../assets/images/feedback.png')}>
+                <Text style={styles.text}>{text}</Text>
             </ImageBackground>
         </TouchableOpacity>
-                        )
+    )
 
     _renderModalContent = () => (
         <View style={styles.modalContent}>
@@ -80,8 +78,8 @@ export default class feedback extends Component {
 
     render() {
         return (
-            <View>
-                {this._renderButton('add', () => this.setState({ visibleModal: 1 }))}
+            <View style={styles.box}>
+                {this._renderButton(' + ', () => this.setState({ visibleModal: 1 }))}
                 <Modal isVisible={this.state.visibleModal === 1}>
                     {this._renderModalContent()}
                 </Modal>
@@ -91,12 +89,20 @@ export default class feedback extends Component {
 }
 
 const styles = StyleSheet.create({
+    box: {
+        ...StyleSheet.absoluteFillObject,
+        width: 16,
+        height:16,
+        marginLeft: '80%'
+        // alignSelf: 'flex-end'
+    },  
+    text: {
+        backgroundColor: 'transparent'
+    },
 	buttonImage: {
 		padding: 16,
 		borderRadius: 4,
-		backgroundColor: '#fff'
-        // justifyContent: 'center',
-        // alignItems: 'center',		
+		backgroundColor: '#fff'		
 	},
 	modalButtons: {
 		flexDirection: "row",

@@ -13,16 +13,14 @@ import {
 	Button, Alert,
 	Image
 } from 'react-native'
-import uuid from 'uuid'//keyGen
+
+import Feedback from '../components/Utils/AlphaUserFeedback'
 
 import firebase, { dataBaseRequest, createKeyForPostFrom, createNewObjIn } from '../components/Utils/FirebaseUtil'
 
 var ScreenHeight = Dimensions.get("window").height
 var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
-
-//Test identifier to ref without text in state.
-const DIETS = ['No Diets', 'Vegeterian', 'Gluten Free', 'Dairy Free', 'Gluten Free & Dairy Free', 'Vegan']
 
 //abstracted fucntions
 // const CustomTextInput = ({ maxLength, ref, submit, onChange, autoCorrect, returnKey, placeHolder, value}) => (
@@ -85,15 +83,9 @@ class NewRecipeScreen extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			data: null,
-
 			//setup
 			error: null,
 			dietTypes: null,
-
-			//array counters
-			// amountOfIningredients: 1,
-			// amountOfSteps: 1,
 	
 			//models
 			recipe: {
@@ -104,9 +96,9 @@ class NewRecipeScreen extends React.Component {
 				difficulty: null,
 				duration: null,
 				rating: null,
-			},//move all of stage one into here
-			ingredients: [''],//create a check to prevent ininate creating of objests
-			steps: [{}],
+			},
+			ingredients: [''],
+			steps: [''],
 			picture: 'http://via.placeholder.com/300.png/09f/fff',
 			
 			//flags
@@ -219,7 +211,7 @@ class NewRecipeScreen extends React.Component {
 					ingredients: this.state.ingredients.map((_, inputIndex) => inputIndex === index ? foodInput : _)
 				})}
 				autoCorrect={true} 
-				keyExtractor={(index) => index}
+				key={index}
 				returnKeyType='next'
 				placeholder='Add name of ingredient' 
 				value={value}
@@ -244,8 +236,8 @@ class NewRecipeScreen extends React.Component {
 					...this.state,
 					steps: this.state.steps.map((_, inputIndex) => inputIndex === index ? stepInput : _)
 				})}
-				autoCorrect={true} 
-				keyExtractor={(index) => index}
+				autoCorrect={true}
+				key={index}
 				returnKeyType='next'
 				placeholder='Add new step' 
 				value={value}
@@ -329,82 +321,71 @@ class NewRecipeScreen extends React.Component {
 		const { navigate } = this.props.navigation
 		if(!this.state.firstStageSubmit) {			
 			return (
-				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
-					<ScrollView >
-						<ImageBackground style={styles.backGround}
-							source={require('../assets/images/seigaiha.png')}>
-							<View style={styles.container}>
-								<TextInput 
-									style = {styles.textInputContainer} 
-									maxLength={35}
-									onSubmitEditing={() => this.authorInput.focus()} 
-									onChangeText={(nameInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, name: nameInput }})}
-									autoCorrect={true} 
-									returnKeyType='next'
-									placeholder='Add the name of recipe' 
-									value={this.state.recipe.name}
-									placeholderTextColor='#505050' />
+						<View style={styles.container}>
+							<TextInput 
+								style = {styles.textInputContainer} 
+								maxLength={35}
+								onSubmitEditing={() => this.authorInput.focus()} 
+								onChangeText={(nameInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, name: nameInput }})}
+								autoCorrect={true} 
+								returnKeyType='next'
+								placeholder='Add the name of recipe' 
+								value={this.state.recipe.name}
+								placeholderTextColor='#505050' />
 
-								<TextInput 
-									style = {styles.textInputContainer} 
-									maxLength={30}
-									ref={(input)=> this.authorInput = input} 
-									onSubmitEditing={() => this.snippetInput.focus()} 
-									onChangeText={(authorName) => this.setState({ ...this.state, recipe: { ...this.state.recipe, author: authorName }})}
-									autoCorrect={true} 
-									returnKeyType='next'
-									placeholder='Add the name of author' 
-									value={this.state.recipe.author}
-									placeholderTextColor='#505050' />
-								
-								<TextInput 
-									style = {styles.textInputContainer} 
-									maxLength={100}
-									ref={(input)=> this.snippetInput = input} 
-									onSubmitEditing={() => this.durationInput.focus()} 
-									onChangeText={(snippetInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, snippet: snippetInput }})}
-									autoCorrect={true} 
-									returnKeyType='next'
-									placeholder='Add your summary of the Recipe' 
-									value={this.state.recipe.snippet}
-									placeholderTextColor='#505050' />
+							<TextInput 
+								style = {styles.textInputContainer} 
+								maxLength={30}
+								ref={(input)=> this.authorInput = input} 
+								onSubmitEditing={() => this.snippetInput.focus()} 
+								onChangeText={(authorName) => this.setState({ ...this.state, recipe: { ...this.state.recipe, author: authorName }})}
+								autoCorrect={true} 
+								returnKeyType='next'
+								placeholder='Add the name of author' 
+								value={this.state.recipe.author}
+								placeholderTextColor='#505050' />
+							
+							<TextInput 
+								style = {styles.textInputContainer} 
+								maxLength={100}
+								ref={(input)=> this.snippetInput = input} 
+								onSubmitEditing={() => this.durationInput.focus()} 
+								onChangeText={(snippetInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, snippet: snippetInput }})}
+								autoCorrect={true} 
+								returnKeyType='next'
+								placeholder='Add your summary of the Recipe' 
+								value={this.state.recipe.snippet}
+								placeholderTextColor='#505050' />
 
-								<TextInput 
-									style = {styles.textInputContainer} 
-									maxLength={3}
-									ref={(input)=> this.durationInput = input} 
-									onSubmitEditing={() => this.durationInput.focus()} 
-									onChangeText={(durationInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, duration: durationInput }})}
-									autoCorrect={false} 
-									keyboardType='numeric'
-									returnKeyType='done'
-									placeholder='Add the time your Recipe takes' 
-									value={this.state.recipe.duration}
-									placeholderTextColor='#505050' />
+							<TextInput 
+								style = {styles.textInputContainer} 
+								maxLength={3}
+								ref={(input)=> this.durationInput = input} 
+								onSubmitEditing={() => this.durationInput.focus()} 
+								onChangeText={(durationInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, duration: durationInput }})}
+								autoCorrect={false} 
+								keyboardType='numeric'
+								returnKeyType='done'
+								placeholder='Add the time your Recipe takes' 
+								value={this.state.recipe.duration}
+								placeholderTextColor='#505050' />
 
-								<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._dietActionSheet}>
-									<Text style={styles.textInput}>{this.state.recipe.diet ? this.state.recipe.diet :  'Add diet type of the recipe' }</Text>
-								</TouchableOpacity> 
+							<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._dietActionSheet}>
+								<Text style={styles.textInput}>{this.state.recipe.diet ? this.state.recipe.diet :  'Add diet type of the recipe' }</Text>
+							</TouchableOpacity> 
 
-								<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._difActionSheet}>
-									<Text style={styles.textInput}>{this.state.recipe.difficulty ? this.state.recipe.difficulty + ' lvl' : 'Add the difficulty of the recipe'}</Text>
-								</TouchableOpacity>
+							<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._difActionSheet}>
+								<Text style={styles.textInput}>{this.state.recipe.difficulty ? this.state.recipe.difficulty + ' lvl' : 'Add the difficulty of the recipe'}</Text>
+							</TouchableOpacity>
 
 
-								<TouchableOpacity style={styles.stage1ButtonContainer}  onPress={this._submitRecipe}>
-									<Text style={styles.buttonText}>Next</Text>
-								</TouchableOpacity>
-							</View>
-						</ImageBackground>
-					</ScrollView>
-				</KeyboardAvoidingView>
+							<TouchableOpacity style={styles.stage1ButtonContainer}  onPress={this._submitRecipe}>
+								<Text style={styles.buttonText}>Next</Text>
+							</TouchableOpacity>
+						</View>
 			)
 		} else if (!this.state.secoundStageSubmit) {
 			return (
-				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
-					<ScrollView >
-						<ImageBackground style={styles.backGround}
-							source={require('../assets/images/seigaiha.png')}>
 							<View style={styles.page}>
 								<Text>Hello and welcome to the Ingredents stage, please input the ingredients that are required for your recipe</Text>
 								
@@ -423,17 +404,10 @@ class NewRecipeScreen extends React.Component {
 									</TouchableOpacity>
 								</View>
 							</View>
-						</ImageBackground>
-					</ScrollView>
-				</KeyboardAvoidingView> 
 			)
 		} else if (!this.state.thridStageSubmit) {
 			console.log(this.state.steps)
 			return (
-				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
-					<ScrollView >
-						<ImageBackground style={styles.backGround}
-							source={require('../assets/images/seigaiha.png')}>
 							<View style={styles.page}>
 								<Text>Hello and welcome to the Instructions stage, please input the steps that are required for your recipe</Text>
 								
@@ -452,19 +426,12 @@ class NewRecipeScreen extends React.Component {
 									</TouchableOpacity>
 								</View>
 							</View>
-						</ImageBackground>
-					</ScrollView>
-				</KeyboardAvoidingView> 
 			)
 		}
 //================================================> Preview stage <=========================================
 		
 		else if (!this.previewStage) {
 			return (
-				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
-					<ScrollView >
-						<ImageBackground style={styles.backGround}
-							source={require('../assets/images/seigaiha.png')}>
 						<View style={styles.page}>
 							<Text>Preview of how your recipe will look</Text>
 							<View style={styles.recipeCard}>
@@ -492,15 +459,22 @@ class NewRecipeScreen extends React.Component {
 								</TouchableOpacity>
 							</View>
 						</View>
-					</ImageBackground>
-				</ScrollView>
-			</KeyboardAvoidingView> 
 			)
 		}
 	}
 
 	render() {
-		return this._renderForm()
+		return(
+			<ImageBackground style={styles.backGround}
+				source={require('../assets/images/seigaiha.png')}>
+					<Feedback page='New Recipe Screen' />
+				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
+					<ScrollView >
+					{this._renderForm()}
+					</ScrollView>
+				</KeyboardAvoidingView> 
+			</ImageBackground>
+		)
 	}
 }
 

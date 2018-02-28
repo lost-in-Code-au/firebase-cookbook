@@ -1,8 +1,8 @@
 import React from 'react'
 import { ImageBackground, Text, View, Dimensions, StyleSheet } from 'react-native'
 import firebase from '../components/Utils/FirebaseUtil'//to start FB instance and check if a user is logged in already.
-var ScreenHeight = Dimensions.get('window').height
-var ScreenWidth = Dimensions.get('window').width
+const ScreenHeight = Dimensions.get('window').height
+const ScreenWidth = Dimensions.get('window').width
 
 export default class Root extends React.Component {
 	constructor() {
@@ -50,7 +50,6 @@ export default class Root extends React.Component {
 
 const styles = StyleSheet.create({
 	font: {
-		fontFamily: 'American Typewriter',
 		fontSize: 16,
 	},
 	backGround: {

@@ -9,10 +9,10 @@ import {
   Button,
 } from 'react-native'
 
-// import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
+import Feedback from '../components/Utils/AlphaUserFeedback'
 
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
-var ScreenWidth = Dimensions.get("window").Width
+var ScreenWidth = Dimensions.get("window").width
 
 class IngredientsScreen extends React.Component {
 
@@ -28,6 +28,7 @@ class IngredientsScreen extends React.Component {
       <ImageBackground
       style={styles.backGround}
       source={require('../assets/images/seigaiha.png')}>
+          <Feedback page='Ingredent Screen' />
         <FlatList
           data={item.ingredients}
           renderItem={({item: ingredient}) => (

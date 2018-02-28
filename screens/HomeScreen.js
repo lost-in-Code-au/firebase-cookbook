@@ -13,13 +13,13 @@ import {
 } from 'react-native'
 import PropTypes from 'prop-types'
 
-//Alpha ver feedback
-import Modal from 'react-native-modal'
+//Alpha version feedback
+import Feedback from '../components/Utils/AlphaUserFeedback'
 
 import firebase, { createNewObjIn, dataBaseRequest, userSignOut } from '../components/Utils/FirebaseUtil'
 
-var ScreenHeight = Dimensions.get("window").height
-var ScreenWidth = Dimensions.get("window").Width
+var ScreenHeight = Dimensions.get('window').height
+var ScreenWidth = Dimensions.get('window').width
 const MAX_SNIPPET_LENGTH = 75
 
 
@@ -45,8 +45,6 @@ class HomeScreen extends React.Component {
 		this.state = {
 			currentUser: null,
 			recipes: [],
-			visibleModal: null,
-			userFeedback: null,
 			loading: true,
 			error: null,
 		}
@@ -85,70 +83,6 @@ class HomeScreen extends React.Component {
 		}
 	}
 
-	_postCommentToFirebase = () => {
-		console.log(this.state.userFeedback)
-		this.setState({ visibleModal: null })
-
-		const newObject = {
-			page: 'Homescreen',
-			feedback: this.state.userFeedback
-		}
-		createNewObjIn('feedback', newObject).then((res)=>{
-			console.log(res.message)
-			Alert.alert(
-				'Great! thank you for the feedback you beautiful person!',
-				res.message,
-				[
-					{text: 'Ok' }
-				],
-				{ cancelable: true }
-			)
-		}).catch((error) => {
-			console.log(error.message)
-			Alert.alert(
-				'Sorry somehing went wrong!',
-				error.message,
-				[
-					{text: 'Ok' }
-				],
-				{ cancelable: true }
-			)
-		})
-
-	}
-
-	_renderButton = (text, onPress) => (
-		<TouchableOpacity  style={styles.modalButton} onPress={onPress}>
-		  <ImageBackground style={styles.buttonImage}
-				source={require('../assets/images/feedback.png')}>
-			<Text>{text}</Text>
-			</ImageBackground>
-		</TouchableOpacity>
-	)
-
-	_renderModalContent = () => (
-		<View style={styles.modalContent}>
-			<Text>Hello, please leave a comment on how this page can be better!</Text>
-			<TextInput
-				style={styles.textInputContainer} 
-				maxLength={45} 
-				onChangeText={(input) => this.setState({ ...this.state, userFeedback: input })}
-				autoCorrect={true} 
-				returnKeyType='done'
-				placeholder='Add comment(max 45 words pls).' 
-				value={this.state.userFeedback}
-				placeholderTextColor='#505050' />
-			<View style={styles.modalButtons}>
-				<TouchableOpacity  style={styles.button} onPress={() => this.setState({ visibleModal: null })}>
-						<Text>Close</Text>
-				</TouchableOpacity>
-				<TouchableOpacity  style={styles.button} onPress={this._postCommentToFirebase}>
-						<Text>Submit</Text>
-				</TouchableOpacity>
-			</View>			
-		</View>
-	)
-
 	_renderHomePage = () => {
 		const { navigate } = this.props.navigation
 		const text = this.state.loading ? 'Loading...' : 'Loaded'
@@ -170,52 +104,47 @@ class HomeScreen extends React.Component {
 		}
 		else {
 			return (
-				<ImageBackground style={styles.backGround}
-				source={require('../assets/images/seigaiha.png')}>
-					<FlatList
-						data={this.state.recipes}
-						renderItem={({ item }) => (
+				<FlatList
+					data={this.state.recipes}
+					keyExtractor={(item, index) => index} 
+					renderItem={({ item }) => (
 						<TouchableOpacity
-						onPress={() => navigate('Recipe', item)}
-						activeOpacity={.5}
-						underlayColor={"#DDDDDD"}
-						key={item._id} style={styles.recipeCardContainer}>
-							<View style={styles.recipeCard}>
-								<Image
-								style={styles.recipeImage}
-								source={{uri: this._setImage(item.picture) }}
-								/>
-								<View style={styles.textPosition}>
-								<View style={styles.overlaptopText}>
-									<Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
-									<Text style={[styles.infoText, styles.font]}>Takes: {item.duration}mins</Text>
-								</View>
-								<View style={styles.overlapbottomText}>
-									<Text style={[styles.name, styles.font]}>{item.name}</Text>
-									<Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(item.snippet)}</Text>
-								</View>
-								</View>
+					onPress={() => navigate('Recipe', item)}
+					activeOpacity={.5}
+					underlayColor={"#DDDDDD"}
+					key={item._id} style={styles.recipeCardContainer}>
+						<View style={styles.recipeCard}>
+							<Image
+							style={styles.recipeImage}
+							source={{uri: this._setImage(item.picture) }}
+							/>
+							<View style={styles.textPosition}>
+							<View style={styles.overlaptopText}>
+								<Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
+								<Text style={[styles.infoText, styles.font]}>Takes: {item.duration}mins</Text>
 							</View>
-						</TouchableOpacity>
+							<View style={styles.overlapbottomText}>
+								<Text style={[styles.name, styles.font]}>{item.name}</Text>
+								<Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(item.snippet)}</Text>
+							</View>
+							</View>
+						</View>
+					</TouchableOpacity>
 					)}
-					keyExtractor={(item, index) => index}
-					/>
-					{this._renderButton(' ', () => this.setState({ visibleModal: 1 }))}
-					<Modal isVisible={this.state.visibleModal === 1}>
-						{this._renderModalContent()}
-					</Modal>
-				</ImageBackground>
+				/>
 			)
 		}
 	}
 
 	render() {
 		return (
-			<View>
+			<ImageBackground style={styles.backGround}
+			source={require('../assets/images/seigaiha.png')}>
 				{this._renderHomePage()}
-			</View>
+				<Feedback page='homescreen' />
+			</ImageBackground>
 		)
-	}
+	}//Can't get Feedback to float and be clickable over the over content yet.
 }
 
 const styles = StyleSheet.create({
@@ -268,7 +197,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#ededed',
     },
 	font: {
-		fontFamily: 'American Typewriter',
 		fontSize: 16,
 	},
 	backGround: {
