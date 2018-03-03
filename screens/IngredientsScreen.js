@@ -21,6 +21,26 @@ class IngredientsScreen extends React.Component {
 		// headerRight: <Button title="Rate" />,//TODO: Create rating Component
 	})
 
+	_ingredents = () => {		
+		return (
+			<FlatList
+				data={item.ingredients}
+				style={styles.flatList}
+				renderItem={({item: ingredient}) => (
+					<View key={ingredient.index} style={styles.recipeCard}>
+						<Text style={styles.name}>{ingredient}</Text>
+					</View>
+				)}
+				ListHeaderComponent={() => (
+					<View style={styles.headerContainer}>
+						<Text  style={[styles.header, styles.font]}>Ingredients</Text>
+					</View>
+				)}
+				keyExtractor={(item, index) => index}
+			/>
+		)
+	}
+
 	render() {
 		const { params: item } = this.props.navigation.state
 
@@ -28,20 +48,7 @@ class IngredientsScreen extends React.Component {
 			<ImageBackground
 			style={styles.backGround}
 			source={require('../assets/images/seigaiha.png')}>
-				<FlatList
-					data={item.ingredients}
-					renderItem={({item: ingredient}) => (
-						<View key={ingredient.index} style={styles.recipeCard}>
-							<Text style={[styles.name, styles.font]}>{ingredient}</Text>
-						</View>
-					)}
-					ListHeaderComponent={() => (
-						<View style={styles.headerContainer}>
-							<Text  style={[styles.header, styles.font]}>Ingredients</Text>
-						</View>
-					)}
-					keyExtractor={(item, index) => index}
-				/>
+				{this._ingredents()}
 				<Feedback page='Ingredent Screen' />
 			</ImageBackground>
 		)
@@ -50,9 +57,8 @@ class IngredientsScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
-	font: {
-		fontFamily: 'American Typewriter',
-		fontSize: 16,
+	flatList: {
+		backgroundColor:'transparent',
 	},
 	backGround: {
 		width: ScreenWidth,

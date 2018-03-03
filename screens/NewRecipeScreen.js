@@ -16,6 +16,8 @@ import { ImagePicker } from 'expo'// For dev logs through expo XDE
 
 import Feedback from '../components/Utils/AlphaUserFeedback'
 
+import uuid from 'uuid'
+
 import firebase, { dataBaseRequest, createNewObjIn } from '../components/Utils/FirebaseUtil'
 
 var ScreenHeight = Dimensions.get("window").height
@@ -86,6 +88,8 @@ class NewRecipeScreen extends React.Component {
 			//setup
 			error: null,
 			dietTypes: null,
+			image: null,
+			file: null,
 	
 			//models
 			recipe: {
@@ -102,7 +106,7 @@ class NewRecipeScreen extends React.Component {
 			picture: 'http://via.placeholder.com/300.png/09f/fff',
 			
 			//flags
-			firstStageSubmit: true,
+			firstStageSubmit: false,
 			secoundStageSubmit: false,
 			thridStageSubmit: false,
 
@@ -126,12 +130,6 @@ class NewRecipeScreen extends React.Component {
 			console.log(error.message)
 		})
 	}
-
-	// <TouchableOpacity style={styles.actionSheetContainer}  onPress={this._dietActionSheet}>
-	// <Text style={styles.textInput}>{this.state.recipe.diet ? this.state.recipe.diet :  'Add diet type of the recipe' }</Text>
-	// </TouchableOpacity> 
-
-	// {this._renderButton(this.state.recipe.diet ? this.state.recipe.diet :  'Add diet type of the recipe', this._dietActionSheet, 'actionSheetContainer')}
 
     _renderButton = (text, onPress, buttonStyle, textStyle) => (
         <TouchableOpacity  style={buttonStyle} onPress={onPress}>
@@ -267,20 +265,72 @@ class NewRecipeScreen extends React.Component {
 			'Are you sure your happy with the preview?',
 			[
 				{text: 'Cancel' },
-				{text: 'OK', onPress: this._submitToFirebase}
+				{text: 'OK', onPress: this._saveImageTofirebase}
 			],
 			{ cancelable: true }
 		)
 	}
 
-	_imagePicker = () => {
-		ImagePicker.launchImageLibraryAsync({
-			mediaTypes: 'Images',
-			allowsEditing: false,
+	_saveImageTofirebase = () => {
+		var storageRef = firebase.storage().ref()
+		var file = this.state.file
+		file.name = `${uuid()}.jpg`
+
+		console.log(file)
+		
+
+		var metadata = {
+			contentType: 'image/jpeg'
+		}
+
+		var uploadTask = storageRef.child('images/' + file.name).put(file, metadata)
+
+		uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,function(snapshot) {
+			var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+			console.log('Upload is ' + progress + '% done')
+			switch (snapshot.state) {
+			  case firebase.storage.TaskState.PAUSED: // or 'paused'
+				console.log('Upload is paused')
+				break;
+			  case firebase.storage.TaskState.RUNNING: // or 'running'
+				console.log('Upload is running')
+				break;
+			}
+		  }, function(error) {
+		
+		  // A full list of error codes is available at
+		  // https://firebase.google.com/docs/storage/web/handle-errors
+		  switch (error.code) {
+			case 'storage/unauthorized':
+			  // User doesn't have permission to access the object
+			  break;
+		
+			case 'storage/canceled':
+			  // User canceled the upload
+			  break;
+		
+			// ...
+		
+			case 'storage/unknown':
+			  // Unknown error occurred, inspect error.serverResponse
+			  break;
+		  }
+		}, function() {
+		  // Upload completed successfully, now we can get the download URL
+		  var downloadURL = uploadTask.snapshot.downloadURL
 		})
+		
+		// saveToFirebase().then((data) => {
+		// 	this._submitToFirebase(url)
+		// }).catch((error) => {
+		// 	console.log(error.message)
+		// })
+
+		
 	}
 
-	_submitToFirebase = () => {
+
+	_submitToFirebase = (url) => {
 		
 		const recipe = this.state.recipe
 		const ingredients = this.state.ingredients
@@ -300,7 +350,7 @@ class NewRecipeScreen extends React.Component {
 			diet: recipe.diet,
 			ingredients: ingredients,
 			instructions: steps,
-			picture: this.state.picture,
+			picture: url,
 			rating: [this.state.recipe.rating]
 		}
 		createNewObjIn('recipes', obj).then(()=>{
@@ -333,6 +383,49 @@ class NewRecipeScreen extends React.Component {
 		} else {
 			return url
 		}
+	}
+
+	_pickImage = async () => {
+
+		
+		let result = await ImagePicker.launchImageLibraryAsync({
+			allowsEditing: true,
+			aspect: [4, 3],
+			base64: true,
+		})
+	
+		console.log(this.state.file)
+	
+		if (!result.cancelled) {
+		  this.setState({ ...this.state, image: result.uri })
+		}
+
+		// .then(() => {
+		// 	// const imagePath = image.path
+			
+		// 	// let uploadBlob = null
+			
+		// 	let mime = 'image/jpg'
+		// 	const imageRef = firebase.storage().ref(uid).child(`${uuid()}.jpg`)
+			
+			
+		// })
+		// .then(() => {
+		// 			this._uploadAsByteArray(this.convertToByteArray(pickerResult.base64), (progress) => {
+		// 				console.log(progress)
+		// 				this.setState({ progress })
+		// 			})
+	
+		// })
+		// .catch((error) => {
+		// console.log(error)
+		// })
+
+
+
+
+
+
 	}
 	//+=====================================================================
 
@@ -387,11 +480,11 @@ class NewRecipeScreen extends React.Component {
 						placeholderTextColor='#505050' />
 
 					<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._dietActionSheet}>
-						<Text style={styles.textInput}>{this.state.recipe.diet ? this.state.recipe.diet :  'Add diet type of the recipe' }</Text>
+						<Text style={styles.textInput}>{this.state.recipe.diet ? this.state.recipe.diet :  'Select diet type' }</Text>
 					</TouchableOpacity> 
 
 					<TouchableOpacity style={styles.actionSheetContainer}  onPress={this._difActionSheet}>
-						<Text style={styles.textInput}>{this.state.recipe.difficulty ? this.state.recipe.difficulty + ' lvl' : 'Add the difficulty of the recipe'}</Text>
+						<Text style={styles.textInput}>{this.state.recipe.difficulty ? this.state.recipe.difficulty + ' lvl' : 'Select the difficulty of the recipe'}</Text>
 					</TouchableOpacity>
 
 					{this._renderButton('Next', this._submitRecipe, styles.stage1ButtonContainer, styles.buttonText)}
@@ -427,23 +520,25 @@ class NewRecipeScreen extends React.Component {
 		else if (!this.previewStage) {
 			return (
 				<View style={styles.page}>
-					<Text>Preview of how your recipe will look</Text>
+					<Text>Preview your recipe and add a photo</Text>
 					<View style={styles.recipeCard}>
-						<TouchableOpacity style={styles.buttonContainer}  onPress={this._imagePicker}>
-							<Image
-							style={styles.recipeImage}
-							source={{uri: this._setImage(this.state.picture) }}
-							/>
-						</TouchableOpacity>
 						<View style={styles.textPosition}>
-						<View style={styles.overlaptopText}>
-							<Text style={[styles.infoText, styles.font]}>Difficulty: {this.state.recipe.difficulty}/5</Text>
-							<Text style={[styles.infoText, styles.font]}>Takes: {this.state.recipe.duration}mins</Text>
+							<View style={styles.overlaptopText}>
+								<Text style={[styles.infoText, styles.font]}>Difficulty: {this.state.recipe.difficulty}/5</Text>
+								<Text style={[styles.infoText, styles.font]}>Takes: {this.state.recipe.duration}mins</Text>
+							</View>
+						<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+							<Button
+							title="Pick an image from camera roll"
+							onPress={this._pickImage}
+							/>
+							{this.state.image &&
+							<Image source={{ uri: this.state.image }} style={{ width: 200, height: 200 }} />}
 						</View>
-						<View style={styles.overlapbottomText}>
-							<Text style={[styles.name, styles.font]}>{this.state.recipe.name}</Text>
-							<Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(this.state.recipe.snippet)}</Text>
-						</View>
+							<View style={styles.overlapbottomText}>
+								<Text style={[styles.name, styles.font]}>{this.state.recipe.name}</Text>
+								<Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(this.state.recipe.snippet)}</Text>
+							</View>
 						</View>
 					</View>
 					<View style={styles.stageButtons}>
@@ -542,10 +637,6 @@ const styles = StyleSheet.create({
 		width: ScreenWidth,
 		height: ScreenHeight,
 	},
-	font: {
-		fontFamily: 'American Typewriter',
-		fontSize: 16,
-	},
 	page: {
 		backgroundColor: 'transparent',
 	},
@@ -559,6 +650,24 @@ const styles = StyleSheet.create({
 		backgroundColor: 'transparent',
 		width: '100%',
 		height: 300,
+	},
+	textPosition: {
+		display: 'flex',
+		justifyContent: 'space-between',
+		top: 0,
+		...StyleSheet.absoluteFillObject
+	},
+	overlaptopText: {
+		backgroundColor: "#fff",
+		flexDirection: "row",
+		justifyContent: "center",
+		opacity: 0.7,
+		width: ScreenWidth
+	},
+	overlapbottomText: {
+		backgroundColor: "#fff",
+		opacity: 0.7,
+		width: ScreenWidth,
 	},
 	name: {
 		fontWeight: 'bold',

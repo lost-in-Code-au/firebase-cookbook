@@ -4,6 +4,8 @@ import Modal from 'react-native-modal' // 2.4.0
 
 import firebase, { createNewObjIn } from './FirebaseUtil'
 
+import commementImage from '../../assets/images/feedback.png'
+
 
 export default class Feedback extends Component {
 	constructor() {
@@ -47,11 +49,12 @@ export default class Feedback extends Component {
     _renderButton = (text, onPress) => (
         <TouchableOpacity  style={styles.modalButton} onPress={onPress}>
             <ImageBackground style={styles.buttonImage}
-                source={require('../../assets/images/feedback.png')}>
+                source={commementImage}>
                 <Text style={styles.text}>{text}</Text>
             </ImageBackground>
         </TouchableOpacity>
-    )
+    )//TODO: need to make the the require('../../assets/images/feedback.png') dynamic to pickup image
+    // when the component is used from other locations
 
     _renderModalContent = () => (
         <View style={styles.modalContent}>

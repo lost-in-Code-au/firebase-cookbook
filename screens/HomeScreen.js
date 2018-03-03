@@ -8,13 +8,22 @@ import {
 	FlatList,
 	TouchableHighlight,
 	TouchableOpacity,
-	Image,
-	Button,
+	Image, Button,
 } from 'react-native'
 import PropTypes from 'prop-types'
 
 //Alpha version feedback
 import Feedback from '../components/Utils/AlphaUserFeedback'
+
+import { ImagePicker } from 'expo'// For dev logs through expo XDE
+import uuid from 'uuid'
+import RNFetchBlob from 'react-native-fetch-blob'
+
+// import atob from 'atob' //broke yo
+// import base64js from 'base64-js'
+// import TextDecoder from 'text-encoding'
+// import TextDecoderLight from 'text-encoder-lite'
+
 
 import firebase, { createNewObjIn, dataBaseRequest, userSignOut } from '../components/Utils/FirebaseUtil'
 
@@ -47,6 +56,11 @@ class HomeScreen extends React.Component {
 			recipes: [],
 			loading: true,
 			error: null,
+
+			//image encoding
+			image: null,
+			file: null,
+			progress: null,
 		}
 	}
 
@@ -136,15 +150,109 @@ class HomeScreen extends React.Component {
 		}
 	}
 
+	//================================================uploader=============================
+
+	//helper functions
+	convertToByteArray = (input) => {
+		// var encoding = 'utf-8'
+		// var bytes = base64js.toByteArray(input)
+		// return new TextDecoder(encoding).decode(bytes)
+
+		const Blob = RNFetchBlob.polyfill.Blob
+
+		// create Blob using base64 encoded string 
+		return Blob.build(input, { type : 'image/png;BASE64' })
+			.then((blob) => {
+				var storageRef = firebase.storage().ref();
+				var ref = storageRef.child(`images/${uuid()}.jpg`)
+				var metadata = {
+					contentType: 'image/jpeg',
+				}
+			  
+				console.log(blob)
+	  
+				let uploadTask = ref.put(blob, metadata)
+			} )
+	}
+
+	//uploader encoder
+	// _uploadAsByteArray = async (pickerResultAsByteArray, progressCallback) => {
+
+	// 	try {
+	
+	// 	//   var metadata = {
+	// 	// 	contentType: 'image/jpeg',
+	// 	//   }
+	
+	// 	  var storageRef = firebase.storage().ref();
+	// 	  var ref = storageRef.child(`images/${uuid()}.jpg`)
+		
+	// 	  console.log(pickerResultAsByteArray)
+
+	// 	  let uploadTask = ref.put(pickerResultAsByteArray)
+	
+	// 	  uploadTask.on('state_changed', function (snapshot) {
+	
+	// 		progressCallback && progressCallback(snapshot.bytesTransferred / snapshot.totalBytes)
+	
+	// 		var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+	// 		console.log('Upload is ' + progress + '% done')
+	
+	// 	  }, function (error) {
+	// 		console.log("in _uploadAsByteArray ", error)
+	// 	  }, function () {
+	// 		var downloadURL = uploadTask.snapshot.downloadURL
+	// 		console.log("_uploadAsByteArray ", uploadTask.snapshot.downloadURL)
+	// 	  })
+	
+	
+	// 	} catch (ee) {
+	// 	  console.log("when trying to load _uploadAsByteArray ", ee)
+	// 	}
+	// }
+
+	//imagepcker
+	_pickImage = async () => {
+
+		let result = await ImagePicker.launchImageLibraryAsync({
+			allowsEditing: true,
+			aspect: [4, 3],
+			base64: true,
+		})
+	
+		if (!result.cancelled) {
+			this.setState({ ...this.state, image: result.uri, file: result.base64 })
+			convertToByteArray(result)
+			// this._uploadAsByteArray(this.convertToByteArray(result.base64), (progress) => {
+			// console.log(progress)
+			// this.setState({ progress })
+			// })
+
+		}
+	}
+
+
 	render() {
 		return (
 			<ImageBackground style={styles.backGround}
 			source={require('../assets/images/seigaiha.png')}>
-				{this._renderHomePage()}
+				{/* {this._renderHomePage()} */}
+
+
+				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+					<Button
+					title="Pick an image from camera roll"
+					onPress={this._pickImage}
+					/>
+					{this.state.image &&
+					<Image source={{ uri: this.state.image }} style={{ width: 200, height: 200 }} />}
+				</View>
+
+
 				<Feedback page='homescreen' />
 			</ImageBackground>
 		)
-	}//Can't get Feedback to float and be clickable over the over content yet.
+	}
 }
 
 const styles = StyleSheet.create({

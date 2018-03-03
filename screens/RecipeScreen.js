@@ -62,8 +62,6 @@ class RecipeScreen extends React.Component {
 
 const styles = StyleSheet.create({
 	font: {
-		fontFamily: 'American Typewriter',
-		fontSize: 16,
 		opacity: 0.9,
 	},
 	backGround: {
