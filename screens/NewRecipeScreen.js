@@ -610,7 +610,12 @@ class NewRecipeScreen extends React.Component {
 			</ImageBackground>
 		)
 	}
-}
+}//TODO list: 
+// 1) reidrect after susscessful submition
+// 2) convert base64 img and upload to firebase
+// 3) push uploaded uri from the img post to the recipe submition
+// 4) cleanup styles of buttons
+// 5) link TextInput(durationInput) to the frist actoinSheet
 
 const styles = StyleSheet.create({
 	stageButtons: {

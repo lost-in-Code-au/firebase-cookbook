@@ -46,16 +46,6 @@ export default class Feedback extends Component {
 		})
 	}
 
-    _renderButton = (text, onPress) => (
-        <TouchableOpacity  style={styles.modalButton} onPress={onPress}>
-            <ImageBackground style={styles.buttonImage}
-                source={commementImage}>
-                <Text style={styles.text}>{text}</Text>
-            </ImageBackground>
-        </TouchableOpacity>
-    )//TODO: need to make the the require('../../assets/images/feedback.png') dynamic to pickup image
-    // when the component is used from other locations
-
     _renderModalContent = () => (
         <View style={styles.modalContent}>
             <Text>Hello, please leave a comment on how this page can be better!</Text>
@@ -82,7 +72,11 @@ export default class Feedback extends Component {
     render() {
         return (
             <View style={styles.box}>
-                {this._renderButton('    ', () => this.setState({ visibleModal: 1 }))}
+                <TouchableOpacity  style={styles.modalButton} onPress={() => this.setState({ visibleModal: 1 })}>
+                    <ImageBackground style={styles.buttonImage}
+                        source={commementImage}>
+                    </ImageBackground>
+                </TouchableOpacity>
                 <Modal isVisible={this.state.visibleModal === 1}>
                     {this._renderModalContent()}
                 </Modal>
@@ -92,22 +86,19 @@ export default class Feedback extends Component {
 }
 
 const styles = StyleSheet.create({
+    //Trigger button styles
     box: {
         ...StyleSheet.absoluteFillObject,
         width: 16,
         height:16,
         marginLeft: '80%'
     },  
-    text: {
-        backgroundColor: 'transparent',
-        color: '#505050',
-        fontSize: 20,
-    },
 	buttonImage: {
-		padding: 16,
+		padding: 24,
 		borderRadius: 10,
 		backgroundColor: '#fff'		
-	},
+    },
+    //Inside the modal styles
 	modalButtons: {
 		flexDirection: "row",
 	},
