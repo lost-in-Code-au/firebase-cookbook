@@ -21,7 +21,7 @@ class IngredientsScreen extends React.Component {
 		// headerRight: <Button title="Rate" />,//TODO: Create rating Component
 	})
 
-	_ingredents = () => {		
+	_ingredents = (item) => {		
 		return (
 			<FlatList
 				data={item.ingredients}
@@ -48,7 +48,7 @@ class IngredientsScreen extends React.Component {
 			<ImageBackground
 			style={styles.backGround}
 			source={require('../assets/images/seigaiha.png')}>
-				{this._ingredents()}
+				{this._ingredents(item)}
 				<Feedback page='Ingredent Screen' />
 			</ImageBackground>
 		)
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
 	},
 	backGround: {
 		width: ScreenWidth,
+        height: ScreenHeight
 	},
 	header: {
 		fontSize: 28,

@@ -9,10 +9,10 @@ import HomeScreen from './screens/HomeScreen'
 import RecipeScreen from './screens/RecipeScreen'
 import IngredientsScreen from './screens/IngredientsScreen'
 import NewRecipeScreen from './screens/NewRecipeScreen'
-import StagingScreen from './screens/StagingScreen'
+// import StagingScreen from './screens/StagingScreen'
 
 const CookBookApp = StackNavigator({
-	Stage: { screen: StagingScreen },//Hash out when no components are being worked on in the staging screen
+	// Stage: { screen: StagingScreen },//Hash out when no components are being worked on in the staging screen
 	Root: { screen: RootScreen },
 	Login: { screen: LoginScreen },
 	Signup: { screen: SignUpScreen },

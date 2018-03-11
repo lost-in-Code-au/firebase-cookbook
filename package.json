@@ -14,6 +14,7 @@
     "base64-js": "^1.2.3",
     "expo": "^24.0.2",
     "firebase": "^4.8.1",
+    "firebase-tools": "^3.17.4",
     "prop-types": "^15.6.0",
     "react": "16.0.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-24.0.0.tar.gz",

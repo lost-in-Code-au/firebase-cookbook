@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "expo-demo-cookbook",
+    "name": "grEats",
     "description": "A very interesting project.",
-    "slug": "expo-demo-cookbook",
+    "slug": "grEats",
     "privacy": "public",
     "sdkVersion": "24.0.0",
     "platforms": ["ios", "android"],

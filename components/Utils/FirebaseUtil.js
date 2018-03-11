@@ -9,6 +9,11 @@ const config = {
 
 firebase.initializeApp(config)
 
+//Setup of firebase methords
+//npm install -g firebase-tools
+//firebase init
+//firebase deploy
+
 export function userLogin(email, password) {
 	return firebase.auth().signInWithEmailAndPassword(email, password)
 }
@@ -16,7 +21,6 @@ export function userLogin(email, password) {
 export function signUp(email, password) {
 	return firebase.auth().createUserWithEmailAndPassword(email, password)
 }
-
 
 export function dataBaseRequest(dBRoot) {
 	const result = []
@@ -36,18 +40,8 @@ export const userSignOut = () => {
 	return firebase.auth().signOut()
 }
 
-// export function createKeyForPostFrom(dBRoot) {
-// 	return firebase.database().ref().child(dBRoot).push().key
-// } // you're ment to create a key first but it seams like it will work just fine without
-
 export function createNewObjIn(dBRoot, newObject) {
 	return firebase.database().ref(dBRoot).push(newObject)
 }
-
-//User .set carefully! it rewrites over all children... basically don't user it, use update instead ^
-// export function createNewRoot(newRoot, newObject) {
-// 	return firebase.database().ref(newRoot).set(newObject)
-// }
-
 
 export default firebase

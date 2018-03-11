@@ -2,26 +2,18 @@ import React from 'react'
 import {
 	Dimensions,
 	StyleSheet,
+	ActivityIndicator,
 	ImageBackground,
 	ActionSheetIOS,
 	View, ScrollView,
-	TextInput,
-	FlatList, Text,
+	TextInput, Text,
 	TouchableOpacity, 
 	KeyboardAvoidingView,
 	Button, Alert, Image
 } from 'react-native'
 
-
 import { ImagePicker } from 'expo'// For dev logs through expo XDE
 import uuid from 'uuid'
-// import RNFetchBlob from 'react-native-fetch-blob'//possible linking issue
-
-// import atob from 'atob' //broke yo
-// import base64js from 'base64-js'
-// import TextDecoder from 'text-encoding'
-// import TextDecoderLight from 'text-encoder-lite'
-
 
 import Feedback from '../components/Utils/AlphaUserFeedback'
 import firebase, { dataBaseRequest, createNewObjIn } from '../components/Utils/FirebaseUtil'
@@ -29,33 +21,6 @@ import firebase, { dataBaseRequest, createNewObjIn } from '../components/Utils/F
 var ScreenHeight = Dimensions.get("window").height
 var ScreenWidth = Dimensions.get("window").Width
 const MAX_SNIPPET_LENGTH = 75
-
-//abstracted fucntions
-// const CustomTextInput = ({ maxLength, ref, submit, onChange, autoCorrect, returnKey, placeHolder, value}) => (
-// 	<TextInput 
-// 		style = {styles.textInputContainer} 
-// 		maxLength={maxLength}
-// 		ref={(input)=> this.{ref} = input} //should it be `this.${ref}.focus()`?
-// 		onSubmitEditing={() => this.{submit}.focus()} //should it be `this.${submit}.focus()`?
-// 		onChangeText={onChange}
-// 		autoCorrect={autoCorrect}
-// 		returnKeyType={returnKey}
-// 		placeholder={placeHolder}
-// 		value={value}
-// 		placeholderTextColor='#505050' />
-// )
-// 	======>exaple component<=======
-//		<CustomTextInput
-//		maxLength=30
-//		ref='authorInput'
-//		submit='snippetInput'
-//		onChange={(authorName) => this.setState({ ...this.state, author: authorName })} //handled in the element
-//		autoCorrect={true}
-// 		returnKey='next'
-// 		placeHolder='Name of author'
-// 		value={this.state.author}
-//		/>
-// 	
 
 const submitionAlert = (options, callback) => {
 	const isfalse = (currentValue) => {
@@ -112,14 +77,16 @@ class NewRecipeScreen extends React.Component {
 			},
 			ingredients: [''],
 			steps: [''],
-			picture: 'http://via.placeholder.com/300.png/09f/fff',
+			imageUrl: 'http://via.placeholder.com/300.png/09f/fff',
 			
 			//flags
 			firstStageSubmit: false,
 			secoundStageSubmit: false,
 			thridStageSubmit: false,
 
-			previewStage: false
+			previewStage: false,
+			uploadImgFlag: true,
+			uploadImgButtonFlag: true
 		}
 	}
 		
@@ -232,7 +199,7 @@ class NewRecipeScreen extends React.Component {
 				autoCorrect={true} 
 				key={index}
 				returnKeyType='next'
-				placeholder='Add name of ingredient' 
+				placeholder='  Add name of ingredient' 
 				value={value}
 				placeholderTextColor='#505050' />
 		))
@@ -258,7 +225,7 @@ class NewRecipeScreen extends React.Component {
 				autoCorrect={true}
 				key={index}
 				returnKeyType='next'
-				placeholder='Add new step' 
+				placeholder='  Add new step' 
 				value={value}
 				placeholderTextColor='#505050' />
 		))
@@ -274,108 +241,10 @@ class NewRecipeScreen extends React.Component {
 			'Are you sure your happy with the preview?',
 			[
 				{text: 'Cancel' },
-				{text: 'OK', onPress: this._saveImageTofirebase}
+				{text: 'OK', onPress: () => this._submitToFirebase()}
 			],
 			{ cancelable: true }
 		)
-	}
-
-	_saveImageTofirebase = () => {
-		var storageRef = firebase.storage().ref()
-		var file = this.state.file
-		file.name = `${uuid()}.jpg`
-
-		console.log(file)
-		
-
-		var metadata = {
-			contentType: 'image/jpeg'
-		}
-
-		var uploadTask = storageRef.child('images/' + file.name).put(file, metadata)
-
-		uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,function(snapshot) {
-			var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-			console.log('Upload is ' + progress + '% done')
-			switch (snapshot.state) {
-			  case firebase.storage.TaskState.PAUSED: // or 'paused'
-				console.log('Upload is paused')
-				break;
-			  case firebase.storage.TaskState.RUNNING: // or 'running'
-				console.log('Upload is running')
-				break;
-			}
-		  }, function(error) {
-		
-		  // A full list of error codes is available at
-		  // https://firebase.google.com/docs/storage/web/handle-errors
-		  switch (error.code) {
-			case 'storage/unauthorized':
-			  // User doesn't have permission to access the object
-			  break;
-		
-			case 'storage/canceled':
-			  // User canceled the upload
-			  break;
-		
-			// ...
-		
-			case 'storage/unknown':
-			  // Unknown error occurred, inspect error.serverResponse
-			  break;
-		  }
-		}, function() {
-		  // Upload completed successfully, now we can get the download URL
-		  var downloadURL = uploadTask.snapshot.downloadURL
-		})
-		
-		// saveToFirebase().then((data) => {
-		// 	this._submitToFirebase(url)
-		// }).catch((error) => {
-		// 	console.log(error.message)
-		// })
-
-		
-	}
-
-
-	_submitToFirebase = (url) => {
-		
-		const recipe = this.state.recipe
-		const ingredients = this.state.ingredients
-		const steps = this.state.steps
-
-		const difficulty = parseInt(recipe.difficulty)
-		const duration = parseInt(recipe.duration)
-		
-
-		obj = {
-			_id: createKeyForPostFrom('recipes'),
-			name: recipe.name,
-			author: recipe.author,
-			snippet: recipe.snippet,
-			difficulty: difficulty,
-			duration: duration,
-			diet: recipe.diet,
-			ingredients: ingredients,
-			instructions: steps,
-			picture: url,
-			rating: [this.state.recipe.rating]
-		}
-		createNewObjIn('recipes', obj).then(()=>{
-			navigate('home')
-		}).catch((error) => {
-			console.log(error.message)
-			Alert.alert(
-				'Sorry somehing went wrong!',
-				error.message,
-				[
-					{text: 'Ok' }
-				],
-				{ cancelable: true }
-			)
-		})
-
 	}
 
 	//+======================= Preview functions =========================
@@ -396,85 +265,108 @@ class NewRecipeScreen extends React.Component {
 
 	//================================================uploader=============================
 
-	// //helper functions
-	// convertToByteArray = (input) => {
-	// 	// var encoding = 'utf-8'
-	// 	// var bytes = base64js.toByteArray(input)
-	// 	// return new TextDecoder(encoding).decode(bytes)
+	    //imagepcker
+	_pickImage = async () => {
 
-	// 	const Blob = RNFetchBlob.polyfill.Blob
-
-	// 	// create Blob using base64 encoded string 
-	// 	return Blob.build(input, { type : 'image/png;BASE64' })
-	// 		.then((blob) => {
-	// 			var storageRef = firebase.storage().ref();
-	// 			var ref = storageRef.child(`images/${uuid()}.jpg`)
-	// 			var metadata = {
-	// 				contentType: 'image/png',
-	// 			}
-			  
-	// 			console.log(blob)
-	  
-	// 			let uploadTask = ref.put(blob, metadata)
-	// 		} )
-	// }
-
-	// //uploader encoder
-	// // _uploadAsByteArray = async (pickerResultAsByteArray, progressCallback) => {
-
-	// // 	try {
+		let result = await ImagePicker.launchImageLibraryAsync({
+			allowsEditing: true,
+			aspect: [4, 3]
+		})
 	
-	// // 	//   var metadata = {
-	// // 	// 	contentType: 'image/jpeg',
-	// // 	//   }
-	
-	// // 	  var storageRef = firebase.storage().ref();
-	// // 	  var ref = storageRef.child(`images/${uuid()}.jpg`)
+		if (!result.cancelled) {
+			this.setState({ ...this.state, image: result.uri })
+		}
+	}
+
+	_uploadToFirebase = async () => {
+		if(!this.state.image) return 
+
+		this.setState({ ...this.state, uploadImgFlag: false})
+
+		const name = `${uuid.v4()}.jpg`
+		const body = new FormData()
+
+		body.append("picture", {
+			uri: this.state.image,
+			name,
+			type: "image/jpg"
+		})
+
+		try {
+			const res = await fetch("https://us-central1-react-native-firebase-st-d0137.cloudfunctions.net/api/picture", {
+				method: "POST",
+				body,
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "multipart/form-data"
+				}
+			})
+
+			const url = await firebase.storage().ref(`images/${name}`).getDownloadURL()
+			
+			await this.setState({ ...this.state, imageUrl: url , uploadImgFlag: true, uploadImgButtonFlag: false })
+			Alert.alert(
+				'Your image was suscefully uploaded',
+				"Now to submit your new recipe",
+				{ cancelable: true }
+			)
+		}
+		catch (err) {
+			console.log(err)
+		}
+	}
+
+	_submitToFirebase = async () => {
+		this.setState({ ...this.state, uploadImgFlag: false})
+		const { navigate } = this.props.navigation
 		
-	// // 	  console.log(pickerResultAsByteArray)
+		const recipe = this.state.recipe
+		const ingredients = this.state.ingredients
+		const steps = this.state.steps
+		const difficulty = parseInt(recipe.difficulty)
+		const duration = parseInt(recipe.duration)
+		
+	
+		obj = {
+			_id: uuid.v4(),
+			name: recipe.name,
+			author: recipe.author,
+			snippet: recipe.snippet,
+			difficulty: difficulty,
+			duration: duration,
+			diet: recipe.diet,
+			ingredients: ingredients,
+			instructions: steps,
+			picture: this.state.imageUrl,
+			rating: [this.state.recipe.rating]
+		}
+		try {
+			await createNewObjIn('recipes', obj).then(()=>{
+				
+				this.setState({ ...this.state, uploadImgFlag: true})
+	
+				const { navigate } = this.props.navigation
+				const msg = 'Success, please refesh your app to see it'
+				navigate('Home', msg)
+			}).catch((error) => {
+				console.log(error.message)
+				Alert.alert(
+					'Sorry somehing went wrong!',
+					error.message,
+					[
+						{text: 'Ok' }
+					],
+					{ cancelable: true }
+				)
+			})
+		}
+		catch (err) {
+			console.log(err)
+		}
+	}
 
-	// // 	  let uploadTask = ref.put(pickerResultAsByteArray)
-	
-	// // 	  uploadTask.on('state_changed', function (snapshot) {
-	
-	// // 		progressCallback && progressCallback(snapshot.bytesTransferred / snapshot.totalBytes)
-	
-	// // 		var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-	// // 		console.log('Upload is ' + progress + '% done')
-	
-	// // 	  }, function (error) {
-	// // 		console.log("in _uploadAsByteArray ", error)
-	// // 	  }, function () {
-	// // 		var downloadURL = uploadTask.snapshot.downloadURL
-	// // 		console.log("_uploadAsByteArray ", uploadTask.snapshot.downloadURL)
-	// // 	  })
-	
-	
-	// // 	} catch (ee) {
-	// // 	  console.log("when trying to load _uploadAsByteArray ", ee)
-	// // 	}
-	// // }
 
-	// //imagepcker
-	// _pickImage = async () => {
-
-	// 	let result = await ImagePicker.launchImageLibraryAsync({
-	// 		allowsEditing: true,
-	// 		aspect: [4, 3],
-	// 		base64: true,
-	// 	})
-	
-	// 	if (!result.cancelled) {
-	// 		this.setState({ ...this.state, image: result.uri, file: result.base64 })
-	// 		convertToByteArray(result)
-	// 		// this._uploadAsByteArray(this.convertToByteArray(result.base64), (progress) => {
-	// 		// console.log(progress)
-	// 		// this.setState({ progress })
-	// 		// })
-
-	// 	}
-	// }
-	//+=====================================================================
+	//=====================================================================
 
 	_renderForm = () => {
 		const { navigate } = this.props.navigation
@@ -540,58 +432,81 @@ class NewRecipeScreen extends React.Component {
 		} else if (!this.state.secoundStageSubmit) {
 			return (
 				<View style={styles.page}>
-					<Text>Hello and welcome to the Ingredents stage, please input the ingredients that are required for your recipe</Text>
+					<Text style={styles.headerText}>Hello and welcome to the Ingredents stage, please input the ingredients that are required for your recipe</Text>
 					{this._ingredentBuilder()}
-					{this._renderButton('+', this._addIngredentTextInput, styles.addField, styles.addFieldText)}
-					<View style={styles.stageButtons}>
-						{this._renderButton('Back', this._stepBackToStageOne, styles.buttonContainer, styles.buttonText)}
-						{this._renderButton('Next', this._submitRecipeIngreedients, styles.buttonContainer, styles.buttonText)}
-					</View>
+					<TouchableOpacity style={styles.addField} onPress={this._addIngredentTextInput}>
+						<View  style={styles.addFieldButton}>
+							<Text style={styles.addFieldButtionText}>+</Text>
+						</View>
+            		</TouchableOpacity>
+					<View style={styles.buttonsContainer}>
+						{this._renderButton('Back', this._stepBackToStageOne, styles.buttons, styles.buttonsText)}
+						{this._renderButton('Next', this._submitRecipeIngreedients, styles.buttons, styles.buttonsText)}
+            		</View>
 				</View>
 			)
 		} else if (!this.state.thridStageSubmit) {
 			return (
 				<View style={styles.page}>
-					<Text>Hello and welcome to the Instructions stage, please input the steps that are required for your recipe</Text>
+					<Text style={styles.headerText}>Hello and welcome to the Instructions stage, please input the steps that are required for your recipe</Text>
 					{this._stepsBuilder()}
-					{this._renderButton('+', this._addStepsTextInput, styles.addField, styles.addFieldText)}
-					<View style={styles.stageButtons}>
-						{this._renderButton('Back', this._stepBackToStageTwo, styles.buttonContainer, styles.buttonText)}
-						{this._renderButton('Next', this._submitRecipeSteps, styles.buttonContainer, styles.buttonText)}
+					<TouchableOpacity style={styles.addField} onPress={this._addStepsTextInput}>
+						<View  style={styles.addFieldButton}>
+							<Text style={styles.addFieldButtionText}>+</Text>
+						</View>
+					</TouchableOpacity>
+					<View style={styles.buttonsContainer}>
+						{this._renderButton('Back', this._stepBackToStageTwo, styles.buttons, styles.buttonsText)}
+						{this._renderButton('Next', this._submitRecipeSteps, styles.buttons, styles.buttonsText)}
 					</View>
 				</View>
 			)
 		}
 //================================================> Preview stage <=========================================
-		
+		else if (!this.state.uploadImgFlag) {
+			return (
+				<ActivityIndicator
+					animating={true}
+					style={styles.indicator}
+					size="large"
+				/>
+			)
+		}
 		else if (!this.previewStage) {
 			return (
 				<View style={styles.page}>
-					<Text>Preview your recipe and add a photo</Text>
+					<Text style={styles.headerText}>Preview your recipe and add a photo</Text>
 					<View style={styles.recipeCard}>
 						<View style={styles.textPosition}>
 							<View style={styles.overlaptopText}>
 								<Text style={[styles.infoText, styles.font]}>Difficulty: {this.state.recipe.difficulty}/5</Text>
 								<Text style={[styles.infoText, styles.font]}>Takes: {this.state.recipe.duration}mins</Text>
 							</View>
-						<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-							<Button
-							title="Pick an image from camera roll"
-							onPress={this._pickImage}
-							/>
-							{this.state.image &&
-							<Image source={{ uri: this.state.image }} style={{ width: 200, height: 200 }} />}
-						</View>
+						
+			
+							<TouchableOpacity style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} onPress={this._pickImage}>
+								
+								{this.state.image ? 
+									<Image source={{ uri: this.state.image }} style={styles.recipeImage} /> 
+									: 
+									<Text style={styles.headerText}>Click to pick image from camera roll</Text> 
+								}
+							</TouchableOpacity>
+	
 							<View style={styles.overlapbottomText}>
 								<Text style={[styles.name, styles.font]}>{this.state.recipe.name}</Text>
 								<Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(this.state.recipe.snippet)}</Text>
 							</View>
 						</View>
 					</View>
-					<View style={styles.stageButtons}>
-						{this._renderButton('Back', this._stepBackToStageThree, styles.buttonContainer, styles.buttonText)}
-						{this._renderButton('Submit Recipe', this._submitPreviewedRecipe, styles.buttonContainer, styles.buttonText)}
-					</View>
+					{this.state.uploadImgButtonFlag && this._renderButton('Upload Photo', this._uploadToFirebase, styles.stage1ButtonContainer, styles.buttonsText) || 					
+						<View style={styles.buttonsContainer}>
+							{this._renderButton('Back', this._stepBackToStageThree, styles.buttons, styles.buttonsText)}
+							<TouchableOpacity style={styles.buttons} onPress={() => this._submitPreviewedRecipe()}>
+								<Text style={styles.buttonsText}>Submit</Text>
+							</TouchableOpacity>
+						</View>
+					}
 				</View>
 			)
 		}
@@ -603,19 +518,14 @@ class NewRecipeScreen extends React.Component {
 				source={require('../assets/images/seigaiha.png')}>
 				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
 					<ScrollView >
-					{this._renderForm()}
-					<Feedback page='New Recipe Screen' />
+						{this._renderForm()}
+						<Feedback page='New Recipe Screen' />
 					</ScrollView>
 				</KeyboardAvoidingView> 
 			</ImageBackground>
 		)
 	}
-}//TODO list: 
-// 1) reidrect after susscessful submition
-// 2) convert base64 img and upload to firebase
-// 3) push uploaded uri from the img post to the recipe submition
-// 4) cleanup styles of buttons
-// 5) link TextInput(durationInput) to the frist actoinSheet
+}
 
 const styles = StyleSheet.create({
 	stageButtons: {
@@ -645,53 +555,76 @@ const styles = StyleSheet.create({
 	},
 	actionSheetContainer: {
 		height: 40,
-		paddingLeft: 10,//text spacing from left
-		marginTop: 20,//buffer on top of each textBox 
+		paddingLeft: 10,
+		marginTop: 20,
 		marginLeft: '10%',
 		width: '80%',
 		backgroundColor: '#fff',
 	},
+
 	stage1ButtonContainer: {
 		padding: 10,
-		marginTop: 20,
+        marginTop: 20,
+        maxHeight: 44,
 		backgroundColor: '#4097c9',
-		width: '100%',
+		width: '60%',
+		marginLeft: '20%',
+    },
+
+
+
+	headerText: {
+        color: '#505050',
+		marginLeft: '10%',
+        width: '80%',
+        fontWeight: 'bold',
+        marginTop: 20,
 	},
-	buttonText: {
-		fontWeight: 'bold',
+
+    buttonsContainer: {
+		flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'space-between',
+        width: '80%',
+        marginLeft: '10%',
+        maxHeight: 44,
+        marginTop: 20,
+	},
+    buttons: {
+		marginBottom: 10,
+		marginTop: 15,
+		backgroundColor: '#4097c9',
+		paddingVertical: 15,
+		width: '40%',
+	},
+    buttonsText: {        
+        fontWeight: 'bold',
+        color: '#fff',
 		textAlign: 'center',
-		color: '#505050',
-	},
+        fontSize: 20,
+        paddingBottom: 11,
+    },
+	
 	addField: {
-		padding: 10,
-		marginTop: 20,
+        marginTop: 20,
+        width: '80%',
+        backgroundColor: '#fff',
+        height: 44,
+        marginLeft: '10%',
+    },
+    addFieldButton: {
+		paddingBottom: 6,
 		backgroundColor: '#4097c9',
 		width: '20%',
-		height: 48,
 		justifyContent: 'center',
-		marginLeft: '40%'
 	},
-	addFieldText:{
+	addFieldButtionText:{
 		color: '#fff',
 		fontWeight: 'bold',
 		textAlign: 'center',
 		fontSize: 34,
 	},
-	buttonContainer: {
-		marginBottom: 10,
-		marginLeft: '16%',
-		marginTop: 15,
-		backgroundColor: '#4097c9',
-		paddingVertical: 15,
-		width: '100%',
-	},
-	backGround: {
-		width: ScreenWidth,
-		height: ScreenHeight,
-	},
-	page: {
-		backgroundColor: 'transparent',
-	},
+	
 	recipeCardContainer: {
 		backgroundColor: 'transparent',
 		maxWidth: ScreenWidth,
@@ -699,11 +632,12 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 	},
 	recipeCard: {
+        marginTop: 15,
 		backgroundColor: 'transparent',
 		width: '100%',
 		height: 300,
-	},
-	textPosition: {
+    },
+    textPosition: {
 		display: 'flex',
 		justifyContent: 'space-between',
 		top: 0,
@@ -720,8 +654,14 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		opacity: 0.7,
 		width: ScreenWidth,
+    },	
+    recipeImage: {
+		backgroundColor: "transparent",
+		width: ScreenWidth,
+		height: 300,
+		opacity: 0.9,
 	},
-	name: {
+    name: {
 		fontWeight: 'bold',
 		margin: 5,
 	},
@@ -737,12 +677,21 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		paddingBottom: 8,
 	},
-	recipeImage: {
-		backgroundColor: "transparent",
+    
+	indicator: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: 80,
+		marginTop: '40%',
+	},
+	backGround: {
 		width: ScreenWidth,
-		height: 300,
-		opacity: 0.9,
-	}
+		height: ScreenHeight,
+	},
+	page: {
+		backgroundColor: 'transparent',
+	},
 })
 
 export default NewRecipeScreen

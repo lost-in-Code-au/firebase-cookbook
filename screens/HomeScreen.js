@@ -45,25 +45,41 @@ class HomeScreen extends React.Component {
 			recipes: [],
 			loading: true,
 			error: null,
+			message: null
 		}
 	}
 
 	static navigationOptions = ({ navigation }) => ({
-		headerTitle: 'grEat',
+		headerTitle: 'grEats',
         headerLeft: <BackButton navigation={navigation} />,
 		headerRight: <NewRecipeButton navigation={navigation} />
 	})
 
-	componentDidMount = () => {	
+	componentDidMount = () => {
 		dataBaseRequest('recipes').then((data) => {
+			const msg = this.props.navigation.state.params
+			// console.log(msg);
+		
 			this.setState({
 				...this.state,
 				recipes: data,
+				message: msg,
 				loading: !this.state.loading,
 			})
 		}).catch((error) => {
 			console.log(error.message)
 		})
+	}
+
+	_msgCheck = () => {
+		const msg = this.state.message
+		Alert.alert(
+			msg,
+			[
+				{text: 'Ok' }
+			],
+			{ cancelable: true }
+		)
 	}
 
 	_shortenSnippet(snippet) {
@@ -85,6 +101,8 @@ class HomeScreen extends React.Component {
 		const { navigate } = this.props.navigation
 		const text = this.state.loading ? 'Loading...' : 'Loaded'
 
+
+
 		if(this.state.loading) {			
 			return (
 				<ImageBackground
@@ -103,10 +121,10 @@ class HomeScreen extends React.Component {
 		else {
 			return (
 				<FlatList
-					data={this.state.recipes}
-					keyExtractor={(item, index) => index} 
-					renderItem={({ item }) => (
-						<TouchableOpacity
+				data={this.state.recipes}
+				keyExtractor={(item, index) => index} 
+				renderItem={({ item }) => (
+					<TouchableOpacity
 					onPress={() => navigate('Recipe', item)}
 					activeOpacity={.5}
 					underlayColor={"#DDDDDD"}
@@ -135,6 +153,13 @@ class HomeScreen extends React.Component {
 	}
 
 	render() {
+		// const { navigate } = this.props.navigation
+		// console.log(this.props.navigation.state.params);
+		// const msg = this.props.navigation.state.params
+		// console.log(msg);
+		// if(msg) {this._msgCheck(msg)}
+		
+		// this.state.message ? this._msgCheck() : 
 		return (
 			<ImageBackground style={styles.backGround}
 			source={require('../assets/images/seigaiha.png')}>

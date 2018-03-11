@@ -25,7 +25,6 @@ export default class Root extends React.Component {
 				})
 				navigate('Home', this.state.currentUser)
 			} else {
-				console.log('no user')
 				this.setState({
 					...this.state,
 					loading: !this.state.loading,

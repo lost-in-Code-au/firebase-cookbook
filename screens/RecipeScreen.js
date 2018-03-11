@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
 	},
 	backGround: {
 		width: ScreenWidth,
+        height: ScreenHeight
 	},
 	headerContainer: {
 		alignItems: 'center',
