@@ -5,34 +5,33 @@ import Modal from 'react-native-modal' // 2.4.0
 import firebase, { createNewObjIn } from './FirebaseUtil'
 
 import commementImage from '../../assets/images/feedback.png'
-import timestamp from 'timestamp'
+import timestamp from 'time-stamp'
 
 
 export default class Feedback extends Component {
 	constructor() {
 		super()
 		this.state = {
-            visibleModal: null,
+            visibleModal: false,
             userFeedback: null
         }
     }
 
-	_postCommentToFirebase = () => {
-		this.setState({ visibleModal: null })
-
-		const newObject = {
-			page: this.props.page,
+	_postCommentToFirebase = async () => {
+        
+        if(!this.state.userFeedback) return
+        
+        const newObject = {
+            page: this.props.page,
             feedback: this.state.userFeedback,
-            Date_n_time: timestamp('YYYY/MM/DD:hh:mm')
+            Date_n_time: timestamp('YYYY/MM/DD @HH:mm')
 		}
-		createNewObjIn('feedback', newObject).then((res)=>{
-			console.log(res)
-			Alert.alert(
+		await createNewObjIn('feedback', newObject).then((res)=>{
+            Alert.alert(
                 'Great! thank you for the feedback you beautiful person!',
                 'Have a nicee day',
-				// res.message,
 				[
-					{text: 'Ok' }
+                    {text: 'Ok', onPress: () => this.setState({ ...this.state, visibleModal: false }) }
 				],
 				{ cancelable: true }
 			)
@@ -42,10 +41,10 @@ export default class Feedback extends Component {
 				'Sorry somehing went wrong!',
 				error.message,
 				[
-					{text: 'Ok' }
+					{text: 'Ok', onPress: () => this.setState({ ...this.state, visibleModal: false }) }
 				],
 				{ cancelable: true }
-			)
+            )   
 		})
 	}
 
@@ -62,7 +61,7 @@ export default class Feedback extends Component {
                 value={this.state.userFeedback}
                 placeholderTextColor='#505050' />
             <View style={styles.modalButtons}>
-                <TouchableOpacity  style={styles.button} onPress={() => this.setState({ visibleModal: null })}>
+                <TouchableOpacity  style={styles.button} onPress={() => this.setState({ visibleModal: false })}>
                         <Text>Close</Text>
                 </TouchableOpacity>
                 <TouchableOpacity  style={styles.button} onPress={this._postCommentToFirebase}>
@@ -75,12 +74,12 @@ export default class Feedback extends Component {
     render() {
         return (
             <View style={styles.box}>
-                <TouchableOpacity  style={styles.modalButton} onPress={() => this.setState({ visibleModal: 1 })}>
+                <TouchableOpacity  style={styles.modalButton} onPress={() => this.setState({ visibleModal: true })}>
                     <ImageBackground style={styles.buttonImage}
                         source={commementImage}>
                     </ImageBackground>
                 </TouchableOpacity>
-                <Modal isVisible={this.state.visibleModal === 1}>
+                <Modal isVisible={this.state.visibleModal === true}>
                     {this._renderModalContent()}
                 </Modal>
             </View>
