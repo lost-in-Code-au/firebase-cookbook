@@ -19,7 +19,7 @@ import Feedback from '../components/Utils/AlphaUserFeedback'
 import firebase, { dataBaseRequest, createNewObjIn } from '../components/Utils/FirebaseUtil'
 
 var ScreenHeight = Dimensions.get("window").height
-var ScreenWidth = Dimensions.get("window").Width
+var ScreenWidth = Dimensions.get("window").width
 const MAX_SNIPPET_LENGTH = 75
 
 const submitionAlert = (options, callback) => {
@@ -316,56 +316,6 @@ class NewRecipeScreen extends React.Component {
 		}
 	}
 
-	_submitToFirebase = async () => {
-		this.setState({ ...this.state, uploadImgFlag: false})
-		const { navigate } = this.props.navigation
-		
-		const recipe = this.state.recipe
-		const ingredients = this.state.ingredients
-		const steps = this.state.steps
-		const difficulty = parseInt(recipe.difficulty)
-		const duration = parseInt(recipe.duration)
-		
-	
-		obj = {
-			_id: uuid.v4(),
-			name: recipe.name,
-			author: recipe.author,
-			snippet: recipe.snippet,
-			difficulty: difficulty,
-			duration: duration,
-			diet: recipe.diet,
-			ingredients: ingredients,
-			instructions: steps,
-			picture: this.state.imageUrl,
-			rating: [this.state.recipe.rating]
-		}
-		try {
-			await createNewObjIn('recipes', obj).then(()=>{
-				
-				this.setState({ ...this.state, uploadImgFlag: true})
-	
-				const { navigate } = this.props.navigation
-				const msg = 'Success, please refesh your app to see it'
-				navigate('Home', msg)
-			}).catch((error) => {
-				console.log(error.message)
-				Alert.alert(
-					'Sorry somehing went wrong!',
-					error.message,
-					[
-						{text: 'Ok' }
-					],
-					{ cancelable: true }
-				)
-			})
-		}
-		catch (err) {
-			console.log(err)
-		}
-	}
-
-
 	//=====================================================================
 
 	_renderForm = () => {
@@ -487,7 +437,7 @@ class NewRecipeScreen extends React.Component {
 							<TouchableOpacity style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} onPress={this._pickImage}>
 								
 								{this.state.image ? 
-									<Image source={{ uri: this.state.image }} style={styles.recipeImage} /> 
+									<Image source={{ uri: this.state.image }} style={styles.image} /> 
 									: 
 									<Text style={styles.headerText}>Click to pick image from camera roll</Text> 
 								}
@@ -655,7 +605,7 @@ const styles = StyleSheet.create({
 		opacity: 0.7,
 		width: ScreenWidth,
     },	
-    recipeImage: {
+    image: {
 		backgroundColor: "transparent",
 		width: ScreenWidth,
 		height: 300,

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "grEats",
-    "description": "A very interesting project.",
+    "description": "A free community recipe app",
     "slug": "grEats",
     "privacy": "public",
     "sdkVersion": "24.0.0",

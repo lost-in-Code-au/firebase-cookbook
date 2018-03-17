@@ -5,6 +5,7 @@ import Modal from 'react-native-modal' // 2.4.0
 import firebase, { createNewObjIn } from './FirebaseUtil'
 
 import commementImage from '../../assets/images/feedback.png'
+import timestamp from 'timestamp'
 
 
 export default class Feedback extends Component {
@@ -21,13 +22,15 @@ export default class Feedback extends Component {
 
 		const newObject = {
 			page: this.props.page,
-			feedback: this.state.userFeedback
+            feedback: this.state.userFeedback,
+            Date_n_time: timestamp('YYYY/MM/DD:hh:mm')
 		}
 		createNewObjIn('feedback', newObject).then((res)=>{
-			console.log(res.message)
+			console.log(res)
 			Alert.alert(
-				'Great! thank you for the feedback you beautiful person!',
-				res.message,
+                'Great! thank you for the feedback you beautiful person!',
+                'Have a nicee day',
+				// res.message,
 				[
 					{text: 'Ok' }
 				],

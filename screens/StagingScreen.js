@@ -107,7 +107,7 @@ _pickImage = async () => {
     })
 
     if (!result.cancelled) {
-        this.setState({ ...this.state, image: result.uri})
+        this.setState({ ...this.state, image: result.uri })
     }
 }
 
