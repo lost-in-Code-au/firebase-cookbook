@@ -25,8 +25,7 @@ const MAX_SNIPPET_LENGTH = 75
 const submitionAlert = (options, callback) => {
 	const isfalse = (currentValue) => {
 		return currentValue
-	}//needs to be tested a bit
-
+	}
 	if( options.every(isfalse) === false ){
 		Alert.alert(
 			'Wait up!',
@@ -168,8 +167,7 @@ class NewRecipeScreen extends React.Component {
 			this.setState({ ...this.state, thridStageSubmit: true })
 		})
 	}
-// <=============================same thing as above=====================================
-//having some trouble with the setStage accepting dynamic input.
+
 	_stepBackToStageOne = () => {
 		this.setState({ ...this.state, firstStageSubmit: false })
 	}
@@ -181,7 +179,6 @@ class NewRecipeScreen extends React.Component {
 	_stepBackToStageThree = () => {
 		this.setState({ ...this.state, thridStageSubmit: false })
 	}
-//End of Refactor 0.2 <==================================================================
 
 	_ingredentBuilder = () => {
 		const build = this.state.ingredients
@@ -247,7 +244,6 @@ class NewRecipeScreen extends React.Component {
 		)
 	}
 
-	//+======================= Preview functions =========================
 	_shortenSnippet(snippet) {
 		if(snippet.length > MAX_SNIPPET_LENGTH){
 			snippet = snippet.slice(0, MAX_SNIPPET_LENGTH-5) + "..."
@@ -263,9 +259,6 @@ class NewRecipeScreen extends React.Component {
 		}
 	}
 
-	//================================================uploader=============================
-
-	    //imagepcker
 	_pickImage = async () => {
 
 		let result = await ImagePicker.launchImageLibraryAsync({
@@ -315,8 +308,6 @@ class NewRecipeScreen extends React.Component {
 			console.log(err)
 		}
 	}
-
-	//=====================================================================
 
 	_renderForm = () => {
 		const { navigate } = this.props.navigation
@@ -379,7 +370,8 @@ class NewRecipeScreen extends React.Component {
 					{this._renderButton('Next', this._submitRecipe, styles.stage1ButtonContainer, styles.buttonText)}
 				</View>
 			)
-		} else if (!this.state.secoundStageSubmit) {
+		} 
+		else if (!this.state.secoundStageSubmit) {
 			return (
 				<View style={styles.page}>
 					<Text style={styles.headerText}>Hello and welcome to the Ingredents stage, please input the ingredients that are required for your recipe</Text>
@@ -395,7 +387,8 @@ class NewRecipeScreen extends React.Component {
             		</View>
 				</View>
 			)
-		} else if (!this.state.thridStageSubmit) {
+		} //TODO: Add ScrollView to list
+		else if (!this.state.thridStageSubmit) {
 			return (
 				<View style={styles.page}>
 					<Text style={styles.headerText}>Hello and welcome to the Instructions stage, please input the steps that are required for your recipe</Text>
@@ -411,7 +404,7 @@ class NewRecipeScreen extends React.Component {
 					</View>
 				</View>
 			)
-		}
+		}//TODO: Add ScrollView to list
 //================================================> Preview stage <=========================================
 		else if (!this.state.uploadImgFlag) {
 			return (
@@ -432,8 +425,6 @@ class NewRecipeScreen extends React.Component {
 								<Text style={[styles.infoText, styles.font]}>Difficulty: {this.state.recipe.difficulty}/5</Text>
 								<Text style={[styles.infoText, styles.font]}>Takes: {this.state.recipe.duration}mins</Text>
 							</View>
-						
-			
 							<TouchableOpacity style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} onPress={this._pickImage}>
 								
 								{this.state.image ? 
@@ -442,7 +433,6 @@ class NewRecipeScreen extends React.Component {
 									<Text style={styles.headerText}>Click to pick image from camera roll</Text> 
 								}
 							</TouchableOpacity>
-	
 							<View style={styles.overlapbottomText}>
 								<Text style={[styles.name, styles.font]}>{this.state.recipe.name}</Text>
 								<Text style={[styles.snippet, styles.font]}>{this._shortenSnippet(this.state.recipe.snippet)}</Text>
@@ -460,7 +450,7 @@ class NewRecipeScreen extends React.Component {
 				</View>
 			)
 		}
-	}
+	}//TODO: make into scollView with flex:1 
 
 	render() {
 		return(
@@ -468,8 +458,10 @@ class NewRecipeScreen extends React.Component {
 				source={require('../assets/images/seigaiha.png')}>
 				<KeyboardAvoidingView behavior="padding" style={styles.backGround}>
 					<ScrollView >
-						{this._renderForm()}
-						<Feedback page='New Recipe Screen' />
+						<View style={styles.scrollView}>
+							{this._renderForm()}
+							<Feedback page='New Recipe Screen' />
+						</View>
 					</ScrollView>
 				</KeyboardAvoidingView> 
 			</ImageBackground>
@@ -478,6 +470,10 @@ class NewRecipeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+	scrollView: {
+		marginBottom: 140,
+		backgroundColor:'transparent',
+	},
 	stageButtons: {
 		flexDirection: 'row',
 		width: '40%'
@@ -521,8 +517,6 @@ const styles = StyleSheet.create({
 		marginLeft: '20%',
     },
 
-
-
 	headerText: {
         color: '#505050',
 		marginLeft: '10%',
@@ -530,7 +524,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 20,
 	},
-
     buttonsContainer: {
 		flexDirection: 'row',
         flex: 1,

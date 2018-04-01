@@ -12,10 +12,8 @@ import { Button } from 'react-native-elements'
 
 import firebase, { authConfigLocal, userLogin } from '../components/Utils/FirebaseUtil'
 
-// import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
-
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
-var ScreenWidth = Dimensions.get("window").Width
+var ScreenWidth = Dimensions.get("window").width
 
 class LoginScreen extends React.Component {
 
@@ -34,10 +32,6 @@ class LoginScreen extends React.Component {
         headerLeft: null,
         title: 'Login',
     })
-
-    ComponentDidMount = () => {
-
-    }
 
     _redirectToSignUp = () => {
         const { navigate } = this.props.navigation
@@ -60,7 +54,6 @@ class LoginScreen extends React.Component {
                 
             })
             .catch((error) => {
-                // console.log('login error: ', error)//please leave for debugging
                 this.setState({ 
                     ...this.state,
                     showWarning: error.message + ' Please check your login details, and try again... <3'
@@ -73,27 +66,28 @@ class LoginScreen extends React.Component {
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <ImageBackground style={styles.backGround}
-                source={require('../assets/images/seigaiha.png')}>
+                    source={require('../assets/images/seigaiha.png')}>
                     <View style={styles.loginContainer}>
                         <TextInput 
-                        style = {styles.input} 
-                        autoCapitalize="none" 
-                        onSubmitEditing={() => this.passwordInput.focus()} 
-                        onChangeText={(userEmail) => this.setState({email: userEmail})}
-                        autoCorrect={false} 
-                        keyboardType='email-address' 
-                        returnKeyType="next" 
-                        placeholder='Email' 
-                        value={this.state.email}
-                        placeholderTextColor='#505050' />
-                        <TextInput style = {styles.input}   
-                        returnKeyType="go" 
-                        onSubmitEditing={this._onPress} 
-                        ref={(input)=> this.passwordInput = input} 
-                        placeholder='Password' 
-                        onChangeText={(passwordInput) => this.setState({password: passwordInput})}
-                        placeholderTextColor='#505050' 
-                        secureTextEntry />
+                            style = {styles.input} 
+                            autoCapitalize="none" 
+                            onSubmitEditing={() => this.passwordInput.focus()} 
+                            onChangeText={(userEmail) => this.setState({email: userEmail})}
+                            autoCorrect={false} 
+                            keyboardType='email-address' 
+                            returnKeyType="next" 
+                            placeholder='Email' 
+                            value={this.state.email}
+                            placeholderTextColor='#505050' />
+                            <TextInput style = {styles.input}   
+                            returnKeyType="go" 
+                            onSubmitEditing={this._onPress} 
+                            ref={(input)=> this.passwordInput = input} 
+                            placeholder='Password' 
+                            onChangeText={(passwordInput) => this.setState({password: passwordInput})}
+                            placeholderTextColor='#505050' 
+                            secureTextEntry 
+                        />
                         {this.state.showWarning && <Text style={styles.showWarning}>{this.state.showWarning}</Text>}
                         <TouchableOpacity style={styles.buttonContainer} 
                             onPress={this._onPress} >

@@ -75,9 +75,6 @@ class StagingScreen extends React.Component {
 
 //====================================== Staging area for component functions =============================
 
-
-
-
 _shortenSnippet(snippet) {
     if(snippet.length > MAX_SNIPPET_LENGTH){
         snippet = snippet.slice(0, MAX_SNIPPET_LENGTH-5) + "..."

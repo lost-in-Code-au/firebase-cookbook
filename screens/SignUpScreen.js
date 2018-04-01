@@ -10,14 +10,10 @@ import {
     Alert, ScrollView
 } from 'react-native'
 import { CheckBox } from 'react-native-elements'
-// import timestamp from 'timestamp'
-
 import firebase, { signUp } from '../components/Utils/FirebaseUtil'
 
-// import styles from '../styles.js'//TODO: need to import styles somehow without losing connection to window object
-
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
-var ScreenWidth = Dimensions.get("window").Width
+var ScreenWidth = Dimensions.get("window").width
 
 class SignUpScreen extends React.Component {
 
@@ -36,35 +32,30 @@ class SignUpScreen extends React.Component {
     })
 
     _onPress = () => {
-        const { navigate } = this.props.navigation
-        
+        const { navigate } = this.props.navigation        
         const email = this.state.email
         const password = this.state.password
 
-        
-        // firebase.auth().createUserWithEmailAndPassword(email, password)
         signUp(email, password)
         .then((response) => {
             const { navigate } = this.props.navigation
             Alert.alert(
                 'Yay! it worked!',
-                'Successful created your account, please check your email of confirmation link',
+                'Successfully created your account, please check your email of confirmation link',
                 [
-                {text: 'Return to login', onPress: () => navigate('Login')},
+                {text: 'Welcome to grEats!'},
                 ],
                 { cancelable: false }
             )
-        })
+        })// onPress: () => navigate('Login')
         .catch((error) => {
-			// console.log('signup error: ', error)//please leave for debugging
 			if (error.code === 'auth/email-already-in-use') {
                 this.setState({ 
                     ...this.state,
                     showWarning: error.message
                 }) 
             }
-        })
-            
+        })    
     }
 
     _renderLandingPage = () => {     
@@ -72,13 +63,13 @@ class SignUpScreen extends React.Component {
             return (
                 <ImageBackground style={styles.backGround}
                 source={require('../assets/images/seigaiha.png')}>
-                    <View style={{}}>
+                    <View>
                         <ScrollView>
                             <Text style={styles.userAgreementBold}>
                                 End-User License Agreement (EULA)
                             </Text>
                             <Text style={styles.userAgreementSub}>
-                                Last updated: 29/3/2018
+                                Last updated: 1/4/2018
                             </Text>
                             <Text style={styles.userAgreement}>
                                 Please read this End-User License Agreement carefully before clicking the "I Agree" checkbox, downloading or using My Application "grEats".
@@ -139,8 +130,8 @@ class SignUpScreen extends React.Component {
                             <Text style={styles.userAgreement}>
                                 If you have any questions about this Agreement, please contact us at:    
                             </Text>
-                            <Text style={styles.userAgreementEmail} onPress={() => Linking.openURL('mailto:mailto@deniseleeyohn.com?subject=abcdefg&body=body')}>    
-                                greats.lost.in.code@gmail.com
+                            <Text style={styles.userAgreementEmail} onPress={() => Linking.openURL('mailto:mailto@lost.in.code.co@gmail.com?subject=abcdefg&body=body')}>    
+                                lost.in.code.co@gmail.com
                             </Text>
                             <CheckBox
                                 title='I Agree'
@@ -202,8 +193,6 @@ class SignUpScreen extends React.Component {
             )
         }
     }
-  //Velan Questions: 
-
     render() {
         return (
             <View>
@@ -238,7 +227,6 @@ const styles = StyleSheet.create({
     userAgreement: {
         textAlign: 'center',
 		backgroundColor: "transparent",
-        // height: 40,
         flex: 1,
         padding: 20,
 		paddingBottom: 6,
@@ -249,7 +237,6 @@ const styles = StyleSheet.create({
         color: 'blue',
         textDecorationLine: 'underline',
         flex: 1,
-        // padding: 20,
 		paddingBottom: 6,
     },
     showWarning: {

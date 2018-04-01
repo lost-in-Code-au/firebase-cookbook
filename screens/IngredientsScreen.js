@@ -39,15 +39,15 @@ class IngredientsScreen extends React.Component {
 				keyExtractor={(item, index) => index}
 			/>
 		)
-	}
+	}//TODO: Double check the FlatList isn't underscrolling
 
 	render() {
 		const { params: item } = this.props.navigation.state
 
 		return (
 			<ImageBackground
-			style={styles.backGround}
-			source={require('../assets/images/seigaiha.png')}>
+				style={styles.backGround}
+				source={require('../assets/images/seigaiha.png')}>
 				{this._ingredents(item)}
 				<Feedback page='Ingredent Screen' />
 			</ImageBackground>
@@ -59,6 +59,7 @@ class IngredientsScreen extends React.Component {
 const styles = StyleSheet.create({
 	flatList: {
 		backgroundColor:'transparent',
+		marginBottom: 80
 	},
 	backGround: {
 		width: ScreenWidth,

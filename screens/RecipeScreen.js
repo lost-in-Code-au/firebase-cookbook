@@ -4,7 +4,7 @@ import {
 	StyleSheet,
 	Text, View,
 	FlatList,
-	ImageBackground,
+	ImageBackground
 } from 'react-native'
 import { Button } from 'react-native-elements'
 
@@ -24,43 +24,51 @@ class RecipeScreen extends React.Component {
 		const { navigate } = this.props.navigation
 		
 		return (
-			<View>
+			<View style={styles.page}>
 				<ImageBackground
 				style={styles.backGround}
 				source={require('../assets/images/seigaiha.png')}>
 					<FlatList
-					data={item.instructions}
-					renderItem={({item: instruction, index}) => (
-						<View key={index} style={styles.recipeCard}>
-							<Text style={[styles.name, styles.font]}>Step {index +1}:</Text>
-							<Text style={[styles.name, styles.font]}>{instruction}</Text>
-						</View>
-					)}
-					ListHeaderComponent={() => (
-						<View style={styles.headerContainer}>
-							<Text style={[styles.name, styles.font]}>{item.name}</Text>
-							<Text style={[styles.name, styles.font]}>By: {item.author}</Text>
-							<Button
-							onPress={() => navigate('Ingredients', item)}
-							key={item._id}
-							title="Ingredients" ></Button>
-							<Text style={[styles.snippet, styles.font]}>{item.snippet}</Text>
-							<View style={styles.infoContainer}>
-								<Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
-								<Text style={[styles.infoText, styles.font]}>Takes: {item.duration}mins</Text>
+						style={styles.flatlist}
+						data={item.instructions}
+						renderItem={({item: instruction, index}) => (
+							<View key={index} style={styles.recipeCard}>
+								<Text style={[styles.name, styles.font]}>Step {index +1}:</Text>
+								<Text style={[styles.name, styles.font]}>{instruction}</Text>
 							</View>
-						</View>
-					)}
-					keyExtractor={(index) => index}
+						)}
+						ListHeaderComponent={() => (
+							<View style={styles.headerContainer}>
+								<Text style={[styles.name, styles.font]}>{item.name}</Text>
+								<Text style={[styles.name, styles.font]}>By: {item.author}</Text>
+								<Button
+								onPress={() => navigate('Ingredients', item)}
+								key={item._id}
+								title="Ingredients" ></Button>
+								<Text style={[styles.snippet, styles.font]}>{item.snippet}</Text>
+								<View style={styles.infoContainer}>
+									<Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
+									<Text style={[styles.infoText, styles.font]}>Takes: {item.duration}mins</Text>
+								</View>
+							</View>
+						)}
+						keyExtractor={(index) => index}
 					/>
 				<Feedback page='Recipe Show Screen' />
 				</ImageBackground>
 			</View>
 		)
 	}
-}
+}//TODO: Extend flatlist CSS to prevent overlap
 
 const styles = StyleSheet.create({
+	page: {
+		flex: 1,
+		backgroundColor: 'transparent',
+	},
+	flatlist: {
+		marginBottom: 80
+	},
 	font: {
 		opacity: 0.9,
 	},

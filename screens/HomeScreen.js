@@ -14,7 +14,6 @@ import PropTypes from 'prop-types'
 
 //Alpha version feedback
 import Feedback from '../components/Utils/AlphaUserFeedback'
-
 import firebase, { createNewObjIn, dataBaseRequest, userSignOut } from '../components/Utils/FirebaseUtil'
 
 var ScreenHeight = Dimensions.get('window').height
@@ -58,8 +57,6 @@ class HomeScreen extends React.Component {
 	componentDidMount = () => {
 		dataBaseRequest('recipes').then((data) => {
 			const msg = this.props.navigation.state.params
-			// console.log(msg);
-		
 			this.setState({
 				...this.state,
 				recipes: data,
@@ -153,13 +150,6 @@ class HomeScreen extends React.Component {
 	}
 
 	render() {
-		// const { navigate } = this.props.navigation
-		// console.log(this.props.navigation.state.params);
-		// const msg = this.props.navigation.state.params
-		// console.log(msg);
-		// if(msg) {this._msgCheck(msg)}
-		
-		// this.state.message ? this._msgCheck() : 
 		return (
 			<ImageBackground style={styles.backGround}
 			source={require('../assets/images/seigaiha.png')}>

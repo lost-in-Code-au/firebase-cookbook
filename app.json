@@ -1,12 +1,12 @@
 {
   "expo": {
     "name": "grEats",
-    "description": "A free community recipe app",
+    "description": "A community recipe app",
     "slug": "grEats",
     "privacy": "public",
     "sdkVersion": "24.0.0",
-    "platforms": ["ios", "android"],
-    "version": "1.0.0",
+    "platforms": ["ios"],
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -15,6 +15,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "bundleIdentifier": "com.lost-in-code.grEats",
       "supportsTablet": true
     }
   }
