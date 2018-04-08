@@ -235,13 +235,62 @@ class NewRecipeScreen extends React.Component {
 	_submitPreviewedRecipe = () => {
 		Alert.alert(
 			'Hold your horses!',
-			'Are you sure your happy with the preview?',
+			"Are you sure you're happy with the preview?",
 			[
-				{text: 'Cancel' },
-				{text: 'OK', onPress: () => this._submitToFirebase()}
+				{text: 'NO' },
+				{text: 'YES', onPress: () => this._submitToFirebase()}
 			],
 			{ cancelable: true }
 		)
+	}
+
+	_submitToFirebase = async () => {
+		this.setState({ ...this.state, uploadImgFlag: false})
+		const { navigate } = this.props.navigation
+		
+		const recipe = this.state.recipe
+		const ingredients = this.state.ingredients
+		const steps = this.state.steps
+		const difficulty = parseInt(recipe.difficulty)
+		const duration = recipe.duration
+		
+	
+		obj = {
+			_id: uuid.v4(),
+			name: recipe.name,
+			author: recipe.author,
+			snippet: recipe.snippet,
+			difficulty: difficulty,
+			duration: duration,
+			diet: recipe.diet,
+			ingredients: ingredients,
+			instructions: steps,
+			picture: this.state.imageUrl,
+			rating: [this.state.recipe.rating]
+		}
+		try {
+			await createNewObjIn('recipes', obj).then(()=>{
+				
+				this.setState({ ...this.state, uploadImgFlag: true})
+	
+				const { navigate } = this.props.navigation
+				const msg = 'Success, please refesh your app to see it'
+				navigate('Home', msg)
+			}).catch((error) => {
+				console.log(error.message)
+				Alert.alert(
+					'Sorry somehing went wrong!',
+					error.message,
+					[
+						{text: 'Ok' }
+					],
+					{ cancelable: true }
+				)
+			})
+		}
+		catch (err) {
+			console.log(err)
+		}
 	}
 
 	_shortenSnippet(snippet) {
@@ -353,7 +402,7 @@ class NewRecipeScreen extends React.Component {
 						onSubmitEditing={() => this.durationInput.focus()} 
 						onChangeText={(durationInput) => this.setState({ ...this.state, recipe: { ...this.state.recipe, duration: durationInput }})}
 						autoCorrect={false} 
-						keyboardType='numeric'
+						keyboardType='default'
 						returnKeyType='done'
 						placeholder='Add the time your Recipe takes' 
 						value={this.state.recipe.duration}
@@ -412,6 +461,7 @@ class NewRecipeScreen extends React.Component {
 					animating={true}
 					style={styles.indicator}
 					size="large"
+					color="#ff7500"
 				/>
 			)
 		}
@@ -625,8 +675,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
-		height: 80,
-		marginTop: '40%',
+		height: ScreenHeight,
+		marginTop: 0,
 	},
 	backGround: {
 		width: ScreenWidth,

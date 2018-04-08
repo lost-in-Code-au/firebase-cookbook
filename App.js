@@ -9,6 +9,7 @@ import HomeScreen from './screens/HomeScreen'
 import RecipeScreen from './screens/RecipeScreen'
 import IngredientsScreen from './screens/IngredientsScreen'
 import NewRecipeScreen from './screens/NewRecipeScreen'
+import MenuScreen from './screens/MenuScreen'
 // import StagingScreen from './screens/StagingScreen'
 
 const CookBookApp = StackNavigator({
@@ -16,10 +17,11 @@ const CookBookApp = StackNavigator({
 	Root: { screen: RootScreen },
 	Login: { screen: LoginScreen },
 	Signup: { screen: SignUpScreen },
-	NewRecipe: { screen: NewRecipeScreen },
 	Home: { screen: HomeScreen },
 	Recipe: { screen: RecipeScreen },
 	Ingredients: { screen: IngredientsScreen },
+	Menu: { screen: MenuScreen },
+	NewRecipe: { screen: NewRecipeScreen },
 })
 
 export default class App extends React.Component {

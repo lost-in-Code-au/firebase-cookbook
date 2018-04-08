@@ -39,12 +39,17 @@ class RecipeScreen extends React.Component {
 						)}
 						ListHeaderComponent={() => (
 							<View style={styles.headerContainer}>
+								<Image
+									style={styles.recipeImage}
+									source={{uri: this._setImage(item.picture) }}
+								/>
+
 								<Text style={[styles.name, styles.font]}>{item.name}</Text>
 								<Text style={[styles.name, styles.font]}>By: {item.author}</Text>
 								<Button
-								onPress={() => navigate('Ingredients', item)}
-								key={item._id}
-								title="Ingredients" ></Button>
+									onPress={() => navigate('Ingredients', item)}
+									key={item._id}
+									title="Ingredients" ></Button>
 								<Text style={[styles.snippet, styles.font]}>{item.snippet}</Text>
 								<View style={styles.infoContainer}>
 									<Text style={[styles.infoText, styles.font]}>Difficulty: {item.difficulty}/5</Text>
@@ -109,6 +114,12 @@ const styles = StyleSheet.create({
 		flex: 1,
 		textAlign: "center",
 	},
+	recipeImage: {
+		backgroundColor: "transparent",
+		width: ScreenWidth,
+		height: 300,
+		opacity: 0.9,
+	}
 })
 
 export default RecipeScreen

@@ -1,16 +1,16 @@
 import React from 'react'
 import {
+	ActivityIndicator,
 	Dimensions,
 	StyleSheet,
 	ImageBackground,
 	Text, TextInput,
 	View, Alert,
 	FlatList,
-	TouchableHighlight,
+	// TouchableHighlight,
 	TouchableOpacity,
 	Image, Button,
 } from 'react-native'
-import PropTypes from 'prop-types'
 
 //Alpha version feedback
 import Feedback from '../components/Utils/AlphaUserFeedback'
@@ -31,9 +31,9 @@ const BackButton = ({ navigation: { navigate } }) => (
 	}} />
 )
 
-const NewRecipeButton = ({ navigation: { navigate } }) => (
-	<Button title="Add" onPress={() => {
-		return navigate('NewRecipe')
+const MenuButton = ({ navigation: { navigate } }) => (
+	<Button title="Menu" onPress={() => {
+		return navigate('Menu')
 	}} />
 )
 
@@ -51,15 +51,15 @@ class HomeScreen extends React.Component {
 	static navigationOptions = ({ navigation }) => ({
 		headerTitle: 'grEats',
         headerLeft: <BackButton navigation={navigation} />,
-		headerRight: <NewRecipeButton navigation={navigation} />
-	})
-
+		headerRight: <MenuButton navigation={navigation} />
+	}) 
+	
 	componentDidMount = () => {
 		dataBaseRequest('recipes').then((data) => {
 			const msg = this.props.navigation.state.params
 			this.setState({
 				...this.state,
-				recipes: data,
+				recipes: data.reverse(),
 				message: msg,
 				loading: !this.state.loading,
 			})
@@ -96,40 +96,34 @@ class HomeScreen extends React.Component {
 
 	_renderHomePage = () => {
 		const { navigate } = this.props.navigation
-		const text = this.state.loading ? 'Loading...' : 'Loaded'
-
-
-
-		if(this.state.loading) {			
+		if (this.state.loading) {
 			return (
-				<ImageBackground
-				style={styles.backGround}
-				source={require('../assets/images/seigaiha.png')}>
-					<Text style={[styles.loading, styles.font]}>{text}</Text>
-				</ImageBackground>
+				<ActivityIndicator
+					animating={true}
+					style={styles.indicator}
+					size="large"
+					color="#ff7500"
+				/>
 			)
 		}
 		else if (this.state.error) {
-			return <View><Text style={styles.font}>Error</Text></View>
-		}
-		else if (this.state.recipes.length === 0) {
-			return <View><Text style={styles.font}>No recipes</Text></View>
+			return <View style={styles.transparent}><Text style={styles.font}>Error</Text></View>
 		}
 		else {
 			return (
 				<FlatList
-				data={this.state.recipes}
-				keyExtractor={(item, index) => index} 
-				renderItem={({ item }) => (
+					data={this.state.recipes}
+					keyExtractor={(item, index) => index} 
+					renderItem={({ item }) => (
 					<TouchableOpacity
-					onPress={() => navigate('Recipe', item)}
-					activeOpacity={.5}
-					underlayColor={"#DDDDDD"}
-					key={item._id} style={styles.recipeCardContainer}>
+						onPress={() => navigate('Recipe', item)}
+						activeOpacity={.5}
+						underlayColor={"#DDDDDD"}
+						key={item._id} style={styles.recipeCardContainer}>
 						<View style={styles.recipeCard}>
 							<Image
-							style={styles.recipeImage}
-							source={{uri: this._setImage(item.picture) }}
+								style={styles.recipeImage}
+								source={{uri: this._setImage(item.picture) }}
 							/>
 							<View style={styles.textPosition}>
 							<View style={styles.overlaptopText}>
@@ -152,15 +146,23 @@ class HomeScreen extends React.Component {
 	render() {
 		return (
 			<ImageBackground style={styles.backGround}
-			source={require('../assets/images/seigaiha.png')}>
-				{this._renderHomePage()}
-				<Feedback page='homescreen' />
+				source={require('../assets/images/seigaiha.png')}>
+					{this._renderHomePage()}
+					<Feedback page='homescreen' />
 			</ImageBackground>
 		)
 	}
 }
 
 const styles = StyleSheet.create({
+	transparent: { backgroundColor: 'transparent' },
+	indicator: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: ScreenHeight,
+		marginTop: 0,
+	},
 	buttonImage: {
 		padding: 16,
 		borderRadius: 8,
@@ -213,6 +215,7 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 	},
 	backGround: {
+		height: ScreenHeight,
 		width: ScreenWidth,
 	},
 	loading: {
