@@ -66,14 +66,25 @@ export default class MenuScreen extends React.Component {
 		const recipes = this.state.recipes
 		const searchInput = this.state.search
 
-		Object.values(recipes)
-			.filter(recipe => {
-				if(recipe.author.includes(searchInput)) return recipe
-				else return
-			})
-		console.log(searchInput)
+		// Object.values(recipes)
+		// 	.filter((recipe) => {
+		// 		return recipe.name.includes(searchInput)
+		// 	})
 
-		console.log(recipes)
+		// name = (recipe, input) => ({
+		// 	recipe.includes(input)
+		// })
+
+		const search = recipes.map((recipe)=> {
+			// name(recipe, searchInput)
+			console.log(recipe)
+			if(recipe.author.includes(searchInput || event)) return recipe
+		})
+		// console.log(searchInput)
+
+		search.filter(Boolean)
+
+		console.log(search)
 
 	}
 	
@@ -106,18 +117,18 @@ export default class MenuScreen extends React.Component {
 		else if(this.state.search){
 			return (
 				<FlatList
-				data={this.state.searchResults}
-				keyExtractor={(item, index) => index} 
-				renderItem={({ item }) => (
+					data={this.state.searchResults}
+					keyExtractor={(item, index) => index} 
+					renderItem={({ item }) => (
 					<TouchableOpacity
-					onPress={() => navigate('Recipe', item)}
-					activeOpacity={.5}
-					underlayColor={"#DDDDDD"}
-					key={item._id} style={styles.recipeCardContainer}>
+						onPress={() => navigate('Recipe', item)}
+						activeOpacity={.5}
+						underlayColor={"#DDDDDD"}
+						key={item._id} style={styles.recipeCardContainer}>
 						<View style={styles.recipeCard}>
 							<Image
-							style={styles.recipeImage}
-							source={{uri: this._setImage(item.picture) }}
+								style={styles.recipeImage}
+								source={{uri: this._setImage(item.picture) }}
 							/>
 							<View style={styles.textPosition}>
 							<View style={styles.overlaptopText}>
