@@ -25,7 +25,7 @@ export default class MenuScreen extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			search: null,
+			inputFlag: null,
 			recipes: [],
 			loading: true,
 			currentUser: null,
@@ -62,34 +62,47 @@ export default class MenuScreen extends React.Component {
 	}
 
 	_seachInput = (event) => {
-		this.setState({ ...this.state, search: event})
 		const recipes = this.state.recipes
-		const searchInput = this.state.search
+		var search = []
+
+		if(!event) this.setState({...this.state, inputFlag: null})
+
+		recipes.map((recipe) => {
+			console.log(recipe)
+			if(recipe.name.includes(event)) search.push(recipe)
+			else if(recipe.author.includes(event)) search.push(recipe)
+			else if(recipe.snippet.includes(event)) search.push(recipe)
+			return search
+		})
 
 		// Object.values(recipes)
 		// 	.filter((recipe) => {
 		// 		return recipe.name.includes(searchInput)
 		// 	})
+		
+		
+		// const search = recipes.filter((recipe) => {
+		// 	console.log(recipe)
+		// 	if(recipe.name.includes(event)) {return recipe}
+		// 	// if(recipe.author.includes(event)) {return recipe}
+		// 	// if(recipe.snippet.includes(event)) {return recipe}
 
-		// name = (recipe, input) => ({
-		// 	recipe.includes(input)
 		// })
-
-		const search = recipes.map((recipe)=> {
-			// name(recipe, searchInput)
-			console.log(recipe)
-			if(recipe.author.includes(searchInput || event)) return recipe
-		})
-		// console.log(searchInput)
-
-		search.filter(Boolean)
-
+		
 		console.log(search)
+		if(search) {
+			this.setState({ 
+				...this.state, 
+				searchResults: search,
+				inputFlag: true
+			})
 
+		}
+		console.log(this.state)
 	}
 	
 	_clearSeachInput = (event) => {
-		this.setState({ ...this.state, search: null})
+		this.setState({ ...this.state, inputFlag: null, searchResults: null,})
 	}
 
 	_renderer = () => {
@@ -104,7 +117,7 @@ export default class MenuScreen extends React.Component {
 				/>
 			)
 		}
-		else if(!this.state.search) {
+		else if(!this.state.inputFlag) {
 			return (
 				<Button
 					title='Add a Recipe'
@@ -114,7 +127,7 @@ export default class MenuScreen extends React.Component {
 				/>
 			)
 		}
-		else if(this.state.search){
+		else if(this.state.inputFlag){
 			return (
 				<FlatList
 					data={this.state.searchResults}
