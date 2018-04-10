@@ -10,26 +10,55 @@ import {
 } from 'react-native'
 
 import Feedback from '../components/Utils/AlphaUserFeedback'
+import { CheckBox } from 'react-native-elements'
 
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
 var ScreenWidth = Dimensions.get("window").width
+
+
 
 class IngredientsScreen extends React.Component {
 
 	static navigationOptions = ({ navigation }) => ({
 		title: navigation.state.params.name,
-		// headerRight: <Button title="Rate" />,//TODO: Create rating Component
 	})
+
+	constructor(props){
+		super(props)
+		const ingredients = props.navigation.state.params.ingredients
+		
+		const counter = ingredients.map((obj, index)=>{
+			return index = false
+		})
+
+		this.state = {
+			checked: [counter]
+		}
+
+	}
+	
+	// _checkThisBox = (index) => {
+	// 	console.log(index)
+		
+	// 	this.setState((state) => ({
+	// 	  checked: {...this.state.checked, [index]: !state.checked}
+	// 	}));
+	// }
 
 	_ingredents = (item) => {		
 		return (
 			<FlatList
 				data={item.ingredients}
 				style={styles.flatList}
-				renderItem={({item: ingredient}) => (
-					<View key={ingredient.index} style={styles.recipeCard}>
-						<Text style={styles.name}>{ingredient}</Text>
-					</View>
+				renderItem={({item: ingredient}, index) => (
+					<CheckBox
+						key={ingredient.index}
+						style={styles.recipeCard}
+						title={index}//expecting to see the index show in the list field then will know if checkbox can see index of string arrays
+						// onPress={()=> this._checkThisBox(ingredient.index)}
+						onPress={()=> this.state = true}
+						checked={this.state.checked[index]}
+					/>					
 				)}
 				ListHeaderComponent={() => (
 					<View style={styles.headerContainer}>
@@ -39,11 +68,11 @@ class IngredientsScreen extends React.Component {
 				keyExtractor={(item, index) => index}
 			/>
 		)
-	}//TODO: Double check the FlatList isn't underscrolling
+	}
 
 	render() {
 		const { params: item } = this.props.navigation.state
-
+		console.log(this.state)
 		return (
 			<ImageBackground
 				style={styles.backGround}

@@ -20,6 +20,8 @@ import {
 	Button 
 } from 'react-native-elements'
 
+import Fuse from 'fuse.js'
+
 
 export default class MenuScreen extends React.Component {
 	constructor() {
@@ -63,42 +65,32 @@ export default class MenuScreen extends React.Component {
 
 	_seachInput = (event) => {
 		const recipes = this.state.recipes
-		var search = []
 
+		console.log(event)
+		const options = {
+			location: 0,
+			distance: 100,
+			threshold: 0.2,
+			shouldSort: true,
+			maxPatternLength: 32,
+			minMatchCharLength: 1,
+			keys: ['name', 'author', 'snippet']
+		  }
+		const f = new Fuse(recipes, options)
+		const results = f.search(event)
+  
 		if(!event) this.setState({...this.state, inputFlag: null})
-
-		recipes.map((recipe) => {
-			console.log(recipe)
-			if(recipe.name.includes(event)) search.push(recipe)
-			else if(recipe.author.includes(event)) search.push(recipe)
-			else if(recipe.snippet.includes(event)) search.push(recipe)
-			return search
-		})
-
-		// Object.values(recipes)
-		// 	.filter((recipe) => {
-		// 		return recipe.name.includes(searchInput)
-		// 	})
 		
-		
-		// const search = recipes.filter((recipe) => {
-		// 	console.log(recipe)
-		// 	if(recipe.name.includes(event)) {return recipe}
-		// 	// if(recipe.author.includes(event)) {return recipe}
-		// 	// if(recipe.snippet.includes(event)) {return recipe}
-
-		// })
-		
-		console.log(search)
-		if(search) {
+		console.log(results)
+		if(results) {
 			this.setState({ 
 				...this.state, 
-				searchResults: search,
+				searchResults: results,
 				inputFlag: true
 			})
 
 		}
-		console.log(this.state)
+		console.log(this.state.searchResults)
 	}
 	
 	_clearSeachInput = (event) => {
@@ -207,4 +199,55 @@ const styles = StyleSheet.create({
 		fontSize: 28,
 		paddingTop: 230,
 	},
+	recipeCardContainer: {
+		backgroundColor: "transparent",
+		maxWidth: ScreenWidth,
+		marginTop: 10,
+		marginBottom: 30,
+	},
+	recipeCard: {
+		backgroundColor: "transparent",
+		width: "100%",
+		height: 300,
+	},
+	name: {
+		fontWeight: "bold",
+		margin: 5,
+	},
+	snippet: {
+		backgroundColor: "transparent",
+		fontWeight: "bold",
+		margin: 5,
+	},
+	infoText: {
+		backgroundColor: "transparent",
+		fontWeight: "bold",
+		flex: 1,
+		textAlign: "center",
+		paddingBottom: 8,
+	},
+	recipeImage: {
+		backgroundColor: "transparent",
+		width: ScreenWidth,
+		height: 300,
+		opacity: 0.9,
+	},
+	textPosition: {
+		display: 'flex',
+		justifyContent: 'space-between',
+		top: 0,
+		...StyleSheet.absoluteFillObject
+	},
+	overlaptopText: {
+		backgroundColor: "#fff",
+		flexDirection: "row",
+		justifyContent: "center",
+		opacity: 0.7,
+		width: ScreenWidth
+	},
+	overlapbottomText: {
+		backgroundColor: "#fff",
+		opacity: 0.7,
+		width: ScreenWidth,
+	}
 })

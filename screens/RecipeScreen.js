@@ -4,7 +4,8 @@ import {
 	StyleSheet,
 	Text, View,
 	FlatList,
-	ImageBackground
+	ImageBackground,
+	Image
 } from 'react-native'
 import { Button } from 'react-native-elements'
 
@@ -18,6 +19,14 @@ class RecipeScreen extends React.Component {
 	static navigationOptions = ({ navigation }) => ({
 		title: navigation.state.params.name,
 	})
+
+	_setImage(url) {
+		if(!url) {
+			return 'https://firebasestorage.googleapis.com/v0/b/react-native-firebase-st-d0137.appspot.com/o/placeholder.jpg?alt=media&token=7a619092-d46f-4162-bea1-4be1f6a5c41f'
+		} else {
+			return url
+		}
+	}
 
 	render() {
 		const { params: item } = this.props.navigation.state
