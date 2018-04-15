@@ -37,27 +37,26 @@ class IngredientsScreen extends React.Component {
 
 	}
 	
-	// _checkThisBox = (index) => {
-	// 	console.log(index)
+	_checkThisBox = (index) => {
+		console.log(index)
 		
-	// 	this.setState((state) => ({
-	// 	  checked: {...this.state.checked, [index]: !state.checked}
-	// 	}));
-	// }
+		this.setState((state) => ({
+		  checked: {...this.state.checked, [index]: !state.checked}
+		}));
+	}
 
 	_ingredents = (item) => {		
 		return (
 			<FlatList
 				data={item.ingredients}
 				style={styles.flatList}
-				renderItem={({item: ingredient}, index) => (
+				renderItem={({ item: ingredient }) => (
 					<CheckBox
 						key={ingredient.index}
 						style={styles.recipeCard}
-						title={index}//expecting to see the index show in the list field then will know if checkbox can see index of string arrays
-						// onPress={()=> this._checkThisBox(ingredient.index)}
-						onPress={()=> this.state = true}
-						checked={this.state.checked[index]}
+						title={ingredient}//expecting to see the index show in the list field then will know if checkbox can see index of string arrays
+						onPress={() => this._checkThisBox(item.index)}
+						checked={() => this.state.checked[index]}
 					/>					
 				)}
 				ListHeaderComponent={() => (
