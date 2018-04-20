@@ -26,23 +26,19 @@ class IngredientsScreen extends React.Component {
 	constructor(props){
 		super(props)
 		const ingredients = props.navigation.state.params.ingredients
-		
 		const counter = ingredients.map((obj, index)=>{
 			return index = false
 		})
-
 		this.state = {
-			checked: [counter]
+			checked: counter
 		}
-
 	}
 	
 	_checkThisBox = (index) => {
-		console.log(index)
-		
-		this.setState((state) => ({
-		  checked: {...this.state.checked, [index]: !state.checked}
-		}));
+		const checked = [...this.state.checked]
+		checked[index] = !checked[index]
+
+		this.setState({ checked })
 	}
 
 	_ingredents = (item) => {		
@@ -50,13 +46,13 @@ class IngredientsScreen extends React.Component {
 			<FlatList
 				data={item.ingredients}
 				style={styles.flatList}
-				renderItem={({ item: ingredient }) => (
+				renderItem={({ item: ingredient, index: index }) => (
 					<CheckBox
-						key={ingredient.index}
+						key={index}
 						style={styles.recipeCard}
 						title={ingredient}//expecting to see the index show in the list field then will know if checkbox can see index of string arrays
-						onPress={() => this._checkThisBox(item.index)}
-						checked={() => this.state.checked[index]}
+						onPress={() => this._checkThisBox(index)}
+						checked={this.state.checked[index]}
 					/>					
 				)}
 				ListHeaderComponent={() => (
