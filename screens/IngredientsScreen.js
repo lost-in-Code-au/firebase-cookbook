@@ -15,8 +15,6 @@ import { CheckBox } from 'react-native-elements'
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
 var ScreenWidth = Dimensions.get("window").width
 
-
-
 class IngredientsScreen extends React.Component {
 
 	static navigationOptions = ({ navigation }) => ({
@@ -50,7 +48,7 @@ class IngredientsScreen extends React.Component {
 					<CheckBox
 						key={index}
 						style={styles.recipeCard}
-						title={ingredient}//expecting to see the index show in the list field then will know if checkbox can see index of string arrays
+						title={ingredient}
 						onPress={() => this._checkThisBox(index)}
 						checked={this.state.checked[index]}
 					/>					
