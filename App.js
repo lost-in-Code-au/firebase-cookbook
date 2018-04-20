@@ -1,6 +1,6 @@
-import 'expo'// For dev logs through expo XDE
+import 'expo'
 import React from 'react'
-import { StackNavigator } from 'react-navigation' // 1.0.0-beta.23
+import { StackNavigator } from 'react-navigation'
 
 import RootScreen from './screens/RootScreen'
 import LoginScreen from './screens/LoginScreen'
@@ -24,8 +24,43 @@ const CookBookApp = StackNavigator({
 	NewRecipe: { screen: NewRecipeScreen },
 })
 
+function cacheImages(images) {
+	return images.map(image => {
+		if (typeof image === 'string') {
+			return Image.prefetch(image)
+		} else {
+			return Asset.fromModule(image).downloadAsync()
+		}
+	})
+}
+
 export default class App extends React.Component {
+	constructor() {
+		super()
+		this.state = {
+			isReady: false,
+		}
+	}
+	
+	_loadAssetsAsync = async () => {//was async _loadAssetsAsync() {
+		const imageAssets = cacheImages([
+		  require('./assets/images/seigaiha.png'),
+		])
+	
+		await Promise.all([...imageAssets]);
+	}
+
 	render() {
+		if (!this.state.isReady) {
+			return (
+			  <AppLoading
+				startAsync={this._loadAssetsAsync}
+				onFinish={() => this.setState({ isReady: true })}
+				onError={console.warn}
+			  />
+			);
+		}
+
 		return <CookBookApp /> 
 	}
 }
