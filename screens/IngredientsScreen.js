@@ -15,10 +15,19 @@ import { CheckBox } from 'react-native-elements'
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
 var ScreenWidth = Dimensions.get("window").width
 
+
+const MenuButton = ({ navigation: { navigate } }) => (
+	<Button title="Menu" onPress={() => {
+		return navigate('Menu')
+	}} />
+)
+
+
 class IngredientsScreen extends React.Component {
 
 	static navigationOptions = ({ navigation }) => ({
 		title: navigation.state.params.name,
+		headerRight: <MenuButton navigation={navigation} />
 	})
 
 	constructor(props){
@@ -65,7 +74,6 @@ class IngredientsScreen extends React.Component {
 
 	render() {
 		const { params: item } = this.props.navigation.state
-		console.log(this.state)
 		return (
 			<ImageBackground
 				style={styles.backGround}

@@ -1,4 +1,5 @@
 import 'expo'
+import { AppLoading, Asset } from 'expo'
 import React from 'react'
 import { StackNavigator } from 'react-navigation'
 

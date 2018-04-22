@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, TouchableOpacity, ImageBackground, StyleSheet, View, TextInput, Alert } from 'react-native'
 import Modal from 'react-native-modal' // 2.4.0
 
-import firebase, { createNewObjIn } from './FirebaseUtil'
+import firebase, { createNewObjIn, userCheck } from './FirebaseUtil'
 
 import commementImage from '../../assets/images/feedback.png'
 import timestamp from 'time-stamp'
@@ -21,30 +21,34 @@ export default class Feedback extends Component {
         
         if(!this.state.userFeedback) return
         
+        const user = userCheck().email
         const newObject = {
             page: this.props.page,
             feedback: this.state.userFeedback,
-            Date_n_time: timestamp('YYYY/MM/DD @HH:mm')
+            Date_n_time: timestamp('YYYY/MM/DD @HH:mm'),
+            user: user
 		}
 		await createNewObjIn('feedback', newObject).then((res)=>{
             Alert.alert(
-                'Great! thank you for the feedback you beautiful person!',
-                'Have a nicee day',
+                'Great! thank you for the feedback, you beautiful person!',
+                'Have a nice day',
 				[
-                    {text: 'Ok', onPress: () => this.setState({ ...this.state, visibleModal: false }) }
+                    {text: 'Ok' }
 				],
 				{ cancelable: true }
-			)
+            )
+            this.setState({ ...this.state, visibleModal: false })
 		}).catch((error) => {
 			console.log(error.message)
 			Alert.alert(
-				'Sorry somehing went wrong!',
+				'Sorry somehing went wrong!, please try again',
 				error.message,
 				[
-					{text: 'Ok', onPress: () => this.setState({ ...this.state, visibleModal: false }) }
+					{text: 'Ok'}
 				],
 				{ cancelable: true }
-            )   
+            )
+            this.setState({ ...this.state, visibleModal: false }) 
 		})
 	}
 

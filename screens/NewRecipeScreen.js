@@ -50,6 +50,13 @@ const customActionSheet = (options, callback) => {
 	})
 }
 
+
+const MenuButton = ({ navigation: { navigate } }) => (
+	<Button title="Menu" onPress={() => {
+		return navigate('Menu')
+	}} />
+)
+
 class NewRecipeScreen extends React.Component {
 	
 	constructor() {
@@ -91,6 +98,7 @@ class NewRecipeScreen extends React.Component {
 		
 	static navigationOptions = ({ navigation }) => ({
 		headerTitle: 'New grEat meal!',
+		headerRight: <MenuButton navigation={navigation} />
 	})
 
 	componentDidMount() {

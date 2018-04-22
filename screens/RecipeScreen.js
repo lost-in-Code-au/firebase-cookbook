@@ -14,10 +14,17 @@ import Feedback from '../components/Utils/AlphaUserFeedback'
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
 var ScreenWidth = Dimensions.get("window").width
 
+const MenuButton = ({ navigation: { navigate } }) => (
+	<Button title="Menu" onPress={() => {
+		return navigate('Menu')
+	}} />
+)
+
 class RecipeScreen extends React.Component {
 
 	static navigationOptions = ({ navigation }) => ({
 		title: navigation.state.params.name,
+		headerRight: <MenuButton navigation={navigation} />
 	})
 
 	_setImage(url) {
