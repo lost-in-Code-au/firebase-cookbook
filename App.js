@@ -46,6 +46,7 @@ export default class App extends React.Component {
 	_loadAssetsAsync = async () => {//was async _loadAssetsAsync() {
 		const imageAssets = cacheImages([
 		  require('./assets/images/seigaiha.png'),
+		  require('./assets/images/feedback.png'),
 		])
 	
 		await Promise.all([...imageAssets]);
