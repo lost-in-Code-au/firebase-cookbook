@@ -9,11 +9,12 @@ import {
 	TextInput, Text,
 	TouchableOpacity, 
 	KeyboardAvoidingView,
-	Button, Alert, Image
+	Alert, Image
 } from 'react-native'
 
 import { ImagePicker } from 'expo'// For dev logs through expo XDE
 import uuid from 'uuid'
+import { Button, Icon } from 'react-native-elements'
 
 import Feedback from '../components/Utils/AlphaUserFeedback'
 import firebase, { dataBaseRequest, createNewObjIn } from '../components/Utils/FirebaseUtil'
@@ -51,8 +52,11 @@ const customActionSheet = (options, callback) => {
 }
 
 
+
 const MenuButton = ({ navigation: { navigate } }) => (
-	<Button title="Menu" onPress={() => {
+	<Button title='|||'
+		buttonStyle={{color: 'black', backgroundColor: 'transparent'}}
+		onPress={() => {
 		return navigate('Menu')
 	}} />
 )
@@ -98,7 +102,11 @@ class NewRecipeScreen extends React.Component {
 		
 	static navigationOptions = ({ navigation }) => ({
 		headerTitle: 'New grEat meal!',
-		headerRight: <MenuButton navigation={navigation} />
+		headerRight: <MenuButton navigation={navigation} />,
+		headerStyle: {
+			backgroundColor: '#D3D3D3',
+			color: 'white'
+		}
 	})
 
 	componentDidMount() {

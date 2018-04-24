@@ -9,8 +9,9 @@ import {
 	FlatList,
 	// TouchableHighlight,
 	TouchableOpacity,
-	Image, Button,
+	Image
 } from 'react-native'
+import { Button, Icon } from 'react-native-elements'
 
 //Alpha version feedback
 import Feedback from '../components/Utils/AlphaUserFeedback'
@@ -22,7 +23,9 @@ const MAX_SNIPPET_LENGTH = 75
 
 
 const BackButton = ({ navigation: { navigate } }) => (
-	<Button title="Logout" onPress={() => {
+	<Button title="Logout" 
+		buttonStyle={{color: 'black', backgroundColor: 'transparent'}}	
+		onPress={() => {
 		return (		userSignOut().then(function() {
 			console.log('scuuessful logout')
 		  }, function(error) {
@@ -32,7 +35,9 @@ const BackButton = ({ navigation: { navigate } }) => (
 )
 
 const MenuButton = ({ navigation: { navigate } }) => (
-	<Button title="Menu" onPress={() => {
+	<Button title='|||'
+		buttonStyle={{color: 'black', backgroundColor: 'transparent'}}
+		onPress={() => {
 		return navigate('Menu')
 	}} />
 )
@@ -51,7 +56,11 @@ class HomeScreen extends React.Component {
 	static navigationOptions = ({ navigation }) => ({
 		headerTitle: 'grEats',
         headerLeft: <BackButton navigation={navigation} />,
-		headerRight: <MenuButton navigation={navigation} />
+		headerRight: <MenuButton navigation={navigation} />,
+		headerStyle: {
+			backgroundColor: '#D3D3D3',
+			color: 'white'
+		}
 	}) 
 	
 	componentDidMount = () => {

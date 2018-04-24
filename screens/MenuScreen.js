@@ -10,20 +10,23 @@ import {
 	StyleSheet 
 } from 'react-native'
 import { dataBaseRequest } from '../components/Utils/FirebaseUtil'
+import Fuse from 'fuse.js'
+import { SearchBar, Button } from 'react-native-elements'
 
 const ScreenHeight = Dimensions.get('window').height
 const ScreenWidth = Dimensions.get('window').width
 const MAX_SNIPPET_LENGTH = 75
 
-import { 
-	SearchBar, 
-	Button 
-} from 'react-native-elements'
-
-import Fuse from 'fuse.js'
-
-
 export default class MenuScreen extends React.Component {
+
+
+	static navigationOptions = ({ navigation }) => ({
+		headerStyle: {
+			backgroundColor: '#D3D3D3',
+			color: 'white'
+		}
+	})
+
 	constructor() {
 		super()
 		this.state = {

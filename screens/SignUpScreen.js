@@ -29,6 +29,10 @@ class SignUpScreen extends React.Component {
     
     static navigationOptions = ({ navigation }) => ({
         title: 'SignUp to grEat',
+		headerStyle: {
+			backgroundColor: '#D3D3D3',
+			color: 'white'
+		}
     })
 
     _onPress = () => {

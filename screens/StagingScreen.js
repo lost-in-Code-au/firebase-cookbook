@@ -70,6 +70,10 @@ class StagingScreen extends React.Component {
 
     static navigationOptions = ({ navigation }) => ({
         headerTitle: 'Stagging Area',
+		headerStyle: {
+			backgroundColor: '#D3D3D3',
+			color: 'white'
+		}
     })
 
 

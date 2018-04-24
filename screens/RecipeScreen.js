@@ -7,7 +7,7 @@ import {
 	ImageBackground,
 	Image
 } from 'react-native'
-import { Button } from 'react-native-elements'
+import { Button, Icon } from 'react-native-elements'
 
 import Feedback from '../components/Utils/AlphaUserFeedback'
 
@@ -15,7 +15,9 @@ var ScreenHeight = Dimensions.get("window").height//not in use now that backgrou
 var ScreenWidth = Dimensions.get("window").width
 
 const MenuButton = ({ navigation: { navigate } }) => (
-	<Button title="Menu" onPress={() => {
+	<Button title='|||'
+		buttonStyle={{color: 'black', backgroundColor: 'transparent'}}
+		onPress={() => {
 		return navigate('Menu')
 	}} />
 )
@@ -24,7 +26,11 @@ class RecipeScreen extends React.Component {
 
 	static navigationOptions = ({ navigation }) => ({
 		title: navigation.state.params.name,
-		headerRight: <MenuButton navigation={navigation} />
+		headerRight: <MenuButton navigation={navigation} />,
+		headerStyle: {
+			backgroundColor: '#D3D3D3',
+			color: 'white'
+		}
 	})
 
 	_setImage(url) {

@@ -5,19 +5,21 @@ import {
 	Text,
 	View,
 	FlatList,
-	ImageBackground,
-	Button,
+	ImageBackground
 } from 'react-native'
 
 import Feedback from '../components/Utils/AlphaUserFeedback'
-import { CheckBox } from 'react-native-elements'
+import { CheckBox, Button, Icon } from 'react-native-elements'
 
 var ScreenHeight = Dimensions.get("window").height//not in use now that background has been removed
 var ScreenWidth = Dimensions.get("window").width
 
 
+
 const MenuButton = ({ navigation: { navigate } }) => (
-	<Button title="Menu" onPress={() => {
+	<Button title='|||'
+		buttonStyle={{color: 'black', backgroundColor: 'transparent'}}
+		onPress={() => {
 		return navigate('Menu')
 	}} />
 )
@@ -27,7 +29,11 @@ class IngredientsScreen extends React.Component {
 
 	static navigationOptions = ({ navigation }) => ({
 		title: navigation.state.params.name,
-		headerRight: <MenuButton navigation={navigation} />
+		headerRight: <MenuButton navigation={navigation} />,
+		headerStyle: {
+			backgroundColor: '#D3D3D3',
+			color: 'white'
+		}
 	})
 
 	constructor(props){

@@ -31,6 +31,10 @@ class LoginScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
         headerLeft: null,
         title: 'Login',
+		headerStyle: {
+			backgroundColor: '#D3D3D3',
+			color: 'white'
+		}
     })
 
     _redirectToSignUp = () => {
